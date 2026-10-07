@@ -131,12 +131,15 @@ export const Hero: React.FC<HeroProps> = ({ onOpenBooking, onOpenVideoTour }) =>
                     className="w-10 h-10 rounded-xl object-cover border border-[#D7D2C9]"
                   />
                   <img
-                    src="/assets/service section/04_dental_implant.png"
+                    src="/assets/service-section/04_dental_implant.png"
                     alt="Tooth model thumbnail"
                     loading="lazy"
                     width={40}
                     height={40}
                     className="w-10 h-10 rounded-xl object-cover border border-[#D7D2C9] bg-[#F4F1EB]"
+                    onError={(e) => {
+                      (e.target as HTMLImageElement).src = '/assets/Explore/e2.jpg';
+                    }}
                   />
                 </div>
               </div>

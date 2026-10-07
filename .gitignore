@@ -22,7 +22,6 @@ yarn-error.log*
 pnpm-debug.log*
 *.log
 *.tmp
-*.png
 scratch/
 
 # OS and IDE files
