@@ -1,0 +1,315 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Dental CRM — Interactive System Architecture Graph</title>
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+  <style>
+    body {
+      background-color: #0b0f19;
+      color: #f1f5f9;
+      font-family: system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+      margin: 0;
+      overflow-x: hidden;
+    }
+    .header-bar {
+      padding: 16px 24px;
+      border-bottom: 1px solid rgba(255, 255, 255, 0.08);
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      background: rgba(15, 23, 42, 0.7);
+      backdrop-filter: blur(12px);
+    }
+    .graph-container {
+      position: relative;
+      width: 100%;
+      height: 780px;
+      background: radial-gradient(circle at 50% 50%, #172554 0%, #0b0f19 80%);
+      border-radius: 12px;
+      margin: 20px auto;
+      overflow: hidden;
+      box-shadow: 0 20px 50px rgba(0,0,0,0.5);
+    }
+    svg {
+      width: 100%;
+      height: 100%;
+    }
+    .edge-line {
+      stroke: rgba(56, 189, 248, 0.35);
+      stroke-width: 2.5;
+      stroke-dasharray: 6, 6;
+      animation: dash 30s linear infinite;
+    }
+    .edge-line.data-flow {
+      stroke: rgba(52, 211, 153, 0.45);
+    }
+    .edge-line.db-flow {
+      stroke: rgba(168, 85, 247, 0.45);
+    }
+    @keyframes dash {
+      to {
+        stroke-dashoffset: -1000;
+      }
+    }
+    .node-group {
+      cursor: pointer;
+      transition: transform 0.25s cubic-bezier(0.16, 1, 0.3, 1);
+    }
+    .node-group:hover {
+      transform: scale(1.12);
+    }
+    .node-pulse {
+      animation: pulse 2.5s infinite;
+      opacity: 0.5;
+    }
+    @keyframes pulse {
+      0% { r: 38; opacity: 0.6; }
+      50% { r: 52; opacity: 0; }
+      100% { r: 38; opacity: 0; }
+    }
+    .node-circle {
+      filter: drop-shadow(0 0 14px currentColor);
+    }
+    .node-label {
+      font-size: 13px;
+      font-weight: 600;
+      fill: #ffffff;
+      text-anchor: middle;
+      pointer-events: none;
+      user-select: none;
+    }
+    .node-sub {
+      font-size: 10px;
+      fill: #94a3b8;
+      text-anchor: middle;
+      pointer-events: none;
+      user-select: none;
+    }
+    .legend-card {
+      background: rgba(15, 23, 42, 0.85);
+      border: 1px solid rgba(255, 255, 255, 0.1);
+      border-radius: 10px;
+      padding: 16px;
+    }
+    .badge-pill-custom {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      padding: 6px 12px;
+      border-radius: 20px;
+      font-size: 12px;
+    }
+  </style>
+</head>
+<body>
+
+  <div class="header-bar">
+    <div class="d-flex align-items-center gap-3">
+      <div class="bg-primary bg-opacity-25 p-2 rounded-3 text-info">
+        <i class="fa-solid fa-diagram-project fa-lg"></i>
+      </div>
+      <div>
+        <h5 class="mb-0 fw-bold">Dental Clinic CRM — System Graph Architecture</h5>
+        <small class="text-secondary">Interactive Node-Link Network Graph & Data Flow</small>
+      </div>
+    </div>
+    <div class="d-flex gap-2">
+      <a href="/dashboard" class="btn btn-outline-info btn-sm"><i class="fa-solid fa-gauge me-1"></i> Open Dashboard</a>
+      <a href="/walkin" class="btn btn-outline-light btn-sm"><i class="fa-solid fa-ticket me-1"></i> Walk-in Kiosk</a>
+      <a href="/online" class="btn btn-outline-light btn-sm"><i class="fa-solid fa-globe me-1"></i> Online Booking</a>
+    </div>
+  </div>
+
+  <div class="container-fluid px-4 py-3">
+
+    <!-- Legend Bar -->
+    <div class="d-flex flex-wrap gap-3 mb-3 align-items-center justify-content-between">
+      <div class="d-flex gap-2 flex-wrap">
+        <span class="badge-pill-custom bg-info bg-opacity-10 text-info border border-info border-opacity-25">
+          <i class="fa-solid fa-circle" style="font-size: 8px;"></i> Frontend Clients (Cyan)
+        </span>
+        <span class="badge-pill-custom bg-primary bg-opacity-10 text-primary border border-primary border-opacity-25">
+          <i class="fa-solid fa-circle" style="font-size: 8px;"></i> API Core Gateway (Blue)
+        </span>
+        <span class="badge-pill-custom bg-success bg-opacity-10 text-success border border-success border-opacity-25">
+          <i class="fa-solid fa-circle" style="font-size: 8px;"></i> Logic & Controllers (Emerald)
+        </span>
+        <span class="badge-pill-custom bg-warning bg-opacity-10 text-warning border border-warning border-opacity-25">
+          <i class="fa-solid fa-circle" style="font-size: 8px;"></i> Database Abstraction (Amber)
+        </span>
+        <span class="badge-pill-custom bg-purple bg-opacity-10 text-light border border-secondary border-opacity-25">
+          <i class="fa-solid fa-circle text-purple" style="font-size: 8px;"></i> Multi-Tier Storage (Purple)
+        </span>
+      </div>
+      <span class="text-secondary small"><i class="fa-solid fa-hand-pointer me-1"></i> Hover on nodes to inspect interactions</span>
+    </div>
+
+    <!-- Graph Canvas Container -->
+    <div class="graph-container">
+      <svg id="archGraph" viewBox="0 0 1200 760">
+        <defs>
+          <radialGradient id="gradCenter" cx="50%" cy="50%" r="50%">
+            <stop offset="0%" stop-color="#38bdf8" />
+            <stop offset="100%" stop-color="#0284c7" />
+          </radialGradient>
+          <radialGradient id="gradClient" cx="50%" cy="50%" r="50%">
+            <stop offset="0%" stop-color="#22d3ee" />
+            <stop offset="100%" stop-color="#0891b2" />
+          </radialGradient>
+          <radialGradient id="gradLogic" cx="50%" cy="50%" r="50%">
+            <stop offset="0%" stop-color="#34d399" />
+            <stop offset="100%" stop-color="#059669" />
+          </radialGradient>
+          <radialGradient id="gradDal" cx="50%" cy="50%" r="50%">
+            <stop offset="0%" stop-color="#fbbf24" />
+            <stop offset="100%" stop-color="#d97706" />
+          </radialGradient>
+          <radialGradient id="gradDb" cx="50%" cy="50%" r="50%">
+            <stop offset="0%" stop-color="#c084fc" />
+            <stop offset="100%" stop-color="#7c3aed" />
+          </radialGradient>
+        </defs>
+
+        <!-- Edges: Clients -> Gateway -->
+        <path d="M 180 180 Q 360 260 520 380" class="edge-line" />
+        <path d="M 160 380 Q 340 380 520 380" class="edge-line" />
+        <path d="M 180 580 Q 360 500 520 380" class="edge-line" />
+
+        <!-- Edges: Gateway -> Controllers -->
+        <path d="M 600 380 Q 720 200 860 140" class="edge-line data-flow" />
+        <path d="M 600 380 Q 750 280 900 280" class="edge-line data-flow" />
+        <path d="M 600 380 Q 760 380 910 420" class="edge-line data-flow" />
+        <path d="M 600 380 Q 740 500 860 560" class="edge-line data-flow" />
+
+        <!-- Controller interconnections -->
+        <path d="M 860 140 Q 940 200 900 280" class="edge-line data-flow" />
+        <path d="M 900 280 Q 980 350 910 420" class="edge-line data-flow" />
+        <path d="M 910 420 Q 940 500 860 560" class="edge-line data-flow" />
+
+        <!-- Edges: Controllers -> DAL -->
+        <path d="M 860 140 Q 760 480 600 590" class="edge-line db-flow" />
+        <path d="M 900 280 Q 780 510 600 590" class="edge-line db-flow" />
+        <path d="M 910 420 Q 780 560 600 590" class="edge-line db-flow" />
+        <path d="M 860 560 Q 750 610 600 590" class="edge-line db-flow" />
+
+        <!-- Edges: DAL -> Storage Engines -->
+        <path d="M 560 620 Q 380 660 340 700" class="edge-line db-flow" />
+        <path d="M 600 630 Q 600 670 600 700" class="edge-line db-flow" />
+        <path d="M 640 620 Q 820 660 860 700" class="edge-line db-flow" />
+
+        <!-- 1. Central Core Node: Express Gateway -->
+        <g class="node-group" transform="translate(560, 380)">
+          <circle class="node-pulse" r="48" fill="none" stroke="#38bdf8" stroke-width="2" />
+          <circle class="node-circle" r="46" fill="url(#gradCenter)" stroke="#e0f2fe" stroke-width="3" style="color: #38bdf8;" />
+          <text y="-6" class="node-label">Express.js API</text>
+          <text y="14" class="node-sub">Port 5000 Core Gateway</text>
+        </g>
+
+        <!-- 2. Client Cluster (Left Side) -->
+        <g class="node-group" transform="translate(180, 180)">
+          <circle class="node-circle" r="38" fill="url(#gradClient)" stroke="#cffafe" stroke-width="2" style="color: #22d3ee;" />
+          <text y="-4" class="node-label">Walk-In Kiosk</text>
+          <text y="12" class="node-sub">/walkin (Instant Token)</text>
+        </g>
+
+        <g class="node-group" transform="translate(160, 380)">
+          <circle class="node-circle" r="40" fill="url(#gradClient)" stroke="#cffafe" stroke-width="2" style="color: #22d3ee;" />
+          <text y="-4" class="node-label">CRM Dashboard</text>
+          <text y="12" class="node-sub">/dashboard (EHR & Queue)</text>
+        </g>
+
+        <g class="node-group" transform="translate(180, 580)">
+          <circle class="node-circle" r="38" fill="url(#gradClient)" stroke="#cffafe" stroke-width="2" style="color: #22d3ee;" />
+          <text y="-4" class="node-label">Online Booking</text>
+          <text y="12" class="node-sub">/online (Slot Picker)</text>
+        </g>
+
+        <!-- 3. Business Logic Cluster (Right Side) -->
+        <g class="node-group" transform="translate(860, 140)">
+          <circle class="node-circle" r="38" fill="url(#gradLogic)" stroke="#d1fae5" stroke-width="2" style="color: #34d399;" />
+          <text y="-4" class="node-label">Token Generator</text>
+          <text y="12" class="node-sub">Visual A001 Algorithm</text>
+        </g>
+
+        <g class="node-group" transform="translate(900, 280)">
+          <circle class="node-circle" r="40" fill="url(#gradLogic)" stroke="#d1fae5" stroke-width="2" style="color: #34d399;" />
+          <text y="-4" class="node-label">Patient EHR Engine</text>
+          <text y="12" class="node-sub">Auto-Reg & Balances</text>
+        </g>
+
+        <g class="node-group" transform="translate(910, 420)">
+          <circle class="node-circle" r="38" fill="url(#gradLogic)" stroke="#d1fae5" stroke-width="2" style="color: #34d399;" />
+          <text y="-4" class="node-label">Billing & Invoicing</text>
+          <text y="12" class="node-sub">POS & Payment Tracking</text>
+        </g>
+
+        <g class="node-group" transform="translate(860, 560)">
+          <circle class="node-circle" r="38" fill="url(#gradLogic)" stroke="#d1fae5" stroke-width="2" style="color: #34d399;" />
+          <text y="-4" class="node-label">History & Clinical</text>
+          <text y="12" class="node-sub">Prescriptions & Archive</text>
+        </g>
+
+        <!-- 4. Database Abstraction Layer (Middle Bottom) -->
+        <g class="node-group" transform="translate(600, 590)">
+          <circle class="node-circle" r="42" fill="url(#gradDal)" stroke="#fef3c7" stroke-width="2" style="color: #fbbf24;" />
+          <text y="-4" class="node-label">dbQuery (DAL)</text>
+          <text y="12" class="node-sub">Hybrid Engine Selector</text>
+        </g>
+
+        <!-- 5. Storage Tier (Bottom Row) -->
+        <g class="node-group" transform="translate(340, 700)">
+          <circle class="node-circle" r="34" fill="url(#gradDb)" stroke="#f3e8ff" stroke-width="2" style="color: #c084fc;" />
+          <text y="-3" class="node-label">Cloudflare D1</text>
+          <text y="11" class="node-sub">Remote Cloud SQL</text>
+        </g>
+
+        <g class="node-group" transform="translate(600, 700)">
+          <circle class="node-circle" r="34" fill="url(#gradDb)" stroke="#f3e8ff" stroke-width="2" style="color: #c084fc;" />
+          <text y="-3" class="node-label">PostgreSQL</text>
+          <text y="11" class="node-sub">Production Relational</text>
+        </g>
+
+        <g class="node-group" transform="translate(860, 700)">
+          <circle class="node-circle" r="34" fill="url(#gradDb)" stroke="#f3e8ff" stroke-width="2" style="color: #c084fc;" />
+          <text y="-3" class="node-label">Local JSON DB</text>
+          <text y="11" class="node-sub">crm_store.json Fallback</text>
+        </g>
+
+      </svg>
+    </div>
+
+    <!-- Node Role Breakdown Cards -->
+    <div class="row g-3">
+      <div class="col-md-3">
+        <div class="legend-card h-100">
+          <h6 class="text-info"><i class="fa-solid fa-desktop me-2"></i> Client Nodes</h6>
+          <p class="small text-secondary mb-0">Endpoints where patients, staff, and doctors interact directly with the kiosk, booking portal, and dashboard.</p>
+        </div>
+      </div>
+      <div class="col-md-3">
+        <div class="legend-card h-100">
+          <h6 class="text-primary"><i class="fa-solid fa-server me-2"></i> API Core Node</h6>
+          <p class="small text-secondary mb-0">Express HTTP routing gateway with Helmet security, CORS, Morgan logger, and JWT authentication guards.</p>
+        </div>
+      </div>
+      <div class="col-md-3">
+        <div class="legend-card h-100">
+          <h6 class="text-success"><i class="fa-solid fa-microchip me-2"></i> Logic Nodes</h6>
+          <p class="small text-secondary mb-0">Active state machines for daily visual token numbering (<kbd>A001</kbd>), phone-based auto patient EHR registration, and POS billing.</p>
+        </div>
+      </div>
+      <div class="col-md-3">
+        <div class="legend-card h-100">
+          <h6 class="text-purple" style="color: #c084fc;"><i class="fa-solid fa-database me-2"></i> Storage Nodes</h6>
+          <p class="small text-secondary mb-0">Tri-tier storage adapter that routes seamlessly across Cloudflare D1 Serverless SQL, PostgreSQL, and zero-config local JSON persistence.</p>
+        </div>
+      </div>
+    </div>
+
+  </div>
+
+</body>
+</html>

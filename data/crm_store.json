@@ -1,0 +1,236 @@
+{
+  "admins": [
+    {
+      "id": 1,
+      "username": "admin",
+      "password_hash": "$2a$10$e8w.xL2S.nZq6R2G7dY8e.5eG/vH3sYn/5qM8N3W5g5d5c5b5a5a5",
+      "name": "Dr. Sarah Jenkins",
+      "email": "admin@smilecare.com",
+      "role": "admin"
+    }
+  ],
+  "settings": {
+    "clinic_name": "Dental",
+    "clinic_logo": "https://images.unsplash.com/photo-1629909613654-28e377c37b09?w=150&auto=format&fit=crop&q=80",
+    "clinic_address": "104 Healthcare Boulevard, Suite 300, Medical District",
+    "phone": "+1 (555) 234-5678",
+    "email": "contact@smilecaredental.com",
+    "token_prefix": "A",
+    "default_followup_months": "6",
+    "currency": "₹",
+    "auto_sync": "true",
+    "theme": "light",
+    "clinic_subtitle": "xyz",
+    "quick_procedures": "[{\"id\":1,\"title\":\"Scaling Done\",\"icon\":\"🩺\",\"text\":\"Routine oral examination completed. Generalized calculus noted. Ultrasonic scaling done.\"},{\"id\":2,\"title\":\"Composite Filling\",\"icon\":\"🦷\",\"text\":\"Class II composite filling placed with etching, bonding & light cure polishing.\"},{\"id\":3,\"title\":\"RCT BMP Sitting\",\"icon\":\"🔬\",\"text\":\"RCT: Access opened, working length established with apex locator, canals shaped to 25/04, dressed with Ca(OH)2.\"},{\"id\":4,\"title\":\"RCT Obturation\",\"icon\":\"✨\",\"text\":\"RCT Obturation completed with gutta-percha & bioceramic sealer. Core restoration placed.\"},{\"id\":5,\"title\":\"Extraction\",\"icon\":\"✂️\",\"text\":\"Atraumatic extraction performed under 2% Lignocaine with Adrenaline (1:80,000). Hemostasis achieved.\"},{\"id\":6,\"title\":\"Crown Prep\",\"icon\":\"👑\",\"text\":\"Crown preparation completed with subgingival shoulder margin. Elastomeric impression taken.\"},{\"id\":7,\"title\":\"Post-Op Advice\",\"icon\":\"📋\",\"text\":\"Post-op instructions given: Soft diet, avoid hot foods, warm salt water rinses after 24 hrs.\"}]"
+  },
+  "services": [
+    {
+      "id": 1,
+      "name": "Dental Cleaning & Scaling",
+      "duration_mins": 45,
+      "price": 1000,
+      "category": "Cleaning",
+      "description": "Ultrasonic scaling, stain removal, and polishing",
+      "status": "Active"
+    },
+    {
+      "id": 2,
+      "name": "Dental Filling (Composite)",
+      "duration_mins": 30,
+      "price": 1500,
+      "category": "Filling",
+      "description": "Tooth-colored composite resin restoration",
+      "status": "Active"
+    },
+    {
+      "id": 3,
+      "name": "Root Canal Treatment (RCT)",
+      "duration_mins": 60,
+      "price": 4000,
+      "category": "RCT",
+      "description": "Painless single/multi-sitting rotary endodontics",
+      "status": "Active"
+    },
+    {
+      "id": 4,
+      "name": "Dental Crown (Zirconia/PFM)",
+      "duration_mins": 45,
+      "price": 3500,
+      "category": "Crown",
+      "description": "High-strength aesthetic ceramic crown",
+      "status": "Active"
+    },
+    {
+      "id": 5,
+      "name": "Tooth Extraction",
+      "duration_mins": 45,
+      "price": 2000,
+      "category": "Extraction",
+      "description": "Atraumatic simple/surgical tooth removal",
+      "status": "Active"
+    },
+    {
+      "id": 6,
+      "name": "Comprehensive Dental Consultation",
+      "duration_mins": 30,
+      "price": 500,
+      "category": "Consultation",
+      "description": "Clinical oral examination, intraoral photos & treatment plan",
+      "status": "Active"
+    },
+    {
+      "id": 7,
+      "name": "Digital X-Ray (IOPA)",
+      "duration_mins": 15,
+      "price": 500,
+      "category": "X-Ray",
+      "description": "Instant high-resolution digital radiographic diagnosis",
+      "status": "Active"
+    },
+    {
+      "id": 8,
+      "name": "Dental Implant",
+      "duration_mins": 90,
+      "price": 25000,
+      "category": "Implant",
+      "description": "Grade-5 titanium implant fixture with abutment",
+      "status": "Active"
+    },
+    {
+      "id": 9,
+      "name": "In-Office Teeth Whitening",
+      "duration_mins": 45,
+      "price": 4500,
+      "category": "Cosmetic",
+      "description": "Laser accelerated dental whitening treatment",
+      "status": "Active"
+    }
+  ],
+  "expenses": [],
+  "patients": [],
+  "doctors": [],
+  "bookings": [],
+  "history": [],
+  "notifications": [],
+  "logs": [
+    {
+      "id": 17,
+      "user_id": 1,
+      "action": "PATIENT_SOFT_DELETED",
+      "details": "Admin 'admin' soft-deleted patient P31045 (krish joshi, 8888888888) along with all associated bookings and clinical history.",
+      "created_at": "2026-10-07T06:03:59.115Z"
+    },
+    {
+      "id": 16,
+      "user_id": 1,
+      "action": "PATIENT_SOFT_DELETED",
+      "details": "Admin 'admin' soft-deleted patient P43606 (Kivex dental, 7041888899) along with all associated bookings and clinical history.",
+      "created_at": "2026-10-07T06:03:52.380Z"
+    },
+    {
+      "id": 15,
+      "user_id": 1,
+      "action": "PATIENT_SOFT_DELETED",
+      "details": "Admin 'admin' soft-deleted patient P71138 (Pooja Hegde, 9844455566) along with all associated bookings and clinical history.",
+      "created_at": "2026-10-07T06:03:46.254Z"
+    },
+    {
+      "id": 14,
+      "user_id": 1,
+      "action": "PATIENT_SOFT_DELETED",
+      "details": "Admin 'admin' soft-deleted patient P32398 (Devendra Sharma, 9812345678) along with all associated bookings and clinical history.",
+      "created_at": "2026-10-07T06:03:39.411Z"
+    },
+    {
+      "id": 13,
+      "user_id": "CANCEL_BOOKING",
+      "action": "Cancelled booking ID 10 (Code: DB000010, Token: A004, Patient: ram)",
+      "details": "",
+      "created_at": "2026-10-06T19:59:12.372Z"
+    },
+    {
+      "id": 12,
+      "user_id": "CANCEL_BOOKING",
+      "action": "Cancelled booking ID 7 (Code: DB000007, Token: A002, Patient: krish joshi)",
+      "details": "",
+      "created_at": "2026-10-06T19:58:28.359Z"
+    },
+    {
+      "id": 11,
+      "user_id": "CANCEL_BOOKING",
+      "action": "Cancelled booking ID 6 (Code: DB000006, Token: A001, Patient: krish joshi)",
+      "details": "",
+      "created_at": "2026-10-06T19:44:54.708Z"
+    },
+    {
+      "id": 10,
+      "user_id": "CANCEL_BOOKING",
+      "action": "Cancelled booking ID 6 (Code: DB000006, Token: A001, Patient: krish joshi)",
+      "details": "",
+      "created_at": "2026-10-06T19:43:38.807Z"
+    },
+    {
+      "id": 9,
+      "user_id": 1,
+      "action": "PATIENT_SOFT_DELETED",
+      "details": "Admin 'admin' soft-deleted patient P12642 (Kivex dental, 7041888899) along with all associated bookings and clinical history.",
+      "created_at": "2026-10-06T19:41:49.405Z"
+    },
+    {
+      "id": 8,
+      "user_id": 1,
+      "action": "PATIENT_SOFT_DELETED",
+      "details": "Admin 'admin' soft-deleted patient P12642 (Kivex dental, 7041888899) along with all associated bookings and clinical history.",
+      "created_at": "2026-10-06T19:41:49.414Z"
+    },
+    {
+      "id": 7,
+      "user_id": 1,
+      "action": "PATIENT_SOFT_DELETED",
+      "details": "Admin 'admin' soft-deleted patient P70590 (Aarav Patel, 9876543210) along with all associated bookings and clinical history.",
+      "created_at": "2026-10-06T19:41:45.588Z"
+    },
+    {
+      "id": 6,
+      "user_id": 1,
+      "action": "PATIENT_SOFT_DELETED",
+      "details": "Admin 'admin' soft-deleted patient P70590 (Aarav Patel, 9876543210) along with all associated bookings and clinical history.",
+      "created_at": "2026-10-06T19:41:45.591Z"
+    },
+    {
+      "id": 5,
+      "user_id": 1,
+      "action": "PATIENT_SOFT_DELETED",
+      "details": "Admin 'admin' soft-deleted patient P33358 (Devendra Sharma, 9812345678) along with all associated bookings and clinical history.",
+      "created_at": "2026-10-06T19:41:41.855Z"
+    },
+    {
+      "id": 4,
+      "user_id": 1,
+      "action": "PATIENT_SOFT_DELETED",
+      "details": "Admin 'admin' soft-deleted patient P33358 (Devendra Sharma, 9812345678) along with all associated bookings and clinical history.",
+      "created_at": "2026-10-06T19:41:41.857Z"
+    },
+    {
+      "id": 3,
+      "user_id": "CANCEL_BOOKING",
+      "action": "Cancelled booking ID 4 (Code: DB000004, Token: A002, Patient: Devendra Sharma)",
+      "details": "",
+      "created_at": "2026-10-06T19:41:21.412Z"
+    },
+    {
+      "id": 2,
+      "user_id": 1,
+      "action": "PATIENT_SOFT_DELETED",
+      "details": "Admin 'admin' soft-deleted patient P89512 (Riya, 9033474123) along with all associated bookings and clinical history.",
+      "created_at": "2026-10-06T14:23:21.422Z"
+    },
+    {
+      "id": 1,
+      "user_id": 1,
+      "action": "PATIENT_SOFT_DELETED",
+      "details": "Admin 'admin' soft-deleted patient P41017 (vidhi, 7894561230) along with all associated bookings and clinical history.",
+      "created_at": "2026-10-06T14:23:17.612Z"
+    }
+  ]
+}

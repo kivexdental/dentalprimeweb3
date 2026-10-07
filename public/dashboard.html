@@ -1,0 +1,3239 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>CRM Dashboard - Dental | Kivex Technology</title>
+  <!-- Bootstrap 5 CSS -->
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
+  <!-- FontAwesome -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css">
+  <!-- Chart.js -->
+  <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+  <link rel="stylesheet" href="css/theme.css">
+  <link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+
+  <div class="app-wrapper">
+    
+    <!-- Left Sidebar -->
+    <aside class="sidebar" id="appSidebar">
+      <div class="brand">
+        <i class="fa-solid fa-tooth fa-2x" style="color: var(--accent-blue);"></i>
+        <div class="overflow-hidden">
+          <h5 class="fw-bold mb-0 text-white text-nowrap" id="sidebarClinicName" style="font-family: var(--font-heading);">Dental</h5>
+          <small class="text-nowrap" id="sidebarClinicSubtitle" style="color: #94a3b8;">xyz</small>
+        </div>
+      </div>
+
+      <div class="sidebar-nav">
+        <a href="#dashboard" class="nav-item-link active" data-view="dashboard">
+          <i class="fa-solid fa-chart-line"></i> <span>Dashboard</span>
+        </a>
+        <a href="#patients" class="nav-item-link" data-view="patients">
+          <i class="fa-solid fa-users"></i> <span>Patients</span>
+        </a>
+        <a href="#online-bookings" class="nav-item-link" data-view="online">
+          <i class="fa-solid fa-laptop-medical"></i> <span>Online Bookings</span>
+          <span class="badge bg-primary ms-auto rounded-pill" id="sidebarOnlineBadge">0</span>
+        </a>
+        <a href="#walkin-bookings" class="nav-item-link" data-view="walkin">
+          <i class="fa-solid fa-person-walking"></i> <span>Walk-In Bookings</span>
+          <span class="badge bg-warning text-dark ms-auto rounded-pill" id="sidebarWalkinBadge">0</span>
+        </a>
+        <a href="#doctors-note" class="nav-item-link" data-view="doctors-note">
+          <i class="fa-solid fa-notes-medical"></i> <span>Doctor's Note</span>
+          <span class="badge bg-danger ms-auto rounded-pill" style="font-size: 0.65rem;">Doctor</span>
+        </a>
+        <a href="#payment-desk" class="nav-item-link" data-view="payment-desk">
+          <i class="fa-solid fa-cash-register"></i> <span>Payment & Billing</span>
+          <span class="badge bg-success ms-auto rounded-pill" id="sidebarBillingBadge">0</span>
+        </a>
+        <a href="#services" class="nav-item-link" data-view="services">
+          <i class="fa-solid fa-tooth"></i> <span>Services</span>
+        </a>
+        <a href="#finance" class="nav-item-link" data-view="finance" id="navItemFinance">
+          <i class="fa-solid fa-file-invoice-dollar"></i> <span>Finance</span>
+        </a>
+        <a href="#notifications" class="nav-item-link" data-view="notifications">
+
+          <i class="fa-solid fa-paper-plane"></i> <span>Notifications</span>
+          <span class="badge bg-info text-dark ms-auto rounded-pill" style="font-size: 0.65rem;">WhatsApp</span>
+        </a>
+        <a href="#settings" class="nav-item-link" data-view="settings">
+          <i class="fa-solid fa-gear"></i> <span>Settings</span>
+        </a>
+      </div>
+
+      <div class="p-3 border-top border-secondary border-opacity-25">
+        <button class="btn btn-outline-light w-100 d-flex align-items-center justify-content-center gap-2" onclick="logoutUser()">
+          <i class="fa-solid fa-right-from-bracket"></i> <span>Logout</span>
+        </button>
+      </div>
+    </aside>
+
+    <!-- Main Content Area -->
+    <main class="main-content">
+      
+      <!-- Top Header Bar -->
+      <header class="top-header">
+        <div class="d-flex align-items-center gap-3">
+          <button class="btn btn-light border p-2" id="sidebarToggleBtn">
+            <i class="fa-solid fa-bars" style="color: var(--primary-text);"></i>
+          </button>
+
+          <!-- Search Everywhere -->
+          <div class="search-bar-wrap">
+            <i class="fa-solid fa-magnifying-glass"></i>
+            <input type="text" id="globalSearchInput" placeholder="Search Patients, Bookings, Doctors...">
+          </div>
+        </div>
+
+        <div class="d-flex align-items-center gap-2">
+          <!-- Web MCP & AI Agent Badge -->
+          <button type="button" class="btn btn-sm px-3 py-1 rounded-pill d-inline-flex align-items-center gap-2 fw-semibold shadow-sm" onclick="openAgentContextModal()" style="border: 1px solid #8b5cf6; color: #6d28d9; background: rgba(139, 92, 246, 0.12);" title="Inspect Live Web MCP & Antigravity AI Data Context">
+            <i class="fa-solid fa-robot text-purple"></i> <span>Web MCP & AI</span>
+            <span class="badge bg-success rounded-pill" style="font-size: 0.65rem;">Active</span>
+          </button>
+
+          <!-- Doctor Workspace Badge / Quick Switch -->
+          <a href="#doctors-note" class="badge px-3 py-2 rounded-pill bg-danger-subtle text-danger border border-danger text-decoration-none d-none d-md-inline-flex align-items-center gap-2" title="Click to open Doctor Consultation Workspace" onclick="switchView('doctors-note')">
+            <i class="fa-solid fa-user-doctor"></i> <span>Doctor Workspace</span>
+          </a>
+
+          <!-- Auto Refresh Toggle -->
+          <div class="form-check form-switch mb-0 d-none d-md-block" title="Auto Refresh Dashboard Stats">
+            <input class="form-check-input" type="checkbox" id="autoRefreshToggle" checked>
+            <label class="form-check-label small text-muted" for="autoRefreshToggle">Auto Sync</label>
+          </div>
+
+          <!-- Dark/Light Theme Button -->
+          <button class="btn btn-light border rounded-circle p-2" id="themeToggleBtn" title="Toggle Theme">
+            <i class="fa-solid fa-moon" style="color: var(--accent-red);"></i>
+          </button>
+
+          <!-- Admin User Badge -->
+          <div class="d-flex align-items-center gap-2">
+            <img src="https://images.unsplash.com/photo-1622253692010-333f2da6031d?w=100&auto=format&fit=crop&q=80" class="rounded-circle border" width="36" height="36" alt="Admin">
+            <div class="d-none d-sm-block text-start">
+              <div class="fw-bold small text-dark" id="headerAdminName">Dr. Sarah Jenkins</div>
+              <small class="text-muted" id="headerAdminRole" style="font-size: 0.75rem;">CRM Admin</small>
+            </div>
+          </div>
+        </div>
+      </header>
+
+      <!-- View Containers -->
+      <div class="p-4 flex-1">
+
+        <!-- 1. DASHBOARD VIEW -->
+        <section id="dashboardView" class="app-view">
+          <div class="d-flex justify-content-between align-items-center mb-4">
+            <div>
+              <h2 class="fw-bold mb-1">Clinic Overview</h2>
+              <p class="text-muted small">Real-time statistics & analytics dashboard.</p>
+            </div>
+            <div class="d-flex gap-2">
+              <button class="btn btn-outline-primary btn-sm" data-bs-toggle="modal" data-bs-target="#crmWalkinModal" onclick="openWalkinModal()">
+                <i class="fa-solid fa-person-walking me-1"></i> Walk-In Booking
+              </button>
+              <a href="online.html" target="_blank" class="btn btn-primary-custom btn-sm">
+                <i class="fa-solid fa-laptop-medical me-1"></i> Online Booking
+              </a>
+            </div>
+          </div>
+
+          <!-- Quick Stats Cards -->
+          <div class="row g-3 mb-4">
+            <div class="col-md-3">
+              <div class="stat-card p-3">
+                <div class="d-flex justify-content-between align-items-center">
+                  <div>
+                    <span class="text-muted small fw-semibold">Walk-In (Today)</span>
+                    <h3 class="fw-bold mb-0 mt-1" id="cardTodayWalkin" style="color: var(--accent-red);">0</h3>
+                    <small class="text-muted">Queue tokens issued today</small>
+                  </div>
+                  <div class="icon-circle" style="background: var(--red-light); color: var(--accent-red);">
+                    <i class="fa-solid fa-person-walking"></i>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            <div class="col-md-3">
+              <div class="stat-card p-3">
+                <div class="d-flex justify-content-between align-items-center">
+                  <div>
+                    <span class="text-muted small fw-semibold">Online Appointments</span>
+                    <h3 class="fw-bold mb-0 mt-1" id="cardTodayOnline" style="color: var(--accent-blue);">0</h3>
+                    <small class="text-muted">Online bookings today</small>
+                  </div>
+                  <div class="icon-circle" style="background: rgba(131,169,208,0.15); color: var(--accent-blue);">
+                    <i class="fa-solid fa-globe"></i>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            <div class="col-md-3">
+              <div class="stat-card p-3">
+                <div class="d-flex justify-content-between align-items-center">
+                  <div>
+                    <span class="text-muted small fw-semibold">Total Patients</span>
+                    <h3 class="fw-bold mb-0 mt-1" id="cardTotalPatients" style="color: var(--accent-green);">0</h3>
+                    <small class="text-muted">Registered in system</small>
+                  </div>
+                  <div class="icon-circle" style="background: rgba(119,149,128,0.15); color: var(--accent-green);">
+                    <i class="fa-solid fa-users"></i>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            <div class="col-md-3">
+              <div class="stat-card p-3">
+                <div class="d-flex justify-content-between align-items-center">
+                  <div>
+                    <span class="text-muted small fw-semibold">Total Revenue (₹)</span>
+                    <h3 class="fw-bold mb-0 mt-1 text-dark" id="cardTotalRevenue">₹0.00</h3>
+                    <small class="text-muted">All-time collections</small>
+                  </div>
+                  <div class="icon-circle" style="background: rgba(245,158,11,0.15); color: #d97706;">
+                    <i class="fa-solid fa-indian-rupee-sign"></i>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <!-- Charts Row -->
+          <div class="row g-4 mb-4">
+            <div class="col-md-5">
+              <div class="glass-card p-4 h-100">
+                <h5 class="fw-bold mb-3">Booking Status Overview</h5>
+                <div style="height: 250px;">
+                  <canvas id="statusPieChart"></canvas>
+                </div>
+              </div>
+            </div>
+            <div class="col-md-7">
+              <div class="glass-card p-4 h-100">
+                <h5 class="fw-bold mb-3">Monthly Bookings Trend</h5>
+                <div style="height: 250px;">
+                  <canvas id="monthlyBarChart"></canvas>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <!-- Recent Bookings Mini Queue Table -->
+          <div class="glass-card p-4">
+            <div class="d-flex justify-content-between align-items-center mb-3">
+              <h5 class="fw-bold mb-0">Active Queue Overview</h5>
+              <button class="btn btn-sm btn-link text-decoration-none" onclick="switchView('bookings')">View Full Queue <i class="fa-solid fa-arrow-right ms-1"></i></button>
+            </div>
+            <div class="table-responsive">
+              <table class="table table-hover align-middle mb-0">
+                <thead class="table-light">
+                  <tr>
+                    <th>Token</th>
+                    <th>Booking Code</th>
+                    <th>Patient Name</th>
+                    <th>Service</th>
+                    <th>Type</th>
+                    <th>Status</th>
+                    <th>Actions</th>
+                  </tr>
+                </thead>
+                <tbody id="recentBookingsTbody">
+                  <!-- Dynamically Rendered -->
+                </tbody>
+              </table>
+            </div>
+          </div>
+        </section>
+
+        <!-- 2. PATIENTS VIEW -->
+        <section id="patientsView" class="app-view d-none">
+          <div class="d-flex justify-content-between align-items-center mb-4 flex-wrap gap-2">
+            <div>
+              <h2 class="fw-bold mb-1">Patients Directory</h2>
+              <p class="text-muted small mb-0">Manage patient medical records, clinical history, and account balances.</p>
+            </div>
+            <button class="btn btn-primary-custom" onclick="openNewPatientModal()">
+              <i class="fa-solid fa-user-plus me-2"></i> Register New Patient
+            </button>
+          </div>
+
+          <!-- Directory Filter Tabs (Active vs Deleted for Admin) -->
+          <!-- Customer / Patient Section Bifurcation Pills -->
+          <div class="d-flex flex-wrap align-items-center justify-content-between gap-2 mb-3">
+            <div class="d-flex flex-wrap gap-2" id="patientBifurcationPills">
+              <button type="button" class="btn btn-sm btn-primary active rounded-pill px-3 fw-semibold" id="pf-btn-all" onclick="filterPatientsByBifurcation('all')">
+                <i class="fa-solid fa-users me-1"></i> All Patients (<span id="pf-count-all">0</span>)
+              </button>
+              <button type="button" class="btn btn-sm btn-outline-danger rounded-pill px-3 fw-semibold" id="pf-btn-tomorrow" onclick="filterPatientsByBifurcation('tomorrow')">
+                <i class="fa-solid fa-calendar-day me-1"></i> Tomorrow Calling (<span id="pf-count-tomorrow">0</span>)
+              </button>
+              <button type="button" class="btn btn-sm btn-outline-success rounded-pill px-3 fw-semibold" id="pf-btn-visited_30d" onclick="filterPatientsByBifurcation('visited_30d')">
+                <i class="fa-solid fa-check-double me-1"></i> Visited &le;30d (<span id="pf-count-visited_30d">0</span>)
+              </button>
+              <button type="button" class="btn btn-sm btn-outline-info rounded-pill px-3 fw-semibold text-dark" id="pf-btn-not_visited_30_90d" onclick="filterPatientsByBifurcation('not_visited_30_90d')">
+                <i class="fa-solid fa-clock-rotate-left me-1"></i> Visited 30-90d (<span id="pf-count-not_visited_30_90d">0</span>)
+              </button>
+              <button type="button" class="btn btn-sm btn-outline-warning rounded-pill px-3 fw-semibold text-dark" id="pf-btn-not_visited_90d" onclick="filterPatientsByBifurcation('not_visited_90d')">
+                <i class="fa-solid fa-triangle-exclamation me-1"></i> Not Visited &gt;90d (<span id="pf-count-not_visited_90d">0</span>)
+              </button>
+              <button type="button" class="btn btn-sm btn-outline-danger rounded-pill px-3 fw-semibold" id="pf-btn-not_visited_180d" onclick="filterPatientsByBifurcation('not_visited_180d')">
+                <i class="fa-solid fa-hourglass-end me-1"></i> Not Visited &gt;180d (<span id="pf-count-not_visited_180d">0</span>)
+              </button>
+              <button type="button" class="btn btn-sm btn-outline-dark rounded-pill px-3 fw-semibold" id="pf-btn-not_visited_365d" onclick="filterPatientsByBifurcation('not_visited_365d')">
+                <i class="fa-solid fa-user-xmark me-1"></i> Inactive &gt;1 Yr (<span id="pf-count-not_visited_365d">0</span>)
+              </button>
+              <button type="button" class="btn btn-sm btn-outline-secondary rounded-pill px-3 fw-semibold" id="pf-btn-never_visited" onclick="filterPatientsByBifurcation('never_visited')">
+                <i class="fa-solid fa-user-plus me-1"></i> Never Visited (<span id="pf-count-never_visited">0</span>)
+              </button>
+              <button type="button" class="btn btn-sm btn-outline-danger rounded-pill px-3 fw-semibold" id="pf-btn-payment_pending" onclick="filterPatientsByBifurcation('payment_pending')">
+                <i class="fa-solid fa-receipt me-1"></i> Outstanding Balance (<span id="pf-count-payment_pending">0</span>)
+              </button>
+            </div>
+
+            <div class="btn-group" role="group" id="patientDirectoryTabs">
+              <button type="button" class="btn btn-outline-primary active btn-sm px-3 fw-semibold" id="tabActivePatients" onclick="setPatientDirectoryTab('active')">
+                <i class="fa-solid fa-users me-1"></i> Active
+                <span class="badge bg-primary text-white ms-1 rounded-pill" id="badgeActivePatientsCount">0</span>
+              </button>
+              <button type="button" class="btn btn-outline-danger btn-sm px-3 fw-semibold d-none" id="tabDeletedPatients" onclick="setPatientDirectoryTab('deleted')">
+                <i class="fa-solid fa-trash-can me-1"></i> Deleted Archive
+                <span class="badge bg-danger text-white ms-1 rounded-pill" id="badgeDeletedPatientsCount">0</span>
+              </button>
+            </div>
+          </div>
+
+          <div class="glass-card p-3 mb-4">
+            <input type="text" class="form-control" id="patientSearchInput" placeholder="Search patients by name, code, phone number...">
+          </div>
+
+          <div class="glass-card p-4">
+            <div class="table-responsive">
+              <table class="table table-hover align-middle mb-0">
+                <thead class="table-light" id="patientsThead">
+                  <tr>
+                    <th>Patient Code</th>
+                    <th>Name</th>
+                    <th>Phone</th>
+                    <th>Gender & Age</th>
+                    <th>Medical History</th>
+                    <th>Allergies</th>
+                    <th>Balance (₹)</th>
+                    <th>Actions</th>
+                  </tr>
+                </thead>
+                <tbody id="patientsTbody">
+                  <!-- Dynamically Rendered -->
+                </tbody>
+              </table>
+            </div>
+          </div>
+        </section>
+
+        <!-- 3. ONLINE BOOKINGS VIEW (Staff Approval Queue) -->
+        <section id="onlineBookingsView" class="app-view d-none">
+          <div class="d-flex justify-content-between align-items-center mb-4 flex-wrap gap-2">
+            <div>
+              <div class="d-flex align-items-center gap-2">
+                <h2 class="fw-bold mb-1">Online Bookings</h2>
+                <span class="badge bg-primary px-3 py-1 rounded-pill" id="onlinePendingBadge">0 Pending Approval</span>
+              </div>
+              <p class="text-muted small mb-0">Patient bookings from online portal. Review and approve to automatically assign queue tokens.</p>
+            </div>
+            <a href="online.html" target="_blank" class="btn btn-outline-primary btn-sm">
+              <i class="fa-solid fa-arrow-up-right-from-square me-1"></i> Open Online Booking Form
+            </a>
+          </div>
+
+          <div class="glass-card p-3 mb-4">
+            <div class="row g-3">
+              <div class="col-md-6">
+                <input type="text" class="form-control" id="onlineSearchInput" placeholder="Search by patient name, phone, service...">
+              </div>
+              <div class="col-md-6">
+                <select class="form-select" id="onlineStatusFilter">
+                  <option value="">All Online Appointments</option>
+                  <option value="Pending" selected>Pending Staff Approval Only</option>
+                  <option value="Approved">Approved & Queued</option>
+                  <option value="Completed">Completed</option>
+                </select>
+              </div>
+            </div>
+          </div>
+
+          <div class="glass-card p-4">
+            <div class="table-responsive">
+              <table class="table table-hover align-middle mb-0">
+                <thead class="table-light">
+                  <tr>
+                    <th>Code</th>
+                    <th>Patient Name</th>
+                    <th>Phone</th>
+                    <th>Service Requested</th>
+                    <th>Preferred Date & Time</th>
+                    <th>Booking For</th>
+                    <th>Status</th>
+                    <th class="text-center">Staff Action</th>
+                  </tr>
+                </thead>
+                <tbody id="onlineBookingsTbody">
+                  <!-- Dynamically Rendered -->
+                </tbody>
+              </table>
+            </div>
+          </div>
+        </section>
+
+        <!-- 4. WALK-IN BOOKINGS & PATIENT QUEUE VIEW -->
+        <section id="walkinBookingsView" class="app-view d-none">
+          <div class="d-flex justify-content-between align-items-center mb-4 flex-wrap gap-2">
+            <div>
+              <div class="d-flex align-items-center gap-2">
+                <h2 class="fw-bold mb-1">Walk-In Bookings & Patient Queue</h2>
+                <span class="badge bg-warning text-dark px-3 py-1 rounded-pill" id="walkinWaitingBadge">0 Waiting</span>
+              </div>
+              <p class="text-muted small mb-0">Patients physically visiting the clinic or approved from online queue. Direct entry to Doctor's Note.</p>
+            </div>
+            <button class="btn btn-primary-custom" data-bs-toggle="modal" data-bs-target="#crmWalkinModal" onclick="openWalkinModal()">
+              <i class="fa-solid fa-person-walking me-2"></i> Book Walk-In Token
+            </button>
+          </div>
+
+          <div class="glass-card p-3 mb-4">
+            <div class="row g-3">
+              <div class="col-md-8">
+                <input type="text" class="form-control" id="walkinSearchInput" placeholder="Filter by Token, Patient Name, Phone...">
+              </div>
+              <div class="col-md-4">
+                <select class="form-select" id="walkinStatusFilter">
+                  <option value="">All Queue Statuses</option>
+                  <option value="Pending" selected>Waiting in Queue</option>
+                  <option value="Approved">Approved / Ready</option>
+                  <option value="Completed">Consultation Completed</option>
+                </select>
+              </div>
+            </div>
+          </div>
+
+          <div class="glass-card p-4">
+            <div class="table-responsive">
+              <table class="table table-hover align-middle mb-0">
+                <thead class="table-light">
+                  <tr>
+                    <th>Token</th>
+                    <th>Booking Code</th>
+                    <th>Patient Name</th>
+                    <th>Phone</th>
+                    <th>Service</th>
+                    <th>Assigned Doctor</th>
+                    <th>Time</th>
+                    <th>Status</th>
+                    <th class="text-center">Consultation Action</th>
+                  </tr>
+                </thead>
+                <tbody id="walkinBookingsTbody">
+                  <!-- Dynamically Rendered -->
+                </tbody>
+              </table>
+            </div>
+          </div>
+        </section>
+
+        <!-- 5. DOCTOR'S NOTE (Main Doctor Consultation Workspace) -->
+        <section id="doctorsNoteView" class="app-view d-none">
+          <div class="d-flex flex-wrap justify-content-between align-items-center gap-3 mb-4">
+            <div>
+              <div class="d-flex align-items-center gap-2">
+                <h2 class="fw-bold mb-1">Doctor's Consultation Note</h2>
+                <span class="badge bg-danger-subtle text-danger border border-danger px-3 py-1 rounded-pill fw-bold">
+                  <i class="fa-solid fa-lock me-1"></i> Doctor Only Workspace
+                </span>
+              </div>
+              <p class="text-muted small mb-0">Main clinical workspace: Interactive 32-teeth chart, Dual Prescription (✍️ Write / 🔎 Search), Auto 6-month next visit.</p>
+            </div>
+            <div class="d-flex align-items-center gap-2">
+              <label class="text-muted small fw-semibold text-nowrap">Patient in Chair:</label>
+              <select class="form-select form-select-sm" id="dn_patient_select" style="min-width: 260px;" onchange="onDoctorSelectPatient(this.value)">
+                <option value="">-- Select Patient from Queue --</option>
+              </select>
+            </div>
+          </div>
+
+          <!-- Active Patient Medical Banner -->
+          <div class="doctor-patient-banner mb-4" id="dn_patient_banner">
+            <div class="row align-items-center g-3">
+              <div class="col-md-4">
+                <div class="d-flex align-items-center gap-3">
+                  <div class="icon-circle bg-white shadow-sm border text-danger">
+                    <i class="fa-solid fa-user-injured fa-lg"></i>
+                  </div>
+                  <div>
+                    <h5 class="fw-bold mb-0" id="dn_banner_name">No Patient in Chair</h5>
+                    <small class="text-muted" id="dn_banner_contact">Select a patient from the queue dropdown above</small>
+                  </div>
+                </div>
+              </div>
+              <div class="col-md-5">
+                <div class="d-flex flex-wrap gap-2 small">
+                  <span class="badge bg-light text-dark border" id="dn_banner_token"><i class="fa-solid fa-ticket me-1"></i>Token: -</span>
+                  <span class="badge bg-light text-dark border" id="dn_banner_code"><i class="fa-solid fa-id-badge me-1"></i>Code: -</span>
+                  <span class="badge bg-light text-dark border" id="dn_banner_blood"><i class="fa-solid fa-droplet text-danger me-1"></i>Blood: -</span>
+                  <span class="badge bg-danger-subtle text-danger border border-danger-subtle" id="dn_banner_allergies"><i class="fa-solid fa-triangle-exclamation me-1"></i>Allergies: None</span>
+                  <span class="badge bg-info-subtle text-primary border border-info-subtle" id="dn_banner_medical"><i class="fa-solid fa-notes-medical me-1"></i>History: None</span>
+                </div>
+              </div>
+              <div class="col-md-3 text-md-end">
+                <small class="text-muted d-block">Attending Doctor <span id="dn_banner_doctor_badge" class="badge bg-success-subtle text-success border border-success-subtle ms-1" style="font-size: 0.68rem;"><i class="fa-solid fa-circle-check me-1"></i>Logged-in Doctor</span></small>
+                <span class="fw-bold text-dark fs-6" id="dn_banner_doctor"><i class="fa-solid fa-user-doctor text-primary me-1"></i>Dr. Alexander Wright</span>
+              </div>
+            </div>
+          </div>
+
+
+          <!-- Teeth Chart Section -->
+          <div class="glass-card p-4 mb-4">
+            <div class="d-flex flex-wrap justify-content-between align-items-center mb-3 gap-2">
+              <div>
+                <h5 class="fw-bold mb-0"><i class="fa-solid fa-teeth-open me-2 text-danger"></i>Interactive Teeth Chart (Adult 32 Teeth)</h5>
+                <small class="text-muted">Click any tooth to assign dental services & treatments (FDI 2-Digit Notation).</small>
+              </div>
+              <div class="d-flex gap-2 flex-wrap align-items-center">
+                <button type="button" class="btn btn-outline-primary btn-sm" id="btnToggleMultiSelect" onclick="toggleTeethMultiSelectMode()">
+                  <i class="fa-solid fa-check-double me-1"></i> <span id="multiSelectModeText">Multi-Select Mode</span>
+                </button>
+                <button type="button" class="btn btn-success btn-sm d-none" id="btnApplyBatchTreatments" onclick="openBatchTreatmentModal()">
+                  <i class="fa-solid fa-wand-magic-sparkles me-1"></i> Apply Treatment (<span id="batchCountBadge">0</span>)
+                </button>
+                <button type="button" class="btn btn-outline-secondary btn-sm" onclick="selectTeethArch('upper')">
+                  <i class="fa-solid fa-arrows-left-right me-1"></i> Select Upper Arch
+                </button>
+                <button type="button" class="btn btn-outline-secondary btn-sm" onclick="selectTeethArch('lower')">
+                  <i class="fa-solid fa-arrows-left-right me-1"></i> Select Lower Arch
+                </button>
+                <button type="button" class="btn btn-outline-danger btn-sm" onclick="clearTeethSelections()">
+                  <i class="fa-solid fa-rotate-left me-1"></i> Reset Chart
+                </button>
+              </div>
+
+            </div>
+
+            <!-- Visual Dental Arch Grid -->
+            <div class="teeth-chart-wrapper">
+              <!-- Upper Arch (Maxillary) -->
+              <div class="dental-arch-title"><i class="fa-solid fa-arrow-up me-1"></i> Upper Jaw (Maxillary Arch)</div>
+              <div class="dental-arch-row">
+                <!-- Upper Right Q1 (18 to 11) -->
+                <div class="d-flex flex-column align-items-center">
+                  <small class="text-muted fw-bold mb-1" style="font-size: 0.7rem;">UPPER RIGHT (Q1)</small>
+                  <div class="quadrant-group" id="teethQ1"></div>
+                </div>
+                <!-- Midline Divider -->
+                <div class="quadrant-divider"></div>
+                <!-- Upper Left Q2 (21 to 28) -->
+                <div class="d-flex flex-column align-items-center">
+                  <small class="text-muted fw-bold mb-1" style="font-size: 0.7rem;">UPPER LEFT (Q2)</small>
+                  <div class="quadrant-group" id="teethQ2"></div>
+                </div>
+              </div>
+
+              <!-- Midline separator -->
+              <div class="midline-divider">
+                <span class="midline-label">OCCLUSAL PLANE</span>
+              </div>
+
+              <!-- Lower Arch (Mandibular) -->
+              <div class="dental-arch-row mt-4">
+                <!-- Lower Right Q4 (48 to 41) -->
+                <div class="d-flex flex-column align-items-center">
+                  <small class="text-muted fw-bold mb-1" style="font-size: 0.7rem;">LOWER RIGHT (Q4)</small>
+                  <div class="quadrant-group" id="teethQ4"></div>
+                </div>
+                <!-- Midline Divider -->
+                <div class="quadrant-divider"></div>
+                <!-- Lower Left Q3 (31 to 38) -->
+                <div class="d-flex flex-column align-items-center">
+                  <small class="text-muted fw-bold mb-1" style="font-size: 0.7rem;">LOWER LEFT (Q3)</small>
+                  <div class="quadrant-group" id="teethQ3"></div>
+                </div>
+              </div>
+              <div class="dental-arch-title mt-2"><i class="fa-solid fa-arrow-down me-1"></i> Lower Jaw (Mandibular Arch)</div>
+            </div>
+
+            <!-- Selected Treatments Live Table -->
+            <div class="mt-4 pt-3 border-top">
+              <div class="d-flex justify-content-between align-items-center mb-2">
+                <h6 class="fw-bold mb-0"><i class="fa-solid fa-list-check me-2 text-danger"></i>Selected Dental Treatments for this Consultation</h6>
+                <span class="badge bg-danger fs-6 px-3 py-1" id="dn_treatment_subtotal_badge">Subtotal: ₹0.00</span>
+              </div>
+              <div class="table-responsive">
+                <table class="table table-sm table-hover align-middle mb-0">
+                  <thead class="table-light">
+                    <tr>
+                      <th>Tooth #</th>
+                      <th>Tooth Location & Name</th>
+                      <th>Selected Treatment / Service</th>
+                      <th class="text-end">Price (₹)</th>
+                      <th class="text-center" style="width: 80px;">Action</th>
+                    </tr>
+                  </thead>
+                  <tbody id="dn_treatments_tbody">
+                    <tr>
+                      <td colspan="5" class="text-center text-muted py-3">No tooth treatments selected yet. Click any tooth in the chart above to add services.</td>
+                    </tr>
+                  </tbody>
+                </table>
+              </div>
+            </div>
+          </div>
+
+          <!-- FULL & EXPANDED PRESCRIPTION SECTION (Big Layout & Fast Controls) -->
+          <div class="glass-card p-4 mb-4">
+            <div class="d-flex flex-wrap justify-content-between align-items-center mb-3 gap-2">
+              <div>
+                <div class="d-flex align-items-center gap-2">
+                  <h4 class="fw-bold mb-0"><i class="fa-solid fa-prescription me-2 text-danger"></i>Doctor Prescription Studio</h4>
+                  <span class="badge bg-primary-subtle text-primary border border-primary-subtle px-3 py-1">Full Clinical Rx</span>
+                </div>
+                <small class="text-muted">Digital handwritten stylus drawing with full paper canvas or fast clinic medicine database search.</small>
+              </div>
+              <div class="d-flex align-items-center gap-2">
+                <button type="button" class="btn btn-outline-primary btn-sm" onclick="printPrescriptionDirectly()">
+                  <i class="fa-solid fa-print me-1"></i> Preview / Print Rx
+                </button>
+                <!-- Tab Switcher -->
+                <ul class="nav nav-pills" id="prescriptionTabs" role="tablist">
+                  <li class="nav-item">
+                    <button class="nav-link active btn-sm" id="rx-search-tab" data-bs-toggle="pill" data-bs-target="#rxSearchPane" type="button">
+                      <i class="fa-solid fa-magnifying-glass me-1"></i> 🔎 Medicine Database
+                    </button>
+                  </li>
+                  <li class="nav-item">
+                    <button class="nav-link btn-sm" id="rx-write-tab" data-bs-toggle="pill" data-bs-target="#rxWritePane" type="button">
+                      <i class="fa-solid fa-pen-nib me-1"></i> ✍️ Full Drawing Pad
+                    </button>
+                  </li>
+                </ul>
+              </div>
+            </div>
+
+            <div class="tab-content" id="prescriptionTabContent">
+              <!-- 1. Search Medicine Pane (Large Layout) -->
+              <div class="tab-pane fade show active" id="rxSearchPane">
+                <div class="row g-4">
+                  <!-- Search & Database Column -->
+                  <div class="col-lg-5">
+                    <label class="form-label fw-bold small text-dark mb-1">Search Clinic Medicine Database:</label>
+                    <div class="position-relative mb-2">
+                      <div class="input-group">
+                        <span class="input-group-text bg-white"><i class="fa-solid fa-magnifying-glass text-muted"></i></span>
+                        <input type="text" class="form-control" id="dn_med_search_input" placeholder="Search by name: Amoxicillin, Ibuprofen, Paracetamol, Betadine..." oninput="onSearchMedicineInput(this.value)">
+                      </div>
+                      <div class="med-search-results mt-1 d-none position-absolute w-100 shadow-lg z-3" id="dn_med_search_results"></div>
+                    </div>
+
+                    <!-- Category Filter Buttons -->
+                    <div class="d-flex flex-wrap gap-1 mb-2">
+                      <span class="badge bg-light text-dark border cursor-pointer" onclick="filterQuickMedicines('All')">All</span>
+                      <span class="badge bg-light text-dark border cursor-pointer" onclick="filterQuickMedicines('Antibiotic')">Antibiotics</span>
+                      <span class="badge bg-light text-dark border cursor-pointer" onclick="filterQuickMedicines('Pain')">Analgesics</span>
+                      <span class="badge bg-light text-dark border cursor-pointer" onclick="filterQuickMedicines('Rinse')">Mouthwash</span>
+                      <span class="badge bg-light text-dark border cursor-pointer" onclick="filterQuickMedicines('Homoeopathy')">Homoeo</span>
+                    </div>
+
+                    <small class="text-muted fw-bold d-block mb-1">Quick Clinic Picks (Click to Add):</small>
+                    <div class="d-flex flex-wrap gap-1" id="dn_quick_medicines" style="max-height: 180px; overflow-y: auto;"></div>
+                  </div>
+
+                  <!-- Prescribed Medicines Table Column (Spacious) -->
+                  <div class="col-lg-7">
+                    <div class="d-flex justify-content-between align-items-center mb-1">
+                      <label class="form-label fw-bold small text-dark mb-0">Active Prescribed Medicines List:</label>
+                      <small class="text-muted" id="dn_rx_count_label">0 items added</small>
+                    </div>
+                    <div class="table-responsive border rounded-3 p-2 bg-light shadow-sm" style="min-height: 240px; max-height: 320px; overflow-y: auto;">
+                      <table class="table table-sm table-hover align-middle mb-0">
+                        <thead class="table-light">
+                          <tr class="small text-muted">
+                            <th style="min-width: 140px;">Medicine Name</th>
+                            <th style="min-width: 160px;">Dosage & Frequency</th>
+                            <th style="min-width: 100px;">Duration</th>
+                            <th style="min-width: 120px;">Instructions</th>
+                            <th class="text-end" style="width: 40px;"></th>
+                          </tr>
+                        </thead>
+                        <tbody id="dn_prescribed_meds_tbody">
+                          <tr>
+                            <td colspan="5" class="text-center text-muted py-4">No medicines added yet. Search or click quick picks on the left.</td>
+                          </tr>
+                        </tbody>
+                      </table>
+                    </div>
+                  </div>
+                </div>
+              </div>
+
+              <!-- 2. Write / Pen Interface Pane (Bigger 380px Height & Ruled Pad Option) -->
+              <div class="tab-pane fade" id="rxWritePane">
+                <div class="prescription-canvas-wrap-large">
+                  <div class="canvas-toolbar p-2 border-bottom bg-light d-flex flex-wrap justify-content-between align-items-center gap-2">
+                    <div class="d-flex align-items-center gap-3">
+                      <span class="small fw-bold text-dark">Pen:</span>
+                      <span class="color-dot active" style="background: #03090D;" onclick="setPenColor('#03090D', this)" title="Black"></span>
+                      <span class="color-dot" style="background: #1e3a8a;" onclick="setPenColor('#1e3a8a', this)" title="Blue"></span>
+                      <span class="color-dot" style="background: #C2644F;" onclick="setPenColor('#C2644F', this)" title="Dental Red"></span>
+                      <span class="color-dot" style="background: #059669;" onclick="setPenColor('#059669', this)" title="Green"></span>
+                    </div>
+
+                    <div class="d-flex align-items-center gap-2">
+                      <span class="small fw-bold text-dark">Stroke:</span>
+                      <button type="button" class="btn btn-sm btn-outline-secondary py-0 px-2" onclick="setPenWidth(2)">Fine (2px)</button>
+                      <button type="button" class="btn btn-sm btn-outline-secondary py-0 px-2 active" id="btnPenMed" onclick="setPenWidth(4)">Med (4px)</button>
+                      <button type="button" class="btn btn-sm btn-outline-secondary py-0 px-2" onclick="setPenWidth(8)">Bold (8px)</button>
+                    </div>
+
+                    <div class="d-flex align-items-center gap-2">
+                      <button type="button" class="btn btn-sm btn-outline-secondary" onclick="toggleCanvasRuledLines()" id="btnRuledToggle">
+                        <i class="fa-solid fa-lines-leaning me-1"></i> Ruled Pad
+                      </button>
+                      <button type="button" class="btn btn-sm btn-outline-danger" onclick="clearPenCanvas()">
+                        <i class="fa-solid fa-eraser me-1"></i> Clear Sheet
+                      </button>
+                    </div>
+                  </div>
+                  <canvas id="prescriptionCanvas" class="prescription-canvas-large"></canvas>
+                </div>
+                <div class="d-flex justify-content-between align-items-center mt-2">
+                  <small class="text-muted"><i class="fa-solid fa-circle-info me-1"></i>Full-height digital doctor pad. Draw handwritten prescription, root canal schematics, or clinical notes.</small>
+                  <span class="badge bg-light text-muted border">Drawing Canvas (380px)</span>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <!-- BIGGER WRITING SECTION & MULTI-DATE APPOINTMENT PLANNER -->
+          <div class="row g-4 mb-4">
+            <!-- 1. Bigger & Better Writing Section -->
+            <div class="col-lg-7">
+              <div class="clinical-writing-studio h-100 d-flex flex-column">
+                <div class="d-flex flex-wrap justify-content-between align-items-center mb-2 gap-2">
+                  <div>
+                    <h5 class="fw-bold mb-0 text-dark">
+                      <i class="fa-solid fa-clipboard-check me-2 text-danger"></i>Clinical Procedure Notes & Findings
+                    </h5>
+                    <small class="text-muted">Comprehensive procedural documentation, findings, canal lengths, materials used.</small>
+                  </div>
+                  <div class="d-flex gap-2">
+                    <button type="button" class="btn btn-sm btn-outline-secondary" onclick="clearClinicalNotes()" title="Clear text">
+                      <i class="fa-solid fa-eraser me-1"></i> Clear Notes
+                    </button>
+                  </div>
+                </div>
+
+                <!-- One-Click Dental Procedure Quick Insert Chips (Configurable in Settings) -->
+                <div class="mb-2">
+                  <div class="d-flex justify-content-between align-items-center mb-1">
+                    <small class="text-muted fw-bold">Quick Procedure Inserts (Click to append):</small>
+                    <a href="#settings" onclick="switchView('settings')" class="small text-decoration-none text-primary fw-semibold" style="font-size: 0.72rem;">
+                      <i class="fa-solid fa-plus-circle me-1"></i>Manage in Settings
+                    </a>
+                  </div>
+                  <div class="d-flex flex-wrap gap-1" id="dn_quick_procedures_container">
+                    <!-- Dynamically populated from settings -->
+                  </div>
+                </div>
+
+
+                <!-- Expanded Big Textarea -->
+                <textarea class="form-control clinical-textarea-large flex-grow-1" id="dn_clinical_notes" placeholder="Enter clinical procedure performed, root canal lengths, restoration materials used, post-op instructions, patient symptoms..."></textarea>
+                <div class="d-flex justify-content-between align-items-center mt-2 small text-muted">
+                  <span><i class="fa-solid fa-keyboard me-1"></i>Auto-saved with consultation</span>
+                  <span id="dn_notes_char_count">0 characters</span>
+                </div>
+              </div>
+            </div>
+
+            <!-- 2. Next Appointment - MULTI-DATE Calendar & Sittings Planner -->
+            <div class="col-lg-5">
+              <div class="multi-calendar-card h-100 d-flex flex-column">
+                <div class="d-flex justify-content-between align-items-center mb-2">
+                  <div>
+                    <h5 class="fw-bold mb-0 text-dark"><i class="fa-solid fa-calendar-days me-2 text-danger"></i>Next Appointment(s)</h5>
+                    <small class="text-muted">Select multiple dates from calendar for multi-sitting visits.</small>
+                  </div>
+                  <span class="badge bg-danger-subtle text-danger border border-danger-subtle px-2 py-1">Multi-Date</span>
+                </div>
+
+                <!-- Interactive Mini Calendar Grid -->
+                <div class="border rounded-3 p-2 bg-light mb-2">
+                  <div class="mini-cal-header">
+                    <button type="button" class="btn btn-sm btn-outline-secondary py-0 px-2" onclick="changeCalendarMonth(-1)"><i class="fa-solid fa-chevron-left"></i></button>
+                    <span class="fw-bold small text-dark" id="miniCalTitle">Month Year</span>
+                    <button type="button" class="btn btn-sm btn-outline-secondary py-0 px-2" onclick="changeCalendarMonth(1)"><i class="fa-solid fa-chevron-right"></i></button>
+                  </div>
+                  <div class="mini-cal-grid" id="miniCalGrid">
+                    <!-- Weekdays and interactive days rendered dynamically -->
+                  </div>
+                </div>
+
+                <!-- Multi-Date Scheduled Sittings List -->
+                <div class="flex-grow-1 mb-2">
+                  <div class="d-flex justify-content-between align-items-center mb-1">
+                    <small class="fw-bold text-dark text-uppercase" style="font-size: 0.72rem;">Scheduled Sittings Plan:</small>
+                    <small class="text-muted" id="dn_sittings_count">0 dates picked</small>
+                  </div>
+                  <div id="dn_sittings_container" style="max-height: 140px; overflow-y: auto;">
+                    <!-- Sittings badges rendered here -->
+                  </div>
+                </div>
+
+                <!-- Quick Multi-Date Offset Helpers -->
+                <div class="border-top pt-2">
+                  <small class="text-muted d-block mb-1 fw-semibold" style="font-size: 0.7rem;">Quick Add Multi-Sitting Presets:</small>
+                  <div class="d-flex flex-wrap gap-1">
+                    <button type="button" class="btn btn-outline-secondary btn-sm py-0 px-2" style="font-size: 0.75rem;" onclick="addNextSittingByOffset(7, 'Follow-up Sitting')">+1 Wk</button>
+                    <button type="button" class="btn btn-outline-secondary btn-sm py-0 px-2" style="font-size: 0.75rem;" onclick="addNextSittingByOffset(14, 'Review Sitting')">+2 Wks</button>
+                    <button type="button" class="btn btn-outline-secondary btn-sm py-0 px-2" style="font-size: 0.75rem;" onclick="addNextSittingByOffset(30, 'Monthly Check')">+1 Mo</button>
+                    <button type="button" class="btn btn-outline-danger btn-sm py-0 px-2" style="font-size: 0.75rem;" onclick="addNextSittingByOffset(180, '6-Month Routine Recall')">+6 Mos (Default)</button>
+                    <button type="button" class="btn btn-outline-primary btn-sm py-0 px-2" style="font-size: 0.75rem;" onclick="addMultiSittingProtocol('RCT')">⚡ 3-Sitting RCT Plan</button>
+                  </div>
+                </div>
+
+                <!-- Hidden fallback inputs for API compatibility -->
+                <input type="hidden" id="dn_next_date">
+                <input type="hidden" id="dn_next_time" value="10:00">
+              </div>
+            </div>
+          </div>
+
+          <!-- DOCTOR CONSULTATION PRICING & DISCOUNT SUMMARY CARD -->
+          <div class="doctor-billing-summary-card mb-4">
+            <div class="d-flex flex-wrap justify-content-between align-items-center gap-2 mb-3">
+              <div>
+                <h5 class="fw-bold mb-0 text-dark"><i class="fa-solid fa-calculator me-2 text-danger"></i>Consultation Pricing & Doctor's Discount</h5>
+                <small class="text-muted">Review charges and optionally authorize a doctor discount before forwarding to the billing desk.</small>
+              </div>
+              <span class="badge bg-light text-dark border px-3 py-2 fw-semibold" id="dn_treatments_count_badge">0 Treatments Selected</span>
+            </div>
+
+            <div class="row g-3 align-items-center">
+              <!-- Subtotal -->
+              <div class="col-md-3">
+                <div class="p-3 bg-white rounded-3 border">
+                  <small class="text-muted fw-bold d-block text-uppercase">Treatments Subtotal</small>
+                  <span class="fs-4 fw-bold text-dark" id="dn_calc_subtotal">₹0.00</span>
+                  <small class="text-muted d-block">From selected teeth & services</small>
+                </div>
+              </div>
+
+              <!-- Doctor Discount Controls -->
+              <div class="col-md-5">
+                <div class="p-3 bg-white rounded-3 border">
+                  <div class="d-flex justify-content-between align-items-center mb-1">
+                    <label class="form-label fw-bold small text-dark mb-0"><i class="fa-solid fa-tags text-danger me-1"></i>Doctor's Discount Concession</label>
+                    <div class="btn-group btn-group-sm" role="group">
+                      <input type="radio" class="btn-check" name="dn_discount_type" id="dn_disc_type_inr" value="INR" checked onchange="recalculateDoctorBilling()">
+                      <label class="btn btn-outline-secondary py-0 px-2" for="dn_disc_type_inr">₹ Fixed</label>
+                      <input type="radio" class="btn-check" name="dn_discount_type" id="dn_disc_type_pct" value="PCT" onchange="recalculateDoctorBilling()">
+                      <label class="btn btn-outline-secondary py-0 px-2" for="dn_disc_type_pct">% Percent</label>
+                    </div>
+                  </div>
+
+                  <div class="input-group input-group-sm mb-2">
+                    <span class="input-group-text" id="dn_disc_addon">₹</span>
+                    <input type="number" step="0.01" min="0" class="form-control fw-bold" id="dn_doctor_discount" value="0" placeholder="0" oninput="recalculateDoctorBilling()">
+                    <input type="text" class="form-control" id="dn_discount_reason" placeholder="Reason (e.g. Courtesy, Senior)" style="max-width: 170px;">
+                  </div>
+
+                  <!-- Quick discount chips -->
+                  <div class="d-flex flex-wrap gap-1">
+                    <span class="discount-preset-chip" onclick="setDoctorDiscountPreset(0, 'INR')">No Disc</span>
+                    <span class="discount-preset-chip" onclick="setDoctorDiscountPreset(5, 'PCT')">5%</span>
+                    <span class="discount-preset-chip" onclick="setDoctorDiscountPreset(10, 'PCT')">10%</span>
+                    <span class="discount-preset-chip" onclick="setDoctorDiscountPreset(15, 'PCT')">15%</span>
+                    <span class="discount-preset-chip" onclick="setDoctorDiscountPreset(500, 'INR')">₹500 Off</span>
+                    <span class="discount-preset-chip" onclick="setDoctorDiscountPreset(100, 'PCT')">100% Free</span>
+                  </div>
+                </div>
+              </div>
+
+              <!-- Net Final Amount for Doctor -->
+              <div class="col-md-4">
+                <div class="p-3 bg-white rounded-3 border border-success border-2">
+                  <small class="text-muted fw-bold d-block text-uppercase">Net Amount to Billing Desk</small>
+                  <span class="net-amount-highlight" id="dn_calc_net">₹0.00</span>
+                  <div class="d-flex justify-content-between align-items-center mt-1">
+                    <small class="text-success fw-semibold" id="dn_discount_summary_text">Discount: ₹0.00 (0%)</small>
+                    <span class="badge bg-success-subtle text-success border border-success-subtle">Pre-filled at checkout</span>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <!-- Bottom Action Bar: Complete Consultation & Forward to Billing Desk -->
+          <div class="glass-card p-4 d-flex flex-wrap justify-content-between align-items-center gap-3 border-start border-4 border-danger">
+            <div>
+              <span class="fw-bold text-dark fs-5"><i class="fa-solid fa-user-doctor me-2 text-danger"></i>Complete Clinical Consultation & Printing</span>
+              <p class="text-muted small mb-0">Print clinical prescription & case summary, or finalize consultation and forward patient to <strong>Payment & Billing Desk</strong>.</p>
+            </div>
+            <div class="d-flex flex-wrap gap-2 align-items-center">
+              <!-- Dedicated Print Section in Consultation Complete -->
+              <button type="button" class="btn btn-outline-primary px-3 fs-6 fw-bold shadow-sm" onclick="printPrescriptionDirectly()">
+                <i class="fa-solid fa-print me-2"></i> Print Prescription Slip
+              </button>
+              <button type="button" class="btn btn-outline-secondary px-3" onclick="resetDoctorWorkspace()">
+                <i class="fa-solid fa-rotate-left me-1"></i> Clear Workspace
+              </button>
+              <button type="button" class="btn btn-success px-4 fs-6 fw-bold shadow-sm" onclick="saveConsultationAndForwardToBilling()">
+                <i class="fa-solid fa-clipboard-check me-2"></i> Complete & Send to Billing Desk <i class="fa-solid fa-arrow-right ms-1"></i>
+              </button>
+            </div>
+          </div>
+        </section>
+
+
+        <!-- 6. PAYMENT & BILLING DESK (Outside Consultation Room) -->
+        <section id="paymentDeskView" class="app-view d-none">
+          <div class="d-flex flex-wrap justify-content-between align-items-center gap-3 mb-4">
+            <div>
+              <div class="d-flex align-items-center gap-2">
+                <h2 class="fw-bold mb-1">Payment & Billing Desk</h2>
+                <span class="badge bg-success-subtle text-success border border-success px-3 py-1 rounded-pill fw-bold">
+                  <i class="fa-solid fa-cash-register me-1"></i> Cashier Counter
+                </span>
+              </div>
+              <p class="text-muted small mb-0">Separate billing workspace outside Doctor's Note. Collect payments for discharged patients, add extra items, and issue tax invoices.</p>
+            </div>
+            <div class="d-flex align-items-center gap-2">
+              <button class="btn btn-sm btn-outline-secondary" onclick="loadPaymentDesk()">
+                <i class="fa-solid fa-rotate me-1"></i> Refresh Queue
+              </button>
+            </div>
+          </div>
+
+          <!-- Billing Stats Summary Cards -->
+          <div class="row g-3 mb-4">
+            <div class="col-md-4">
+              <div class="stat-card p-3 border-start border-4 border-warning">
+                <div class="d-flex justify-content-between align-items-center">
+                  <div>
+                    <span class="text-muted small fw-semibold">Awaiting Payment</span>
+                    <h3 class="fw-bold mb-0 mt-1 text-dark" id="billingQueueCount">0</h3>
+                    <small class="text-muted">Patients discharged from doctor</small>
+                  </div>
+                  <div class="icon-circle bg-warning-subtle text-warning">
+                    <i class="fa-solid fa-hourglass-half"></i>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            <div class="col-md-4">
+              <div class="stat-card p-3 border-start border-4 border-success">
+                <div class="d-flex justify-content-between align-items-center">
+                  <div>
+                    <span class="text-muted small fw-semibold">Today's Collections (₹)</span>
+                    <h3 class="fw-bold mb-0 mt-1 text-success" id="billingTodayCollections">₹0.00</h3>
+                    <small class="text-muted">Paid at front desk</small>
+                  </div>
+                  <div class="icon-circle bg-success-subtle text-success">
+                    <i class="fa-solid fa-indian-rupee-sign"></i>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            <div class="col-md-4">
+              <div class="stat-card p-3 border-start border-4 border-info">
+                <div class="d-flex justify-content-between align-items-center">
+                  <div>
+                    <span class="text-muted small fw-semibold">Pending Patient Dues (₹)</span>
+                    <h3 class="fw-bold mb-0 mt-1 text-dark" id="billingPendingDues">₹0.00</h3>
+                    <small class="text-muted">Across patient accounts</small>
+                  </div>
+                  <div class="icon-circle bg-info-subtle text-info">
+                    <i class="fa-solid fa-file-invoice"></i>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <!-- Patients Awaiting Payment Queue Table -->
+          <div class="glass-card p-4 mb-4">
+            <div class="d-flex flex-wrap justify-content-between align-items-center mb-3 gap-2">
+              <div>
+                <h5 class="fw-bold mb-0"><i class="fa-solid fa-receipt me-2 text-success"></i>Patients Awaiting Payment</h5>
+                <small class="text-muted">Patients whose clinical consultation has finished and are ready to settle their bill.</small>
+              </div>
+              <div class="d-flex align-items-center gap-2">
+                <input type="text" class="form-control form-control-sm" id="billingQueueSearch" placeholder="Search patient, token, phone..." oninput="filterBillingQueue()" style="width: 240px;">
+              </div>
+            </div>
+
+            <div class="table-responsive">
+              <table class="table table-hover align-middle mb-0">
+                <thead class="table-light">
+                  <tr>
+                    <th style="width: 80px;">Token</th>
+                    <th>Patient Name & Contact</th>
+                    <th>Attending Doctor</th>
+                    <th>Treatments Performed (Teeth Chart)</th>
+                    <th>Prescription</th>
+                    <th>Est. Amount</th>
+                    <th>Status</th>
+                    <th class="text-end" style="width: 170px;">Action</th>
+                  </tr>
+                </thead>
+                <tbody id="billingQueueTbody">
+                  <tr>
+                    <td colspan="8" class="text-center text-muted py-4">
+                      <div class="spinner-border spinner-border-sm text-primary me-2"></div> Loading billing queue...
+                    </td>
+                  </tr>
+                </tbody>
+              </table>
+            </div>
+          </div>
+
+          <!-- Quick Dues Settlement / Walk-in Cashier Section -->
+          <div class="glass-card p-4">
+            <div class="d-flex justify-content-between align-items-center mb-3">
+              <div>
+                <h5 class="fw-bold mb-0"><i class="fa-solid fa-wallet me-2 text-primary"></i>Patients with Outstanding Balances</h5>
+                <small class="text-muted">Collect past outstanding amounts directly at the billing counter.</small>
+              </div>
+              <button class="btn btn-sm btn-outline-primary" onclick="switchView('patients')">
+                View All Patients <i class="fa-solid fa-arrow-right ms-1"></i>
+              </button>
+            </div>
+            <div class="table-responsive">
+              <table class="table table-hover align-middle mb-0">
+                <thead class="table-light">
+                  <tr>
+                    <th>Patient Code</th>
+                    <th>Patient Name</th>
+                    <th>Phone</th>
+                    <th>Outstanding Dues</th>
+                    <th class="text-end">Action</th>
+                  </tr>
+                </thead>
+                <tbody id="billingOutstandingTbody">
+                  <!-- Populated dynamically -->
+                </tbody>
+              </table>
+            </div>
+          </div>
+        </section>
+
+        <!-- 6. SERVICES VIEW (Dental Services Catalog & Pricing) -->
+        <section id="servicesView" class="app-view d-none">
+          <div class="d-flex justify-content-between align-items-center mb-4 flex-wrap gap-2">
+            <div>
+              <h2 class="fw-bold mb-1"><i class="fa-solid fa-tooth me-2 text-danger"></i>Dental Services & Pricing</h2>
+              <p class="text-muted small mb-0">Configure dental services, standard procedure pricing (₹), and treatment categories.</p>
+            </div>
+            <div class="d-flex gap-2">
+              <button class="btn btn-primary-custom btn-sm" onclick="openNewServiceModal()">
+                <i class="fa-solid fa-plus me-1"></i> Add Dental Service
+              </button>
+            </div>
+          </div>
+
+          <div class="glass-card p-4">
+            <div class="d-flex justify-content-between align-items-center mb-3">
+              <h5 class="fw-bold mb-0">Clinical Dental Services Catalog</h5>
+              <input type="text" class="form-control form-control-sm" id="serviceSearchInput" placeholder="Filter services..." style="max-width: 250px;">
+            </div>
+            <div class="table-responsive">
+              <table class="table table-hover align-middle mb-0">
+                <thead class="table-light">
+                  <tr>
+                    <th>Service / Treatment</th>
+                    <th>Category</th>
+                    <th>Duration</th>
+                    <th class="text-end">Standard Price (₹)</th>
+                    <th>Status</th>
+                    <th class="text-center">Actions</th>
+                  </tr>
+                </thead>
+                <tbody id="servicesCatalogTbody">
+                  <!-- Rendered dynamically -->
+                </tbody>
+              </table>
+            </div>
+          </div>
+        </section>
+
+        <!-- 7. FINANCE VIEW (Payments, Revenue, Expenses, Financial Records) -->
+        <section id="financeView" class="app-view d-none">
+          <div class="d-flex justify-content-between align-items-center mb-4 flex-wrap gap-2">
+            <div>
+              <h2 class="fw-bold mb-1">Clinic Finance & Revenue Management</h2>
+              <p class="text-muted small mb-0">Track patient payments, operating expenses, daily collections, and net profitability.</p>
+            </div>
+            <button class="btn btn-primary-custom" onclick="openNewExpenseModal()">
+              <i class="fa-solid fa-receipt me-2"></i> Record Clinic Expense
+            </button>
+          </div>
+
+          <!-- Key Financial Metric Cards -->
+          <div class="row g-3 mb-4">
+            <div class="col-xl col-md-4 col-sm-6">
+              <div class="stat-card p-3">
+                <div class="d-flex justify-content-between align-items-center">
+                  <div>
+                    <span class="text-muted small fw-semibold">Total Revenue</span>
+                    <h3 class="fw-bold mb-0 mt-1 text-success" id="finTotalRevenue">₹0.00</h3>
+                    <small class="text-muted" style="font-size: 0.72rem;">All-time collected</small>
+                  </div>
+                  <div class="icon-circle" style="background: rgba(16, 185, 129, 0.15); color: #059669;">
+                    <i class="fa-solid fa-arrow-trend-up"></i>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            <div class="col-xl col-md-4 col-sm-6">
+              <div class="stat-card p-3 border-start border-3 border-primary shadow-sm" style="background: linear-gradient(135deg, #ffffff 0%, rgba(99, 102, 241, 0.04) 100%);">
+                <div class="d-flex justify-content-between align-items-center">
+                  <div>
+                    <span class="text-muted small fw-semibold"><i class="fa-solid fa-calendar-days text-primary me-1"></i>Monthly Revenue</span>
+                    <h3 class="fw-bold mb-0 mt-1" id="finMonthlyRevenue" style="color: #4f46e5;">₹0.00</h3>
+                    <small class="text-muted fw-semibold" id="finCurrentMonthName" style="font-size: 0.72rem;">Current Month</small>
+                  </div>
+                  <div class="icon-circle" style="background: rgba(99, 102, 241, 0.15); color: #4f46e5;">
+                    <i class="fa-solid fa-calendar-check"></i>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            <div class="col-xl col-md-4 col-sm-6">
+              <div class="stat-card p-3">
+                <div class="d-flex justify-content-between align-items-center">
+                  <div>
+                    <span class="text-muted small fw-semibold">Today's Collections</span>
+                    <h3 class="fw-bold mb-0 mt-1 text-primary" id="finTodayRevenue">₹0.00</h3>
+                    <small class="text-muted" style="font-size: 0.72rem;">Today's cash/UPI</small>
+                  </div>
+                  <div class="icon-circle" style="background: rgba(131,169,208,0.15); color: var(--accent-blue);">
+                    <i class="fa-solid fa-cash-register"></i>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            <div class="col-xl col-md-4 col-sm-6">
+              <div class="stat-card p-3">
+                <div class="d-flex justify-content-between align-items-center">
+                  <div>
+                    <span class="text-muted small fw-semibold">Total Expenses</span>
+                    <h3 class="fw-bold mb-0 mt-1 text-danger" id="finTotalExpenses">₹0.00</h3>
+                    <small class="text-muted" style="font-size: 0.72rem;">Clinic costs</small>
+                  </div>
+                  <div class="icon-circle" style="background: var(--red-light); color: var(--accent-red);">
+                    <i class="fa-solid fa-file-invoice-dollar"></i>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            <div class="col-xl col-md-4 col-sm-6">
+              <div class="stat-card p-3">
+                <div class="d-flex justify-content-between align-items-center">
+                  <div>
+                    <span class="text-muted small fw-semibold">Net Profit</span>
+                    <h3 class="fw-bold mb-0 mt-1" id="finNetProfit" style="color: var(--accent-green);">₹0.00</h3>
+                    <small class="text-muted" style="font-size: 0.72rem;">Net clinic profit</small>
+                  </div>
+                  <div class="icon-circle" style="background: rgba(119,149,128,0.15); color: var(--accent-green);">
+                    <i class="fa-solid fa-scale-balanced"></i>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <!-- Finance Tabs: Payments, Expenses, Outstanding Balances, Reports -->
+          <ul class="nav nav-tabs mb-4 border-bottom" id="financeTabs" role="tablist">
+            <li class="nav-item">
+              <button class="nav-link active fw-semibold" id="tab-patient-payments" data-bs-toggle="tab" data-bs-target="#patientPaymentsTabPane" type="button">
+                <i class="fa-solid fa-receipt me-2 text-primary"></i> Patient Payments & Invoices
+              </button>
+            </li>
+            <li class="nav-item">
+              <button class="nav-link fw-semibold" id="tab-clinic-expenses" data-bs-toggle="tab" data-bs-target="#expensesTabPane" type="button">
+                <i class="fa-solid fa-money-bill-transfer me-2 text-danger"></i> Operating Expenses Tracker
+              </button>
+            </li>
+            <li class="nav-item">
+              <button class="nav-link fw-semibold" id="tab-outstanding-balances" data-bs-toggle="tab" data-bs-target="#outstandingTabPane" type="button">
+                <i class="fa-solid fa-clock-rotate-left me-2 text-warning"></i> Outstanding Balances
+              </button>
+            </li>
+            <li class="nav-item">
+              <button class="nav-link fw-semibold" id="tab-financial-summary" data-bs-toggle="tab" data-bs-target="#financialSummaryTabPane" type="button">
+                <i class="fa-solid fa-chart-pie me-2 text-success"></i> Financial Analytics
+              </button>
+            </li>
+          </ul>
+
+          <div class="tab-content" id="financeTabContent">
+            <!-- 1. Patient Payments Tab -->
+            <div class="tab-pane fade show active" id="patientPaymentsTabPane">
+              <div class="glass-card p-3 mb-4">
+                <div class="row g-3">
+                  <div class="col-md-5">
+                    <input type="text" class="form-control" id="paymentSearchInput" placeholder="Search by patient, phone, booking code...">
+                  </div>
+                  <div class="col-md-4">
+                    <select class="form-select" id="paymentModeFilter" onchange="renderFinancePayments()">
+                      <option value="">All Payment Modes (Cash, Card, UPI, Other)</option>
+                      <option value="Cash">Cash Payments</option>
+                      <option value="Card">Card Payments</option>
+                      <option value="UPI">UPI Payments</option>
+                      <option value="Other">Other Modes</option>
+                    </select>
+                  </div>
+                  <div class="col-md-3">
+                    <input type="date" class="form-control" id="paymentDateFilter" onchange="renderFinancePayments()">
+                  </div>
+                </div>
+              </div>
+
+              <div class="glass-card p-4">
+                <div class="table-responsive">
+                  <table class="table table-hover align-middle mb-0">
+                    <thead class="table-light">
+                      <tr>
+                        <th>Date</th>
+                        <th>Token / Code</th>
+                        <th>Patient Name</th>
+                        <th>Service / Treatments</th>
+                        <th>Payment Mode</th>
+                        <th class="text-end">Amount (₹)</th>
+                        <th>Status</th>
+                        <th class="text-center">Receipt</th>
+                      </tr>
+                    </thead>
+                    <tbody id="financePaymentsTbody">
+                      <!-- Dynamically populated from History & Payments -->
+                    </tbody>
+                  </table>
+                </div>
+              </div>
+            </div>
+
+            <!-- 2. Expenses Tracker Tab -->
+            <div class="tab-pane fade" id="expensesTabPane">
+              <div class="glass-card p-3 mb-4 d-flex justify-content-between align-items-center flex-wrap gap-2">
+                <div class="d-flex gap-2">
+                  <select class="form-select form-select-sm" id="expenseCategoryFilter" onchange="renderFinanceExpenses()" style="min-width: 200px;">
+                    <option value="">All Expense Categories</option>
+                    <option value="Dental Materials">Dental Materials</option>
+                    <option value="Clinic Supplies">Clinic Supplies</option>
+                    <option value="Lab Fees">Lab Fees</option>
+                    <option value="Rent">Rent</option>
+                    <option value="Utilities">Utilities</option>
+                    <option value="Staff Salary">Staff Salary</option>
+                    <option value="Other">Other Expenses</option>
+                  </select>
+                </div>
+                <button class="btn btn-outline-danger btn-sm" onclick="openNewExpenseModal()">
+                  <i class="fa-solid fa-plus me-1"></i> Add Expense Entry
+                </button>
+              </div>
+
+              <div class="glass-card p-4">
+                <div class="table-responsive">
+                  <table class="table table-hover align-middle mb-0">
+                    <thead class="table-light">
+                      <tr>
+                        <th>Date</th>
+                        <th>Expense Item / Title</th>
+                        <th>Category</th>
+                        <th class="text-end">Amount (₹)</th>
+                        <th>Notes / Vendor</th>
+                        <th class="text-center">Action</th>
+                      </tr>
+                    </thead>
+                    <tbody id="financeExpensesTbody">
+                      <!-- Dynamically rendered expenses -->
+                    </tbody>
+                  </table>
+                </div>
+              </div>
+            </div>
+
+            <!-- 3. Outstanding Balances Tab -->
+            <div class="tab-pane fade" id="outstandingTabPane">
+              <div class="glass-card p-4">
+                <div class="d-flex justify-content-between align-items-center mb-3">
+                  <h5 class="fw-bold mb-0">Patients with Pending Balances</h5>
+                  <span class="badge bg-warning text-dark px-3 py-1" id="outstandingTotalBadge">Total Dues: ₹0.00</span>
+                </div>
+                <div class="table-responsive">
+                  <table class="table table-hover align-middle mb-0">
+                    <thead class="table-light">
+                      <tr>
+                        <th>Patient Code</th>
+                        <th>Patient Name</th>
+                        <th>Phone</th>
+                        <th>Last Consultation</th>
+                        <th class="text-end">Outstanding Balance (₹)</th>
+                        <th class="text-center">Action</th>
+                      </tr>
+                    </thead>
+                    <tbody id="outstandingBalancesTbody">
+                      <!-- Rendered dynamically -->
+                    </tbody>
+                  </table>
+                </div>
+              </div>
+            </div>
+
+            <!-- 4. Financial Analytics Tab -->
+            <div class="tab-pane fade" id="financialSummaryTabPane">
+              <!-- Monthly Performance Summary Card -->
+              <div class="glass-card p-4 mb-4 border-start border-4 border-primary">
+                <div class="d-flex justify-content-between align-items-center mb-3 flex-wrap gap-2">
+                  <div>
+                    <h5 class="fw-bold mb-0"><i class="fa-solid fa-chart-line text-primary me-2"></i>Monthly Financial Performance (<span id="finAnalyticsMonthLabel">Current Month</span>)</h5>
+                    <small class="text-muted">Month-to-date collections, operating expenses, and monthly operating profit.</small>
+                  </div>
+                  <span class="badge bg-primary-subtle text-primary border border-primary-subtle px-3 py-1 fw-bold" id="finAnalyticsMonthBadge">Active Month</span>
+                </div>
+                <div class="row g-3">
+                  <div class="col-md-4">
+                    <div class="p-3 rounded-2 bg-light border">
+                      <span class="text-muted small fw-semibold">Monthly Collected Revenue</span>
+                      <h4 class="fw-bold text-primary mb-0 mt-1" id="finAnalyticsMonthRevenue">₹0.00</h4>
+                      <small class="text-muted">Actual collected funds</small>
+                    </div>
+                  </div>
+                  <div class="col-md-4">
+                    <div class="p-3 rounded-2 bg-light border">
+                      <span class="text-muted small fw-semibold">Monthly Operating Expenses</span>
+                      <h4 class="fw-bold text-danger mb-0 mt-1" id="finAnalyticsMonthExpenses">₹0.00</h4>
+                      <small class="text-muted">Clinic operating costs</small>
+                    </div>
+                  </div>
+                  <div class="col-md-4">
+                    <div class="p-3 rounded-2 bg-light border">
+                      <span class="text-muted small fw-semibold">Monthly Net Operating Profit</span>
+                      <h4 class="fw-bold mb-0 mt-1" id="finAnalyticsMonthProfit" style="color: var(--accent-green);">₹0.00</h4>
+                      <small class="text-muted">Net profit this month</small>
+                    </div>
+                  </div>
+                </div>
+              </div>
+
+              <div class="row g-4">
+                <div class="col-md-6">
+                  <div class="glass-card p-4 h-100">
+                    <h5 class="fw-bold mb-3">Collections by Payment Mode</h5>
+                    <div style="height: 260px;">
+                      <canvas id="paymentModePieChart"></canvas>
+                    </div>
+                  </div>
+                </div>
+                <div class="col-md-6">
+                  <div class="glass-card p-4 h-100">
+                    <h5 class="fw-bold mb-3">Top Revenue Treatments</h5>
+                    <table class="table align-middle">
+                      <thead>
+                        <tr><th>Treatment</th><th class="text-end">Total Count</th></tr>
+                      </thead>
+                      <tbody id="topServicesTbody">
+                        <!-- Rendered -->
+                      </tbody>
+                    </table>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </section>
+
+
+
+        <!-- 9. SETTINGS VIEW (Medicine Management & System Configuration) -->
+        <section id="settingsView" class="app-view d-none">
+          <div class="d-flex justify-content-between align-items-center mb-4 flex-wrap gap-2">
+            <div>
+              <h2 class="fw-bold mb-1"><i class="fa-solid fa-gear me-2 text-danger"></i>System Settings & Medicine Management</h2>
+              <p class="text-muted small mb-0">Manage clinic medicine database used by Doctor's Note prescription system, login accounts, and system configs.</p>
+            </div>
+          </div>
+
+          <!-- 1. Doctor & Staff Login Account Management (Admin Settings) -->
+          <div class="glass-card p-4 mb-4">
+            <div class="d-flex justify-content-between align-items-center mb-3 flex-wrap gap-2">
+              <div>
+                <h5 class="fw-bold mb-0">
+                  <i class="fa-solid fa-users-gear me-2 text-primary"></i>Doctor & Staff Login Accounts
+                </h5>
+                <p class="text-muted small mb-0">Manage system login accounts for Doctors, Staff, and Administrators.</p>
+              </div>
+              <button type="button" class="btn btn-primary-custom btn-sm" onclick="openNewUserModal()">
+                <i class="fa-solid fa-user-plus me-1"></i> + Add Doctor / Staff Account
+              </button>
+            </div>
+
+            <div class="table-responsive">
+              <table class="table table-hover align-middle mb-0">
+                <thead class="table-light">
+                  <tr>
+                    <th>Full Name</th>
+                    <th>Role</th>
+                    <th>Username</th>
+                    <th>Email</th>
+                    <th>Created</th>
+                    <th class="text-center">Action</th>
+                  </tr>
+                </thead>
+                <tbody id="systemUsersTbody">
+                  <!-- Dynamically rendered system users -->
+                </tbody>
+              </table>
+            </div>
+          </div>
+
+          <!-- 2. Quick Procedure Templates Management (Custom Quick Procedures) -->
+          <div class="glass-card p-4 mb-4">
+            <div class="d-flex justify-content-between align-items-center mb-3 flex-wrap gap-2">
+              <div>
+                <h5 class="fw-bold mb-0">
+                  <i class="fa-solid fa-clipboard-list me-2 text-primary"></i>Quick Procedure Templates Management
+                </h5>
+                <p class="text-muted small mb-0">Customize one-click clinical notes templates that appear in Doctor's Note.</p>
+              </div>
+            </div>
+
+            <!-- Add Quick Procedure Template Form -->
+            <div class="row g-2 mb-4">
+              <div class="col-md-4">
+                <input type="text" class="form-control" id="newQuickProcTitle" placeholder="Button Title (e.g. 🦷 Composite Class II)">
+              </div>
+              <div class="col-md-6">
+                <input type="text" class="form-control" id="newQuickProcTemplate" placeholder="Clinical notes text to auto-insert...">
+              </div>
+              <div class="col-md-2">
+                <button type="button" class="btn btn-primary-custom w-100" onclick="addQuickProcedureTemplate()">
+                  <i class="fa-solid fa-plus me-1"></i> Add Template
+                </button>
+              </div>
+            </div>
+
+            <div class="table-responsive">
+              <table class="table table-sm table-hover align-middle mb-0">
+                <thead class="table-light">
+                  <tr>
+                    <th style="width: 250px;">Button Title</th>
+                    <th>Auto-Insert Template Content</th>
+                    <th class="text-center" style="width: 90px;">Action</th>
+                  </tr>
+                </thead>
+                <tbody id="quickProceduresSettingsTbody">
+                  <!-- Dynamically rendered -->
+                </tbody>
+              </table>
+            </div>
+          </div>
+
+          <div class="row g-4">
+
+            <!-- Medicine Database Management (Core Requirement) -->
+            <div class="col-md-8">
+              <div class="glass-card p-4">
+                <div class="d-flex justify-content-between align-items-center mb-3">
+                  <div>
+                    <h5 class="fw-bold mb-0"><i class="fa-solid fa-pills me-2 text-success"></i>Medicine Database Management</h5>
+                    <p class="text-muted small mb-0">Add or manage medicines that appear in the Doctor's Note prescription search interface.</p>
+                  </div>
+                </div>
+
+                <!-- Add Medicine Input -->
+                <div class="row g-2 mb-4">
+                  <div class="col-md-5">
+                    <input type="text" class="form-control" id="newMedicineName" placeholder="Medicine name (e.g. Clindamycin 300mg)">
+                  </div>
+                  <div class="col-md-4">
+                    <select class="form-select" id="newMedicineCategory">
+                      <option value="Dental">Dental Medicines</option>
+                      <option value="Homoeopathic">Homoeopathic Medicines</option>
+                    </select>
+                  </div>
+                  <div class="col-md-3">
+                    <button type="button" class="btn btn-success w-100" onclick="addMedicine()">
+                      <i class="fa-solid fa-plus me-1"></i> Add Medicine
+                    </button>
+                  </div>
+                </div>
+
+                <!-- Dental Medicines List -->
+                <div class="mb-4">
+                  <small class="text-muted fw-bold text-uppercase d-block mb-2" style="font-size: 0.75rem;"><i class="fa-solid fa-tooth me-1"></i>Dental Medicines Database</small>
+                  <div id="settings_dental_medicines" class="d-flex flex-wrap gap-2">
+                    <!-- Rendered Dynamically -->
+                  </div>
+                </div>
+
+                <!-- Homoeopathic Medicines List -->
+                <div>
+                  <small class="text-muted fw-bold text-uppercase d-block mb-2" style="font-size: 0.75rem;"><i class="fa-solid fa-leaf me-1"></i>Homoeopathic Medicines Database</small>
+                  <div id="settings_homeo_medicines" class="d-flex flex-wrap gap-2">
+                    <!-- Rendered Dynamically -->
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            <!-- Database Maintenance -->
+            <div class="col-md-4">
+              <!-- Database Backup / Export -->
+              <div class="glass-card p-4">
+                <h5 class="fw-bold mb-3"><i class="fa-solid fa-database me-2 text-primary"></i>Database Maintenance</h5>
+                <p class="text-muted small">Download complete CRM JSON backup or restore clinic data.</p>
+                <button class="btn btn-outline-primary w-100 mb-2" onclick="backupDatabase()">
+                  <i class="fa-solid fa-download me-2"></i> Download JSON Backup
+                </button>
+                <button class="btn btn-outline-secondary w-100" onclick="restoreDatabase()">
+                  <i class="fa-solid fa-upload me-2"></i> Restore Database
+                </button>
+              </div>
+            </div>
+          </div>
+        </section>
+
+        <!-- 8. NOTIFICATIONS & AUTOMATION VIEW (WhatsApp API & Make.com) -->
+        <section id="notificationsView" class="app-view d-none">
+          <div class="d-flex justify-content-between align-items-center mb-4 flex-wrap gap-2">
+            <div>
+              <h2 class="fw-bold mb-1"><i class="fa-solid fa-paper-plane text-success me-2"></i>Notifications & Communication Hub</h2>
+              <p class="text-muted small mb-0">Select patient, choose approved template, preview dynamic variables, and send via WhatsApp API or Make.com.</p>
+            </div>
+            <div class="d-flex gap-2">
+              <button class="btn btn-outline-secondary btn-sm" onclick="loadNotificationCenter()">
+                <i class="fa-solid fa-arrows-rotate me-1"></i> Refresh
+              </button>
+              <button class="btn btn-outline-primary btn-sm" onclick="openNotificationConfigModal()">
+                <i class="fa-solid fa-sliders me-1"></i> Channel & API Settings
+              </button>
+            </div>
+          </div>
+
+          <!-- 1. PATIENT COHORT MASTER LIST & EXCEL BIFURCATION TABLE (Primary Master View) -->
+          <div class="glass-card p-4 mb-4" id="cohortSpreadsheetSection">
+            <div class="d-flex justify-content-between align-items-center mb-3 flex-wrap gap-2">
+              <div>
+                <h5 class="fw-bold text-dark mb-0">
+                  <i class="fa-solid fa-file-excel text-success me-2"></i>Patient Cohort Master List & Excel Bifurcation Table
+                </h5>
+                <small class="text-muted">Filter patients who visited vs not visited within timeframes, select multiple rows, and match to notification templates.</small>
+              </div>
+              <div class="d-flex gap-2 align-items-center">
+                <button type="button" class="btn btn-outline-success btn-sm" onclick="exportCohortToExcelCSV()">
+                  <i class="fa-solid fa-file-csv me-1"></i> Export to Excel (CSV)
+                </button>
+                <button type="button" class="btn btn-primary btn-sm fw-bold shadow-sm" onclick="applySelectedCohortToBatchComposer()">
+                  <i class="fa-solid fa-paper-plane me-1"></i> Send Template to Selected (<span id="btnSendCohortCount">0</span>)
+                </button>
+              </div>
+            </div>
+
+            <!-- Excel Filter & Bifurcation Tabs -->
+            <ul class="nav nav-pills mb-3 gap-1 p-1 bg-light rounded-3 border flex-wrap" id="cohortFilterTabs">
+              <li class="nav-item">
+                <button class="nav-link active btn-sm py-1 px-3" data-cohort-filter="all" onclick="filterCohortTable('all')">
+                  All Patients <span class="badge bg-secondary ms-1 rounded-pill" id="badgeCohortAll">0</span>
+                </button>
+              </li>
+              <li class="nav-item">
+                <button class="nav-link btn-sm py-1 px-3 text-primary" data-cohort-filter="tomorrow" onclick="filterCohortTable('tomorrow')">
+                  <i class="fa-solid fa-calendar-day me-1"></i> Tomorrow Calling <span class="badge bg-primary ms-1 rounded-pill" id="badgeCohortTomorrow">0</span>
+                </button>
+              </li>
+              <li class="nav-item">
+                <button class="nav-link btn-sm py-1 px-3 text-success" data-cohort-filter="visited_30d" onclick="filterCohortTable('visited_30d')">
+                  <i class="fa-solid fa-check-double me-1"></i> Visited &le;30 Days <span class="badge bg-success ms-1 rounded-pill" id="badgeCohortVisited30">0</span>
+                </button>
+              </li>
+              <li class="nav-item">
+                <button class="nav-link btn-sm py-1 px-3 text-info" data-cohort-filter="not_visited_30_90d" onclick="filterCohortTable('not_visited_30_90d')">
+                  <i class="fa-solid fa-clock-rotate-left me-1"></i> Visited 30-90 Days <span class="badge bg-info text-dark ms-1 rounded-pill" id="badgeCohortVisited3090">0</span>
+                </button>
+              </li>
+              <li class="nav-item">
+                <button class="nav-link btn-sm py-1 px-3 text-warning" data-cohort-filter="not_visited_90d" onclick="filterCohortTable('not_visited_90d')">
+                  <i class="fa-solid fa-triangle-exclamation me-1"></i> Not Visited &gt;90 Days <span class="badge bg-warning text-dark ms-1 rounded-pill" id="badgeCohortNotVisited90">0</span>
+                </button>
+              </li>
+              <li class="nav-item">
+                <button class="nav-link btn-sm py-1 px-3 text-danger" data-cohort-filter="not_visited_180d" onclick="filterCohortTable('not_visited_180d')">
+                  <i class="fa-solid fa-hourglass-end me-1"></i> Not Visited &gt;180 Days (6 Mo) <span class="badge bg-danger ms-1 rounded-pill" id="badgeCohortNotVisited180">0</span>
+                </button>
+              </li>
+              <li class="nav-item">
+                <button class="nav-link btn-sm py-1 px-3 text-dark" data-cohort-filter="not_visited_365d" onclick="filterCohortTable('not_visited_365d')">
+                  <i class="fa-solid fa-user-xmark me-1"></i> Inactive &gt;1 Year <span class="badge bg-dark ms-1 rounded-pill" id="badgeCohortNotVisited365">0</span>
+                </button>
+              </li>
+              <li class="nav-item">
+                <button class="nav-link btn-sm py-1 px-3 text-secondary" data-cohort-filter="never_visited" onclick="filterCohortTable('never_visited')">
+                  <i class="fa-solid fa-user-plus me-1"></i> Never Visited (New) <span class="badge bg-secondary ms-1 rounded-pill" id="badgeCohortNeverVisited">0</span>
+                </button>
+              </li>
+              <li class="nav-item">
+                <button class="nav-link btn-sm py-1 px-3 text-danger" data-cohort-filter="payment_pending" onclick="filterCohortTable('payment_pending')">
+                  <i class="fa-solid fa-receipt me-1"></i> Outstanding Balance Due <span class="badge bg-danger ms-1 rounded-pill" id="badgeCohortPaymentPending">0</span>
+                </button>
+              </li>
+            </ul>
+
+            <!-- Table Controls: Search, Match Template, Select All -->
+            <div class="row g-2 mb-3 align-items-center">
+              <div class="col-md-5">
+                <div class="input-group input-group-sm">
+                  <span class="input-group-text bg-white"><i class="fa-solid fa-magnifying-glass text-muted"></i></span>
+                  <input type="text" class="form-control" id="cohortSearchInput" placeholder="Search by name, phone, token, doctor, or treatment..." oninput="renderCohortTable()">
+                </div>
+              </div>
+
+              <div class="col-md-4">
+                <div class="input-group input-group-sm">
+                  <span class="input-group-text bg-white small fw-bold">Match Template:</span>
+                  <select class="form-select" id="cohortQuickTemplateSelect" onchange="syncCohortTemplateSelection()">
+                    <option value="">-- Match Template for Selected --</option>
+                  </select>
+                </div>
+              </div>
+
+              <div class="col-md-3 text-end d-flex gap-2 justify-content-end">
+                <button type="button" class="btn btn-outline-secondary btn-sm" onclick="toggleSelectAllCohort(true)">
+                  <i class="fa-solid fa-check-double me-1"></i> Select All
+                </button>
+                <button type="button" class="btn btn-outline-secondary btn-sm" onclick="toggleSelectAllCohort(false)">
+                  <i class="fa-solid fa-xmark me-1"></i> Deselect
+                </button>
+              </div>
+            </div>
+
+            <!-- Spreadsheet Table Container -->
+            <div class="table-responsive border rounded-3" style="max-height: 480px; overflow-y: auto;">
+              <table class="table table-hover table-striped align-middle mb-0" id="cohortSpreadsheetTable" style="font-size: 0.85rem;">
+                <thead class="table-light sticky-top" style="z-index: 5;">
+                  <tr>
+                    <th style="width: 40px;" class="text-center">
+                      <input type="checkbox" class="form-check-input" id="cohortHeaderCheckbox" onchange="onCohortHeaderCheckboxChanged(this)">
+                    </th>
+                    <th>Code</th>
+                    <th>Patient Name</th>
+                    <th>Phone Number</th>
+                    <th>Visit Status & Bifurcation</th>
+                    <th>Last Visit Date</th>
+                    <th>Last Treatment</th>
+                    <th>Attending Doctor</th>
+                    <th>Next Appt / Due</th>
+                    <th>Due Amount</th>
+                    <th class="text-center">Action</th>
+                  </tr>
+                </thead>
+                <tbody id="cohortSpreadsheetTbody">
+                  <tr><td colspan="11" class="text-center text-muted py-4">Loading patient cohorts...</td></tr>
+                </tbody>
+              </table>
+            </div>
+
+            <!-- Table Footer Summary -->
+            <div class="d-flex justify-content-between align-items-center mt-2 px-1 text-muted small flex-wrap gap-2">
+              <div>
+                Showing <strong id="cohortVisibleCount">0</strong> patients (<strong id="cohortTotalSelectedCount">0</strong> selected)
+              </div>
+              <div>
+                <span class="badge bg-light text-dark border me-1"><i class="fa-solid fa-circle text-success me-1"></i>Visited</span>
+                <span class="badge bg-light text-dark border me-1"><i class="fa-solid fa-circle text-warning me-1"></i>Recall Due</span>
+                <span class="badge bg-light text-dark border"><i class="fa-solid fa-circle text-secondary me-1"></i>New / Inactive</span>
+              </div>
+            </div>
+          </div>
+
+          <!-- 2. Main Workspace: Form (Left) & Dynamic WhatsApp Preview (Right) -->
+          <div class="row g-4 mb-4">
+            <!-- Left Column: Controls (Patient, Template, Channel, Variables) -->
+            <div class="col-lg-7">
+              <div class="glass-card p-4">
+                <h5 class="fw-bold text-dark mb-3"><i class="fa-solid fa-sliders text-primary me-2"></i>Compose Notification</h5>
+
+                <form id="notificationComposeForm" onsubmit="event.preventDefault(); sendNotificationPayload();">
+                  <!-- Mode Toggle: Single Patient vs Multi-Patient Batch Mode -->
+                  <div class="d-flex justify-content-between align-items-center mb-3 p-2 bg-light rounded-3 border">
+                    <span class="small fw-bold text-dark"><i class="fa-solid fa-users me-1 text-primary"></i> Recipient Mode:</span>
+                    <div class="btn-group btn-group-sm" role="group">
+                      <input type="radio" class="btn-check" name="notifRecipientMode" id="modeSingle" value="single" checked onchange="toggleRecipientMode('single')">
+                      <label class="btn btn-outline-primary" for="modeSingle"><i class="fa-solid fa-user me-1"></i> Single Patient</label>
+
+                      <input type="radio" class="btn-check" name="notifRecipientMode" id="modeBatch" value="batch" onchange="toggleRecipientMode('batch')">
+                      <label class="btn btn-outline-primary" for="modeBatch"><i class="fa-solid fa-users-viewfinder me-1"></i> Multi-Patient List (Batch)</label>
+                    </div>
+                  </div>
+
+                  <!-- 1A. Single Patient Selector Dropdown -->
+                  <div class="mb-3" id="singleRecipientWrap">
+                    <label class="form-label fw-bold small text-dark d-flex justify-content-between align-items-center">
+                      <span><i class="fa-solid fa-user me-1 text-primary"></i> 1. Select Patient / Booking:</span>
+                      <small class="text-muted" id="notifPatientBadge">Choose from active registry</small>
+                    </label>
+                    <select class="form-select fw-semibold" id="notifPatientSelector" onchange="onNotifRecipientSelected()">
+                      <option value="">-- Choose Patient or Appointment --</option>
+                    </select>
+                    <small class="text-muted" style="font-size: 0.72rem;">Selecting a patient will auto-fill name, phone, doctor, date, and payment status.</small>
+                  </div>
+
+                  <!-- 1B. Multi-Patient Selected Tray (Visible in Batch Mode) -->
+                  <div class="mb-3 d-none" id="batchRecipientWrap">
+                    <div class="d-flex justify-content-between align-items-center mb-2">
+                      <label class="form-label fw-bold small text-dark mb-0">
+                        <i class="fa-solid fa-list-check me-1 text-success"></i> Selected Batch Patients (<span id="batchSelectedCount">0</span> selected):
+                      </label>
+                      <button type="button" class="btn btn-link btn-sm p-0 text-decoration-none" onclick="scrollToCohortTable()">
+                        <i class="fa-solid fa-table me-1"></i> Select from Excel Cohort Table Above
+                      </button>
+                    </div>
+                    <div class="border rounded-3 p-2 bg-white" style="max-height: 110px; overflow-y: auto;" id="batchSelectedPillsContainer">
+                      <span class="text-muted small fst-italic">No patients selected yet. Check rows in the Patient Cohort Table above or click "Select All" in any tab.</span>
+                    </div>
+                  </div>
+
+                  <!-- 2. Template Dropdown & Channel Selector -->
+                  <div class="row g-3 mb-3">
+                    <div class="col-md-7">
+                      <label class="form-label fw-bold small text-dark">
+                        <i class="fa-solid fa-file-lines me-1 text-success"></i> 2. Message Template:
+                      </label>
+                      <select class="form-select" id="notifTemplateSelector" onchange="onNotifTemplateChanged()">
+                        <!-- Rendered dynamically with approved templates -->
+                      </select>
+                    </div>
+
+                    <div class="col-md-5">
+                      <label class="form-label fw-bold small text-dark">
+                        <i class="fa-solid fa-tower-broadcast me-1 text-info"></i> 3. Delivery Channel:
+                      </label>
+                      <div class="btn-group w-100" role="group">
+                        <input type="radio" class="btn-check" name="notifChannel" id="channelWhatsapp" value="whatsapp" checked onchange="updateChannelBadge()">
+                        <label class="btn btn-outline-success btn-sm d-flex align-items-center justify-content-center gap-1" for="channelWhatsapp">
+                          <i class="fa-brands fa-whatsapp"></i> WhatsApp API
+                        </label>
+
+                        <input type="radio" class="btn-check" name="notifChannel" id="channelMake" value="make" onchange="updateChannelBadge()">
+                        <label class="btn btn-outline-purple btn-sm d-flex align-items-center justify-content-center gap-1" for="channelMake">
+                          <i class="fa-solid fa-bolt"></i> Make.com
+                        </label>
+                      </div>
+                    </div>
+                  </div>
+
+                  <!-- 3. Dynamic Variables Form (Collapsible/Accordion) -->
+                  <div class="border rounded-3 p-3 bg-light mb-3">
+                    <div class="d-flex justify-content-between align-items-center mb-2">
+                      <span class="fw-bold small text-dark"><i class="fa-solid fa-tags text-warning me-1"></i> Dynamic Merge Variables</span>
+                      <span class="badge bg-secondary-subtle text-secondary" style="font-size: 0.7rem;">Auto-populated</span>
+                    </div>
+
+                    <div class="row g-2">
+                      <div class="col-md-6">
+                        <label class="form-label small text-muted mb-1">Patient Name:</label>
+                        <input type="text" class="form-control form-control-sm" id="notifVarPatientName" placeholder="e.g. Parth Gohil" oninput="renderNotificationPreview()">
+                      </div>
+                      <div class="col-md-6">
+                        <label class="form-label small text-muted mb-1">Recipient Mobile (10 digits):</label>
+                        <input type="tel" class="form-control form-control-sm" id="notifVarPhone" placeholder="e.g. 9033474123" oninput="renderNotificationPreview()">
+                      </div>
+                      <div class="col-md-6">
+                        <label class="form-label small text-muted mb-1">Doctor Name:</label>
+                        <input type="text" class="form-control form-control-sm" id="notifVarDoctor" placeholder="e.g. Dr. Alexander Wright" oninput="renderNotificationPreview()">
+                      </div>
+                      <div class="col-md-3 col-6">
+                        <label class="form-label small text-muted mb-1">Date:</label>
+                        <input type="date" class="form-control form-control-sm" id="notifVarDate" oninput="renderNotificationPreview()">
+                      </div>
+                      <div class="col-md-3 col-6">
+                        <label class="form-label small text-muted mb-1">Time / Slot:</label>
+                        <input type="text" class="form-control form-control-sm" id="notifVarTime" placeholder="10:00 AM" oninput="renderNotificationPreview()">
+                      </div>
+                      <div class="col-md-4">
+                        <label class="form-label small text-muted mb-1">Token Number:</label>
+                        <input type="text" class="form-control form-control-sm" id="notifVarToken" placeholder="A001" oninput="renderNotificationPreview()">
+                      </div>
+                      <div class="col-md-4">
+                        <label class="form-label small text-muted mb-1">Treatment / Service:</label>
+                        <input type="text" class="form-control form-control-sm" id="notifVarTreatment" placeholder="e.g. Dental Cleaning" oninput="renderNotificationPreview()">
+                      </div>
+                      <div class="col-md-4">
+                        <label class="form-label small text-muted mb-1">Due Amount (₹):</label>
+                        <input type="number" class="form-control form-control-sm" id="notifVarDueAmount" placeholder="0.00" oninput="renderNotificationPreview()">
+                      </div>
+                      <div class="col-md-6">
+                        <label class="form-label small text-muted mb-1">Payment Link:</label>
+                        <input type="url" class="form-control form-control-sm" id="notifVarPaymentLink" placeholder="https://pay.dental.com/inv/1" oninput="renderNotificationPreview()">
+                      </div>
+                      <div class="col-md-6">
+                        <label class="form-label small text-muted mb-1">Review Link:</label>
+                        <input type="url" class="form-control form-control-sm" id="notifVarReviewLink" placeholder="https://g.page/r/dental/review" oninput="renderNotificationPreview()">
+                      </div>
+                    </div>
+                  </div>
+
+                  <!-- 4. Rendered Message Text (Editable for one-off tweaks) -->
+                  <div class="mb-3">
+                    <label class="form-label fw-bold small text-dark d-flex justify-content-between align-items-center">
+                      <span><i class="fa-solid fa-envelope-open-text me-1 text-primary"></i> Message Body (Final Payload):</span>
+                      <button type="button" class="btn btn-link btn-sm p-0 text-decoration-none" onclick="resetTemplateBody()"><i class="fa-solid fa-rotate-left me-1"></i>Reset to Template</button>
+                    </label>
+                    <textarea class="form-control font-monospace" id="notifMessageText" rows="4" style="font-size: 0.85rem;" oninput="renderNotificationPreview(true)"></textarea>
+                  </div>
+
+                  <!-- Dispatch Action Bar -->
+                  <div class="d-flex justify-content-between align-items-center pt-2 border-top">
+                    <div class="d-flex align-items-center gap-2">
+                      <span class="badge bg-light text-dark border" id="notifChannelIndicator">Channel: WhatsApp API</span>
+                      <small class="text-muted" id="notifCharCount">0 chars</small>
+                    </div>
+                    <div class="d-flex gap-2">
+                      <button type="button" class="btn btn-light btn-sm" onclick="clearNotifForm()">
+                        <i class="fa-solid fa-eraser me-1"></i> Clear
+                      </button>
+                      <button type="submit" class="btn btn-success fw-bold px-4 shadow-sm" id="btnSendNotification">
+                        <i class="fa-solid fa-paper-plane me-1"></i> Send Notification
+                      </button>
+                    </div>
+                  </div>
+                </form>
+              </div>
+            </div>
+
+            <!-- Right Column: Live Phone / WhatsApp Preview Mockup -->
+            <div class="col-lg-5">
+              <div class="glass-card p-4 h-100 d-flex flex-column">
+                <div class="d-flex justify-content-between align-items-center mb-3">
+                  <h5 class="fw-bold text-dark mb-0"><i class="fa-solid fa-mobile-screen text-success me-2"></i>Message Preview</h5>
+                  <span class="badge bg-success-subtle text-success border border-success-subtle px-2 py-1">
+                    <i class="fa-solid fa-circle-check me-1"></i>Live View
+                  </span>
+                </div>
+
+                <!-- Realistic WhatsApp Chat Mockup -->
+                <div class="whatsapp-mockup flex-grow-1 d-flex flex-column rounded-4 overflow-hidden border shadow-sm" style="background: #e5ddd5; min-height: 440px;">
+                  <!-- WhatsApp Chat Header -->
+                  <div class="p-3 text-white d-flex align-items-center justify-content-between" style="background: #075e54;">
+                    <div class="d-flex align-items-center gap-2">
+                      <div class="bg-white rounded-circle d-flex align-items-center justify-content-center text-dark" style="width: 36px; height: 36px;">
+                        <i class="fa-solid fa-tooth text-primary"></i>
+                      </div>
+                      <div>
+                        <div class="fw-bold small mb-0" id="previewClinicName">Dental Clinic</div>
+                        <small style="font-size: 0.65rem; color: #a2f2bf;"><i class="fa-solid fa-circle text-success me-1" style="font-size: 0.5rem;"></i>Official WhatsApp Business</small>
+                      </div>
+                    </div>
+                    <div class="text-white-50">
+                      <i class="fa-solid fa-ellipsis-vertical"></i>
+                    </div>
+                  </div>
+
+                  <!-- Chat Bubble Area -->
+                  <div class="p-3 flex-grow-1 d-flex flex-column justify-content-end" style="background-image: radial-gradient(#d4cbbe 10%, transparent 11%); background-size: 16px 16px;">
+                    <div class="bg-white p-3 rounded-3 shadow-sm mb-2 position-relative" style="max-width: 90%; border-top-left-radius: 0 !important;">
+                      <div class="d-flex justify-content-between align-items-center border-bottom pb-1 mb-2">
+                        <small class="fw-bold text-success" id="previewTemplateTitle">Appointment Confirmation</small>
+                        <small class="text-muted" style="font-size: 0.65rem;" id="previewTimestamp">Just now</small>
+                      </div>
+                      <div class="text-dark small" id="previewMessageBody" style="white-space: pre-wrap; font-size: 0.82rem; line-height: 1.45;">
+                        Hello Parth, your appointment has been confirmed with Dr. Alexander Wright on 2026-10-06 at 10:00 AM.
+                      </div>
+                      <!-- Interactive Buttons in WhatsApp Template -->
+                      <div class="mt-2 pt-2 border-top d-flex flex-column gap-1" id="previewActionButtons">
+                        <div class="badge bg-light text-primary border text-start py-2 px-2 fw-semibold" style="font-size: 0.72rem;">
+                          <i class="fa-solid fa-map-location-dot me-1"></i> <span id="previewBtnAddress">104 Healthcare Boulevard</span>
+                        </div>
+                      </div>
+                      <div class="text-end mt-1">
+                        <small class="text-muted" style="font-size: 0.65rem;">
+                          <i class="fa-solid fa-check-double text-primary"></i> Delivered
+                        </small>
+                      </div>
+                    </div>
+                  </div>
+
+                  <!-- Footer Phone Simulation Bar -->
+                  <div class="bg-light p-2 border-top d-flex align-items-center gap-2">
+                    <input type="text" class="form-control form-control-sm rounded-pill" placeholder="Reply..." disabled>
+                    <div class="btn btn-sm btn-success rounded-circle" style="width: 32px; height: 32px; padding: 4px;"><i class="fa-solid fa-microphone"></i></div>
+                  </div>
+                </div>
+
+                <!-- Payload JSON inspector collapse -->
+                <div class="mt-3">
+                  <button class="btn btn-sm btn-link p-0 text-decoration-none text-muted" type="button" data-bs-toggle="collapse" data-bs-target="#payloadPreviewCollapse">
+                    <i class="fa-solid fa-code me-1"></i> View Standardized JSON Payload
+                  </button>
+                  <div class="collapse mt-2" id="payloadPreviewCollapse">
+                    <pre class="bg-dark text-success p-2 rounded-2 mb-0 font-monospace" id="previewJsonPayload" style="font-size: 0.72rem; max-height: 160px; overflow-y: auto;">{}</pre>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <!-- Recent Dispatched Notifications Log Table -->
+          <div class="glass-card p-4">
+            <div class="d-flex justify-content-between align-items-center mb-3">
+              <h5 class="fw-bold text-dark mb-0"><i class="fa-solid fa-clock-rotate-left text-muted me-2"></i>Recent Dispatches & Triggers</h5>
+              <span class="badge bg-secondary-subtle text-secondary" id="notifLogCount">0 dispatches</span>
+            </div>
+            <div class="table-responsive">
+              <table class="table table-hover align-middle mb-0">
+                <thead class="table-light">
+                  <tr>
+                    <th>Time</th>
+                    <th>Channel & Template</th>
+                    <th>Recipient Details</th>
+                    <th>Status</th>
+                    <th>Action</th>
+                  </tr>
+                </thead>
+                <tbody id="notifLogsTableBody">
+                  <tr><td colspan="5" class="text-center text-muted py-3">No dispatches recorded yet.</td></tr>
+                </tbody>
+              </table>
+            </div>
+          </div>
+        </section>
+
+      </div>
+    </main>
+  </div>
+
+  <!-- APPROVE CONFIRMATION POPUP MODAL -->
+  <div class="modal fade" id="approveModal" tabindex="-1" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered">
+      <div class="modal-content glass-card border-0 text-center p-4">
+        <div class="modal-body">
+          <div class="text-success mb-3">
+            <i class="fa-solid fa-circle-check fa-4x animate__animated animate__bounceIn"></i>
+          </div>
+          <h3 class="fw-bold text-dark mb-2">Approved</h3>
+          <p class="fs-6 text-muted mb-4" id="approveModalMessage">Booking approved successfully.</p>
+          <button type="button" class="btn btn-success rounded-pill px-5 py-2 fw-bold" data-bs-dismiss="modal">OK</button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- 1. TOOTH TREATMENT SELECTION POPUP MODAL (Matching Interactive Teeth Chart Aesthetic) -->
+  <div class="modal fade" id="toothTreatmentModal" tabindex="-1" aria-hidden="true">
+    <div class="modal-dialog modal-lg modal-dialog-centered">
+      <div class="modal-content glass-card border-0 shadow-lg">
+        <div class="modal-header border-0 pb-0" style="background: var(--bg); border-bottom: 1px solid var(--border);">
+          <div>
+            <h5 class="modal-title fw-bold" id="tt_modal_title">
+              <i class="fa-solid fa-tooth me-2 text-danger"></i>Tooth Treatment Assignment
+            </h5>
+            <small class="text-muted" id="tt_modal_subtitle">Select dental treatments for this tooth</small>
+          </div>
+          <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+        </div>
+        <div class="modal-body p-4">
+          <input type="hidden" id="tt_tooth_num">
+          <input type="hidden" id="tt_tooth_name">
+          <input type="hidden" id="tt_tooth_quadrant">
+
+          <!-- Selected Tooth Showcase Card matching the Odontogram -->
+          <div class="tooth-modal-showcase" id="tt_showcase_container">
+            <div class="tooth-modal-avatar">
+              <span class="t-num" id="tt_showcase_num">18</span>
+              <i class="fa-solid fa-tooth t-icon"></i>
+              <span class="t-badge" id="tt_showcase_badge">OK</span>
+            </div>
+            <div class="flex-grow-1">
+              <div class="d-flex flex-wrap justify-content-between align-items-center mb-1 gap-2">
+                <h5 class="fw-bold text-dark mb-0" id="tt_showcase_name">Third Molar</h5>
+                <span class="badge bg-light text-dark border px-2 py-1" id="tt_showcase_quadrant">Upper Right (Q1)</span>
+              </div>
+              <small class="text-muted d-block mb-2" id="tt_showcase_fdi">FDI 2-Digit Notation: Tooth #18 (Maxillary Arch)</small>
+
+              <!-- Tooth Surfaces Selector -->
+              <div>
+                <small class="text-muted fw-bold d-block mb-1" style="font-size: 0.72rem;">SELECT TOOTH SURFACES / SCOPE:</small>
+                <div class="d-flex flex-wrap gap-1 align-items-center">
+                  <div class="surface-chip active" id="surf_ALL" onclick="toggleToothSurface('ALL')">ALL</div>
+                  <div class="surface-chip" id="surf_O" onclick="toggleToothSurface('O')">O</div>
+                  <div class="surface-chip" id="surf_M" onclick="toggleToothSurface('M')">M</div>
+                  <div class="surface-chip" id="surf_D" onclick="toggleToothSurface('D')">D</div>
+                  <div class="surface-chip" id="surf_B" onclick="toggleToothSurface('B')">B</div>
+                  <div class="surface-chip" id="surf_L" onclick="toggleToothSurface('L')">L</div>
+                  <small class="text-muted ms-2" id="surf_label_desc">Entire Tooth / Crown</small>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <!-- Treatments List -->
+          <label class="form-label fw-bold small text-muted text-uppercase mb-2">Available Treatments & Clinic Services:</label>
+          <div class="d-flex flex-column gap-2 mb-3" id="tt_services_list" style="max-height: 240px; overflow-y: auto;">
+            <!-- Rendered dynamically -->
+          </div>
+
+          <!-- Multi-Tooth Application Selector: Rendered as Mini Odontogram Arch! -->
+          <div class="border-top pt-3">
+            <div class="d-flex justify-content-between align-items-center mb-1">
+              <label class="form-label fw-bold small text-muted text-uppercase mb-0">Apply Also to Multiple Selected Teeth:</label>
+              <div class="d-flex gap-1">
+                <button type="button" class="btn btn-sm btn-link py-0 text-decoration-none" onclick="batchSelectArchInModal('upper')">Upper Arch</button>
+                <span class="text-muted">•</span>
+                <button type="button" class="btn btn-sm btn-link py-0 text-decoration-none" onclick="batchSelectArchInModal('lower')">Lower Arch</button>
+                <span class="text-muted">•</span>
+                <button type="button" class="btn btn-sm btn-link py-0 text-danger text-decoration-none" onclick="clearBatchInModal()">Clear</button>
+              </div>
+            </div>
+            <p class="text-muted small mb-2">Click any tooth below to apply the exact same service simultaneously (matches your interactive chart):</p>
+            <div class="mini-teeth-chart" id="tt_mini_chart_container">
+              <!-- Rendered as Mini Odontogram Arches: Q1, Q2, Q4, Q3 -->
+            </div>
+          </div>
+        </div>
+        <div class="modal-footer border-0 bg-light d-flex justify-content-between">
+          <span class="fw-bold text-dark fs-6" id="tt_modal_total_preview">Total: ₹0.00</span>
+          <div class="d-flex gap-2">
+            <button type="button" class="btn btn-secondary btn-sm px-3" data-bs-dismiss="modal">Cancel</button>
+            <button type="button" class="btn btn-success btn-sm px-4 fw-bold shadow-sm" onclick="applyToothTreatments()">
+              <i class="fa-solid fa-check me-1"></i> Apply & Save to Note
+            </button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+
+
+
+  <!-- 2. PAYMENT & BILLING MODAL (Auto Populated from Doctor's Note with Doctor Discount & Cashier Discount) -->
+  <div class="modal fade" id="paymentModal" tabindex="-1" aria-hidden="true" data-bs-backdrop="static">
+    <div class="modal-dialog modal-lg modal-dialog-centered">
+      <div class="modal-content glass-card border-0">
+        <div class="modal-header border-0 pb-0" style="background: var(--bg); border-bottom: 1px solid var(--border);">
+          <div>
+            <h5 class="modal-title fw-bold"><i class="fa-solid fa-receipt me-2 text-danger"></i>Patient Payment & Billing Checkout</h5>
+            <small class="text-muted">Workflow Step: Doctor's Note → Payment & Discount → Finance Record</small>
+          </div>
+          <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+        </div>
+        <form id="paymentForm" onsubmit="event.preventDefault(); submitPaymentCheckout();">
+          <input type="hidden" id="pay_booking_id">
+          <div class="modal-body p-4">
+            <!-- Patient summary -->
+            <div class="bg-light p-3 rounded-3 mb-3 border d-flex justify-content-between align-items-center flex-wrap gap-2">
+              <div>
+                <span class="text-muted small d-block">Patient Name:</span>
+                <span class="fw-bold fs-6 text-dark" id="pay_patient_name">-</span>
+              </div>
+              <div>
+                <span class="text-muted small d-block">Token Number:</span>
+                <span class="badge bg-danger fs-6" id="pay_visual_token">-</span>
+              </div>
+              <div>
+                <span class="text-muted small d-block">Attending Doctor:</span>
+                <span class="fw-semibold text-dark" id="pay_doctor_name">-</span>
+              </div>
+            </div>
+
+            <!-- Selected Services / Treatments Table -->
+            <div class="mb-3">
+              <div class="d-flex justify-content-between align-items-center mb-2">
+                <h6 class="fw-bold mb-0">Services & Treatments (Carried from Doctor's Note)</h6>
+                <button type="button" class="btn btn-outline-danger btn-sm" onclick="addAdditionalPaymentItem()">
+                  <i class="fa-solid fa-plus me-1"></i> Add Additional Item
+                </button>
+              </div>
+
+              <div class="table-responsive border rounded-3">
+                <table class="table table-hover align-middle mb-0">
+                  <thead class="table-light">
+                    <tr>
+                      <th>Service / Procedure</th>
+                      <th>Tooth / Specification</th>
+                      <th class="text-end" style="width: 140px;">Price (₹)</th>
+                      <th class="text-center" style="width: 50px;"></th>
+                    </tr>
+                  </thead>
+                  <tbody id="paymentItemsTbody">
+                    <!-- Populated dynamically -->
+                  </tbody>
+                </table>
+              </div>
+            </div>
+
+            <!-- Bill Calculation & Payment Options -->
+            <div class="row g-3 mb-3">
+              <div class="col-md-6">
+                <!-- Payment Mode Selection -->
+                <label class="form-label fw-semibold">Payment Option <span class="text-danger">*</span></label>
+                <div class="row g-2">
+                  <div class="col-3">
+                    <div class="payment-mode-tile selected" onclick="selectPaymentMode('Cash', this)">
+                      <i class="fa-solid fa-money-bill-wave d-block fs-4 mb-1"></i>
+                      <small>Cash</small>
+                    </div>
+                  </div>
+                  <div class="col-3">
+                    <div class="payment-mode-tile" onclick="selectPaymentMode('Card', this)">
+                      <i class="fa-solid fa-credit-card d-block fs-4 mb-1"></i>
+                      <small>Card</small>
+                    </div>
+                  </div>
+                  <div class="col-3">
+                    <div class="payment-mode-tile" onclick="selectPaymentMode('UPI', this)">
+                      <i class="fa-solid fa-qrcode d-block fs-4 mb-1"></i>
+                      <small>UPI</small>
+                    </div>
+                  </div>
+                  <div class="col-3">
+                    <div class="payment-mode-tile" onclick="selectPaymentMode('Other', this)">
+                      <i class="fa-solid fa-building-columns d-block fs-4 mb-1"></i>
+                      <small>Other</small>
+                    </div>
+                  </div>
+                </div>
+                <input type="hidden" id="pay_selected_mode" value="Cash">
+
+                <!-- Compulsory Transaction / UTR Reference -->
+                <div class="mt-3" id="pay_ref_group">
+                  <label class="form-label fw-bold small text-dark d-flex justify-content-between align-items-center mb-1">
+                    <span><i class="fa-solid fa-receipt text-danger me-1"></i>Transaction / UTR / Reference No. <span class="text-danger">*</span></span>
+                    <span class="badge bg-danger text-white" style="font-size: 0.68rem; font-weight: 600;">Compulsory</span>
+                  </label>
+                  <div class="input-group input-group-sm">
+                    <span class="input-group-text bg-white"><i class="fa-solid fa-hashtag text-muted"></i></span>
+                    <input type="text" class="form-control" id="pay_transaction_ref" placeholder="Enter UPI UTR / Card Auth / Bank Ref / Receipt No." required>
+                  </div>
+                  <small class="text-muted d-block mt-1" style="font-size: 0.72rem;">
+                    <i class="fa-solid fa-circle-exclamation text-danger me-1"></i><strong>Mandatory Note:</strong> Enter 12-digit UPI UTR, Card Auth Slip, or Cash Receipt No. for audit verification.
+                  </small>
+                </div>
+
+                <!-- Payment Status -->
+                <div class="mt-3">
+                  <label class="form-label fw-semibold small">Payment Status</label>
+                  <select class="form-select form-select-sm" id="pay_status" onchange="handlePaymentStatusChange()">
+                    <option value="Paid" selected>Paid in Full</option>
+                    <option value="Partial">Partial Payment</option>
+                  </select>
+                </div>
+
+
+                <!-- Partial Payment Amount Input Group (Shown only when Partial is selected) -->
+                <div class="mt-3 p-3 border rounded-3 bg-white shadow-sm d-none" id="pay_partial_container" style="border-left: 4px solid #fd7e14 !important;">
+                  <div class="d-flex justify-content-between align-items-center mb-1">
+                    <label for="pay_partial_amount" class="form-label fw-bold small text-dark mb-0">
+                      <i class="fa-solid fa-hand-holding-dollar text-warning me-1"></i>Amount Paid by Patient <span class="text-danger">*</span>
+                    </label>
+                    <span class="badge bg-warning text-dark font-monospace" style="font-size: 0.68rem;">Partial Payment</span>
+                  </div>
+                  <div class="input-group input-group-sm mb-2">
+                    <span class="input-group-text bg-light fw-bold text-dark">₹</span>
+                    <input type="number" step="0.01" min="0" class="form-control fw-bold fs-6 text-dark" id="pay_partial_amount" placeholder="Enter amount paid today" oninput="recalculatePaymentTotals()">
+                    <button type="button" class="btn btn-outline-secondary btn-sm" onclick="setPartialPercentage(50)" title="Set 50% deposit">50%</button>
+                    <button type="button" class="btn btn-outline-secondary btn-sm" onclick="setPartialPercentage(25)" title="Set 25% deposit">25%</button>
+                  </div>
+                  <div class="d-flex justify-content-between align-items-center py-1 border-top border-bottom bg-light px-2 rounded small">
+                    <span class="text-muted fw-semibold" style="font-size: 0.75rem;">Remaining Due (Patient Ledger):</span>
+                    <span class="fw-bold text-danger font-monospace" id="pay_remaining_due_display">₹0.00</span>
+                  </div>
+                  <small class="text-muted d-block mt-1" style="font-size: 0.70rem;">
+                    <i class="fa-solid fa-circle-info text-primary me-1"></i>The remaining balance will be automatically recorded in the patient's outstanding balance.
+                  </small>
+                </div>
+              </div>
+
+              <!-- Subtotal / Doctor Discount / Cashier Discount / Final Amount -->
+              <div class="col-md-6">
+                <div class="p-3 bg-light rounded-3 border">
+                  <div class="payment-calc-row">
+                    <span class="text-muted">Gross Subtotal:</span>
+                    <span class="fw-bold" id="pay_subtotal">₹0.00</span>
+                  </div>
+                  <div class="payment-calc-row">
+                    <span class="text-muted small">Doctor Authorized Discount:</span>
+                    <span class="fw-bold text-success" id="pay_doctor_discount_display">-₹0.00</span>
+                  </div>
+                  <div class="payment-calc-row">
+                    <span class="text-muted">Cashier Additional Discount:</span>
+                    <div class="input-group input-group-sm" style="max-width: 140px;">
+                      <span class="input-group-text">₹</span>
+                      <input type="number" step="0.01" min="0" class="form-control text-end" id="pay_discount" value="0.00" oninput="recalculatePaymentTotals()">
+                    </div>
+                  </div>
+                  <div class="payment-calc-row">
+                    <span class="text-muted small">Total Discount:</span>
+                    <span class="fw-bold text-danger" id="pay_total_discount_display">-₹0.00</span>
+                  </div>
+                  <hr class="my-2">
+                  <div class="payment-calc-row">
+                    <span class="fw-bold fs-5 text-dark">Final Bill Amount:</span>
+                    <span class="fw-bold fs-4 text-success" id="pay_final_amount">₹0.00</span>
+                  </div>
+
+                  <!-- Partial / Due Calculation Breakdown (Dynamic) -->
+                  <div id="pay_partial_calc_breakdown" class="d-none mt-2 pt-2 border-top">
+                    <div class="payment-calc-row">
+                      <span class="fw-semibold text-success small"><i class="fa-solid fa-circle-check me-1"></i>Amount Paid Today:</span>
+                      <span class="fw-bold text-success fs-6" id="pay_calc_paid_amount">₹0.00</span>
+                    </div>
+                    <div class="payment-calc-row">
+                      <span class="fw-semibold text-danger small"><i class="fa-solid fa-clock-rotate-left me-1"></i>Balance Due (Patient Ledger):</span>
+                      <span class="fw-bold text-danger fs-6" id="pay_calc_due_amount">₹0.00</span>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+          </div>
+          <div class="modal-footer border-0 bg-light d-flex justify-content-between align-items-center">
+            <button type="button" class="btn btn-secondary px-3" data-bs-dismiss="modal">Cancel</button>
+            <div class="d-flex gap-2 flex-wrap">
+              <button type="button" class="btn btn-outline-success px-3 fw-bold" onclick="printReceiptWithPrescription(document.getElementById('pay_booking_id').value)" title="Print Combined Official Receipt and Clinical Prescription">
+                <i class="fa-solid fa-file-invoice-dollar me-1"></i> Print Receipt + Rx Sheet
+              </button>
+              <button type="button" class="btn btn-outline-primary px-3 fw-bold" onclick="printBillingInvoice(document.getElementById('pay_booking_id').value)">
+                <i class="fa-solid fa-print me-1"></i> Print Bill / Estimate
+              </button>
+              <button type="submit" class="btn btn-success px-4 fw-bold" id="pay_submitBtn">
+                <i class="fa-solid fa-circle-check me-2"></i> Confirm Payment & Record in Finance
+              </button>
+            </div>
+          </div>
+
+        </form>
+      </div>
+    </div>
+  </div>
+
+
+  <!-- 3. ADD / EDIT DENTAL SERVICE MODAL -->
+  <div class="modal fade" id="serviceModal" tabindex="-1" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered">
+      <div class="modal-content glass-card border-0">
+        <div class="modal-header border-0 pb-0">
+          <h5 class="modal-title fw-bold" id="serviceModalTitle"><i class="fa-solid fa-tooth me-2 text-danger"></i>Add / Edit Dental Service</h5>
+          <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+        </div>
+        <form id="serviceForm" onsubmit="event.preventDefault(); saveDentalService();">
+          <input type="hidden" id="srv_id">
+          <div class="modal-body pt-3">
+            <div class="row g-3">
+              <div class="col-12">
+                <label class="form-label fw-semibold">Service / Treatment Name *</label>
+                <input type="text" class="form-control" id="srv_name" placeholder="e.g. Root Canal Treatment (RCT)" required>
+              </div>
+              <div class="col-md-6">
+                <label class="form-label fw-semibold">Treatment Category *</label>
+                <select class="form-select" id="srv_category" required>
+                  <option value="Cleaning">Cleaning & Hygiene</option>
+                  <option value="Filling">Filling / Restoration</option>
+                  <option value="RCT">Root Canal (RCT)</option>
+                  <option value="Crown">Crown & Bridge</option>
+                  <option value="Extraction">Extraction & Surgery</option>
+                  <option value="Consultation">Consultation & Exam</option>
+                  <option value="X-Ray">Radiology / X-Ray</option>
+                  <option value="Implant">Dental Implant</option>
+                  <option value="Orthodontics">Braces & Aligners</option>
+                  <option value="Cosmetic">Cosmetic Dentistry</option>
+                  <option value="Other">Other</option>
+                </select>
+              </div>
+              <div class="col-md-6">
+                <label class="form-label fw-semibold">Price (₹) *</label>
+                <input type="number" step="0.01" class="form-control" id="srv_price" placeholder="1500.00" required>
+              </div>
+              <div class="col-md-6">
+                <label class="form-label fw-semibold">Standard Duration (Mins)</label>
+                <input type="number" class="form-control" id="srv_duration" value="30">
+              </div>
+              <div class="col-md-6">
+                <label class="form-label fw-semibold">Status</label>
+                <select class="form-select" id="srv_status">
+                  <option value="Active" selected>Active</option>
+                  <option value="Inactive">Inactive</option>
+                </select>
+              </div>
+              <div class="col-12">
+                <label class="form-label fw-semibold">Description</label>
+                <textarea class="form-control" id="srv_description" rows="2" placeholder="Clinical description of dental procedure..."></textarea>
+              </div>
+            </div>
+          </div>
+          <div class="modal-footer border-0">
+            <button type="button" class="btn btn-secondary btn-sm" data-bs-dismiss="modal">Cancel</button>
+            <button type="submit" class="btn btn-primary-custom btn-sm px-4">Save Service</button>
+          </div>
+        </form>
+      </div>
+    </div>
+  </div>
+
+  <!-- 4. RECORD EXPENSE MODAL (Finance) -->
+  <div class="modal fade" id="expenseModal" tabindex="-1" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered">
+      <div class="modal-content glass-card border-0">
+        <div class="modal-header border-0 pb-0">
+          <h5 class="modal-title fw-bold"><i class="fa-solid fa-file-invoice-dollar me-2 text-danger"></i>Record Clinic Expense</h5>
+          <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+        </div>
+        <form id="expenseForm" onsubmit="event.preventDefault(); submitNewExpense();">
+          <div class="modal-body pt-3">
+            <div class="row g-3">
+              <div class="col-12">
+                <label class="form-label fw-semibold">Expense Title / Item *</label>
+                <input type="text" class="form-control" id="exp_title" placeholder="e.g. Composite Resin Syringes restock" required>
+              </div>
+              <div class="col-md-6">
+                <label class="form-label fw-semibold">Category *</label>
+                <select class="form-select" id="exp_category" required>
+                  <option value="Dental Materials" selected>Dental Materials</option>
+                  <option value="Clinic Supplies">Clinic Supplies</option>
+                  <option value="Lab Fees">Lab Fees (Crown/Dentures)</option>
+                  <option value="Rent">Clinic Rent</option>
+                  <option value="Utilities">Utilities (Power/Broadband)</option>
+                  <option value="Staff Salary">Staff / Nurse Salary</option>
+                  <option value="Other">Other Expenses</option>
+                </select>
+              </div>
+              <div class="col-md-6">
+                <label class="form-label fw-semibold">Amount (₹) *</label>
+                <input type="number" step="0.01" class="form-control" id="exp_amount" placeholder="2500.00" required>
+              </div>
+              <div class="col-md-6">
+                <label class="form-label fw-semibold">Expense Date</label>
+                <input type="date" class="form-control" id="exp_date" required>
+              </div>
+              <div class="col-md-6">
+                <label class="form-label fw-semibold">Vendor / Supplier</label>
+                <input type="text" class="form-control" id="exp_vendor" placeholder="e.g. 3M Dental Supply">
+              </div>
+              <div class="col-12">
+                <label class="form-label fw-semibold">Notes / Receipt #</label>
+                <textarea class="form-control" id="exp_notes" rows="2" placeholder="Optional notes or invoice reference..."></textarea>
+              </div>
+            </div>
+          </div>
+          <div class="modal-footer border-0">
+            <button type="button" class="btn btn-secondary btn-sm" data-bs-dismiss="modal">Cancel</button>
+            <button type="submit" class="btn btn-primary-custom btn-sm px-4">Save Expense</button>
+          </div>
+        </form>
+      </div>
+    </div>
+  </div>
+
+  <!-- 5. COLLECT OUTSTANDING PATIENT BALANCE MODAL -->
+  <div class="modal fade" id="collectBalanceModal" tabindex="-1" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered">
+      <div class="modal-content glass-card border-0">
+        <div class="modal-header border-0 pb-0">
+          <h5 class="modal-title fw-bold"><i class="fa-solid fa-hand-holding-dollar me-2 text-success"></i>Collect Outstanding Balance</h5>
+          <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+        </div>
+        <form id="collectBalanceForm" onsubmit="event.preventDefault(); submitCollectBalance();">
+          <input type="hidden" id="cb_patient_id">
+          <div class="modal-body pt-3">
+            <div class="p-3 bg-light rounded-3 mb-3 border">
+              <span class="text-muted small d-block">Patient:</span>
+              <span class="fw-bold fs-6 text-dark" id="cb_patient_name">-</span>
+              <div class="mt-2 text-danger fw-bold" id="cb_current_due">Total Balance Due: ₹0.00</div>
+            </div>
+
+            <div class="mb-3">
+              <label class="form-label fw-semibold">Amount to Collect (₹) *</label>
+              <input type="number" step="0.01" class="form-control fs-5 fw-bold text-success" id="cb_amount" required>
+            </div>
+
+            <div class="mb-3">
+              <label class="form-label fw-semibold">Payment Mode</label>
+              <select class="form-select" id="cb_payment_mode">
+                <option value="Cash" selected>Cash</option>
+                <option value="UPI">UPI</option>
+                <option value="Card">Card</option>
+                <option value="Other">Other</option>
+              </select>
+            </div>
+
+            <div class="mb-3">
+              <label class="form-label fw-semibold">Settlement Notes</label>
+              <input type="text" class="form-control" id="cb_notes" placeholder="e.g. Cleared via UPI transaction ref...">
+            </div>
+          </div>
+          <div class="modal-footer border-0">
+            <button type="button" class="btn btn-secondary btn-sm" data-bs-dismiss="modal">Cancel</button>
+            <button type="submit" class="btn btn-success btn-sm px-4">Record Payment</button>
+          </div>
+        </form>
+      </div>
+    </div>
+  </div>
+
+  <!-- EDIT BOOKING DETAILS MODAL -->
+  <div class="modal fade" id="editBookingModal" tabindex="-1" aria-hidden="true">
+    <div class="modal-dialog modal-lg modal-dialog-centered">
+      <div class="modal-content glass-card border-0">
+        <div class="modal-header border-0">
+          <h5 class="modal-title fw-bold"><i class="fa-solid fa-pen-to-square me-2" style="color: var(--accent-red);"></i>Edit Booking Details</h5>
+          <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+        </div>
+        <form id="editBookingForm">
+          <input type="hidden" id="eb_id">
+          <div class="modal-body">
+            <div class="row g-3">
+              <div class="col-md-6">
+                <label class="form-label fw-semibold">Patient Name *</label>
+                <input type="text" class="form-control" id="eb_patient_name" required>
+              </div>
+              <div class="col-md-6">
+                <label class="form-label fw-semibold">Phone Number *</label>
+                <input type="tel" class="form-control" id="eb_phone" placeholder="10-digit Indian Mobile Number" maxlength="10" pattern="[6-9][0-9]{9}" title="Enter 10-digit mobile number starting with 6, 7, 8, or 9" required>
+              </div>
+              <div class="col-md-6">
+                <label class="form-label fw-semibold">Email</label>
+                <input type="email" class="form-control" id="eb_email">
+              </div>
+              <div class="col-md-6">
+                <label class="form-label fw-semibold">Dental Service</label>
+                <input type="text" class="form-control" id="eb_service_name" required>
+              </div>
+              <div class="col-md-6">
+                <label class="form-label fw-semibold">Assigned Doctor</label>
+                <select class="form-select" id="eb_doctor_select"></select>
+              </div>
+              <div class="col-md-3">
+                <label class="form-label fw-semibold">Date</label>
+                <input type="date" class="form-control" id="eb_date" required>
+              </div>
+              <div class="col-md-3">
+                <label class="form-label fw-semibold">Time</label>
+                <input type="time" class="form-control" id="eb_time" required>
+              </div>
+            </div>
+          </div>
+          <div class="modal-footer border-0">
+            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancel</button>
+            <button type="submit" class="btn btn-primary-custom">Update Details</button>
+          </div>
+        </form>
+      </div>
+    </div>
+  </div>
+
+  <!-- INVOICE PRINT MODAL -->
+  <div class="modal fade" id="invoiceModal" tabindex="-1" aria-hidden="true">
+    <div class="modal-dialog modal-lg modal-dialog-centered">
+      <div class="modal-content glass-card border-0">
+        <div class="modal-body p-4 p-md-5 printable-area" id="invoicePrintArea">
+          <div class="d-flex justify-content-between align-items-center mb-4 pb-3 border-bottom">
+            <div>
+              <h3 class="fw-bold mb-0" style="color: var(--accent-red); font-family: var(--font-heading);"><i class="fa-solid fa-tooth me-2" style="color: var(--accent-blue);"></i>Dental</h3>
+              <small class="text-muted">Kivex Technology CRM Platform | 1st Floor, Omkar Plaza, Nikol, Ahmedabad</small>
+            </div>
+            <div class="text-end">
+              <h4 class="fw-bold text-dark mb-0">INVOICE</h4>
+              <small class="text-muted" id="invNumber">INV-1001</small>
+            </div>
+          </div>
+
+          <div class="row mb-4">
+            <div class="col-6">
+              <h6 class="fw-bold">Patient Details:</h6>
+              <p class="mb-0 fw-semibold" id="invPatientName">-</p>
+              <small class="text-muted d-block" id="invPhone">-</small>
+            </div>
+            <div class="col-6 text-end">
+              <h6 class="fw-bold">Appointment Info:</h6>
+              <small class="d-block" id="invDate">Date: -</small>
+              <small class="d-block" id="invDoctor">Doctor: Doctor</small>
+            </div>
+          </div>
+
+          <table class="table table-bordered align-middle mb-4">
+            <thead class="table-light">
+              <tr>
+                <th>Description / Treatment</th>
+                <th class="text-end">Amount</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td id="invTreatment">-</td>
+                <td class="text-end" id="invSubtotal">₹0.00</td>
+              </tr>
+            </tbody>
+            <tfoot>
+              <tr>
+                <th class="text-end">Discount:</th>
+                <td class="text-end" id="invDiscount">₹0.00</td>
+              </tr>
+              <tr class="table-info">
+                <th class="text-end fs-5">Final Bill Amount:</th>
+                <td class="text-end fs-5 fw-bold" id="invTotal">₹500.00</td>
+              </tr>
+              <tr id="invPartialPaidRow" class="d-none table-success">
+                <th class="text-end">Amount Paid:</th>
+                <td class="text-end fw-bold text-success" id="invPaidAmount">₹0.00</td>
+              </tr>
+              <tr id="invPartialDueRow" class="d-none table-warning">
+                <th class="text-end">Remaining Due Balance:</th>
+                <td class="text-end fw-bold text-danger" id="invDueAmount">₹0.00</td>
+              </tr>
+            </tfoot>
+          </table>
+
+          <div class="mb-4" id="invMedicinesSection" style="display: none;">
+            <h6 class="fw-bold mb-1">Medicines Prescribed:</h6>
+            <p class="mb-0" id="invMedicines"></p>
+          </div>
+
+          <div class="d-flex justify-content-end align-items-center pt-3 border-top">
+            <div class="text-end">
+              <div class="fw-bold mt-2" style="color: var(--accent-red); font-family: var(--font-heading);">Dental</div>
+              <small class="text-muted d-block" style="font-size: 0.72rem;">Powered by Kivex Technology</small>
+            </div>
+          </div>
+
+        </div>
+        <div class="modal-footer border-0 no-print">
+          <button type="button" class="btn btn-outline-secondary" data-bs-dismiss="modal">Close</button>
+          <button type="button" class="btn btn-primary-custom" onclick="window.print()"><i class="fa-solid fa-print me-1"></i> Print Invoice</button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- PATIENT REGISTRATION / EDIT MODAL -->
+  <div class="modal fade" id="patientModal" tabindex="-1" aria-hidden="true">
+    <div class="modal-dialog modal-lg modal-dialog-centered">
+      <div class="modal-content glass-card border-0">
+        <div class="modal-header border-0">
+          <h5 class="modal-title fw-bold" id="patientModalTitle"><i class="fa-solid fa-user-plus me-2" style="color: var(--accent-red);"></i>Register / Edit Patient</h5>
+          <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+        </div>
+        <form id="patientForm">
+          <input type="hidden" id="p_id">
+          <div class="modal-body">
+            <div class="row g-3">
+              <div class="col-md-6">
+                <label class="form-label fw-semibold">Full Name *</label>
+                <input type="text" class="form-control" id="p_name" required>
+              </div>
+              <div class="col-md-6">
+                <label class="form-label fw-semibold">Phone Number *</label>
+                <input type="tel" class="form-control" id="p_phone" placeholder="10-digit Indian Mobile (e.g. 9876543210)" maxlength="10" pattern="[6-9][0-9]{9}" title="Enter 10-digit mobile number starting with 6, 7, 8, or 9" required>
+              </div>
+              <div class="col-md-6">
+                <label class="form-label fw-semibold">Email</label>
+                <input type="email" class="form-control" id="p_email">
+              </div>
+              <div class="col-md-3">
+                <label class="form-label fw-semibold">Gender</label>
+                <select class="form-select" id="p_gender">
+                  <option value="Male">Male</option>
+                  <option value="Female">Female</option>
+                  <option value="Other">Other</option>
+                </select>
+              </div>
+              <div class="col-md-3">
+                <label class="form-label fw-semibold">Blood Group</label>
+                <input type="text" class="form-control" id="p_blood" placeholder="O+">
+              </div>
+              <div class="col-md-6">
+                <label class="form-label fw-semibold">Date of Birth</label>
+                <input type="date" class="form-control" id="p_dob">
+              </div>
+              <div class="col-md-6">
+                <label class="form-label fw-semibold">Emergency Contact</label>
+                <input type="tel" class="form-control" id="p_emergency" placeholder="10-digit Contact Phone" maxlength="10">
+              </div>
+              <div class="col-md-6">
+                <label class="form-label fw-semibold">Medical History</label>
+                <input type="text" class="form-control" id="p_medical" placeholder="e.g. Diabetes, Hypertension">
+              </div>
+              <div class="col-md-6">
+                <label class="form-label fw-semibold">Known Allergies</label>
+                <input type="text" class="form-control" id="p_allergy" placeholder="e.g. Penicillin">
+              </div>
+              <div class="col-md-6">
+                <label class="form-label fw-semibold">Current Medication</label>
+                <input type="text" class="form-control" id="p_medication">
+              </div>
+              <div class="col-md-6">
+                <label class="form-label fw-semibold">Outstanding Balance (₹)</label>
+                <input type="number" step="0.01" class="form-control" id="p_balance" value="0.00">
+              </div>
+              <div class="col-12">
+                <label class="form-label fw-semibold">Full Address</label>
+                <textarea class="form-control" id="p_address" rows="2"></textarea>
+              </div>
+            </div>
+          </div>
+          <div class="modal-footer border-0">
+            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancel</button>
+            <button type="submit" class="btn btn-primary-custom" id="patientSubmitBtn">Save Patient Details</button>
+          </div>
+        </form>
+      </div>
+    </div>
+  </div>
+
+  <!-- ADD / EDIT DOCTOR MODAL -->
+  <div class="modal fade" id="doctorModal" tabindex="-1" aria-hidden="true">
+    <div class="modal-dialog modal-lg modal-dialog-centered">
+      <div class="modal-content glass-card border-0">
+        <div class="modal-header border-0">
+          <h5 class="modal-title fw-bold" id="doctorModalTitle"><i class="fa-solid fa-user-doctor me-2" style="color: var(--accent-red);"></i>Add / Edit Doctor Profile</h5>
+          <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+        </div>
+        <form id="doctorForm">
+          <input type="hidden" id="d_id">
+          <div class="modal-body">
+            <div class="row g-3">
+              <div class="col-md-6">
+                <label class="form-label fw-semibold">Doctor Name *</label>
+                <input type="text" class="form-control" id="d_name" required placeholder="e.g. Dr. John Doe">
+              </div>
+              <div class="col-md-6">
+                <label class="form-label fw-semibold">Specialization *</label>
+                <input type="text" class="form-control" id="d_specialization" required placeholder="e.g. Orthodontist">
+              </div>
+              <div class="col-md-6">
+                <label class="form-label fw-semibold">Qualification</label>
+                <input type="text" class="form-control" id="d_qualification" placeholder="e.g. BDS, MDS">
+              </div>
+              <div class="col-md-6">
+                <label class="form-label fw-semibold">Experience</label>
+                <input type="text" class="form-control" id="d_experience" placeholder="e.g. 10 Years">
+              </div>
+              <div class="col-md-6">
+                <label class="form-label fw-semibold">Contact Phone</label>
+                <input type="tel" class="form-control" id="d_contact">
+              </div>
+              <div class="col-md-6">
+                <label class="form-label fw-semibold">Email</label>
+                <input type="email" class="form-control" id="d_email">
+              </div>
+              <div class="col-md-6">
+                <label class="form-label fw-semibold">Available Days</label>
+                <input type="text" class="form-control" id="d_days" placeholder="e.g. Mon, Wed, Fri">
+              </div>
+              <div class="col-md-6">
+                <label class="form-label fw-semibold">Available Hours</label>
+                <input type="text" class="form-control" id="d_time" placeholder="e.g. 09:00 AM - 05:00 PM">
+              </div>
+            </div>
+          </div>
+          <div class="modal-footer border-0">
+            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancel</button>
+            <button type="submit" class="btn btn-primary-custom">Save Doctor Profile</button>
+          </div>
+        </form>
+      </div>
+    </div>
+  </div>
+
+
+  <!-- CRM WALK-IN MODAL -->
+  <div class="modal fade" id="crmWalkinModal" tabindex="-1" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered">
+      <div class="modal-content glass-card border-0">
+        <div class="modal-header border-0 pb-0">
+          <h5 class="modal-title fw-bold"><i class="fa-solid fa-person-walking me-2" style="color: var(--accent-red);"></i>Book Walk-In Token</h5>
+          <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+        </div>
+        <form id="crmWalkinForm" novalidate onsubmit="event.preventDefault(); submitCrmWalkin(event);">
+          <div class="modal-body pt-3">
+            <div class="row g-3">
+              <div class="col-md-6">
+                <label for="cw_patient_name" class="form-label fw-semibold">Patient Name <span class="text-danger">*</span></label>
+                <div class="input-group">
+                  <span class="input-group-text"><i class="fa-solid fa-user" style="color: var(--accent-red);"></i></span>
+                  <input type="text" class="form-control" id="cw_patient_name" placeholder="Enter patient full name" required>
+                </div>
+              </div>
+              <div class="col-md-6">
+                <label for="cw_phone" class="form-label fw-semibold">Phone Number <span class="text-danger">*</span></label>
+                <div class="input-group">
+                  <span class="input-group-text"><i class="fa-solid fa-phone" style="color: var(--accent-red);"></i></span>
+                  <input type="tel" class="form-control" id="cw_phone" placeholder="10-digit mobile number" maxlength="14" required>
+                </div>
+              </div>
+              <div class="col-12">
+                <label for="cw_email" class="form-label fw-semibold">Email (Optional)</label>
+                <div class="input-group">
+                  <span class="input-group-text"><i class="fa-regular fa-envelope" style="color: var(--accent-red);"></i></span>
+                  <input type="email" class="form-control" id="cw_email" placeholder="name@example.com">
+                </div>
+              </div>
+              <div class="col-12">
+                <label for="cw_dental_service" class="form-label fw-semibold">Dental Service <span class="text-danger">*</span></label>
+                <select class="form-select" id="cw_dental_service" required>
+                  <option value="" disabled selected>Select Dental Treatment</option>
+                  <option value="General Checkup">General Checkup</option>
+                  <option value="Teeth Cleaning">Teeth Cleaning</option>
+                  <option value="Root Canal">Root Canal</option>
+                  <option value="Dental Implant">Dental Implant</option>
+                  <option value="Braces">Braces</option>
+                  <option value="Teeth Whitening">Teeth Whitening</option>
+                  <option value="Scaling">Scaling</option>
+                  <option value="Extraction">Extraction</option>
+                  <option value="Crown">Crown</option>
+                  <option value="Bridge">Bridge</option>
+                  <option value="Denture">Denture</option>
+                  <option value="Smile Design">Smile Design</option>
+                  <option value="Emergency">Emergency</option>
+                  <option value="Other">Other</option>
+                </select>
+              </div>
+              <div class="col-12 d-none" id="cw_otherServiceGroup">
+                <label for="cw_other_service" class="form-label fw-semibold">Enter Service <span class="text-danger">*</span></label>
+                <div class="input-group">
+                  <span class="input-group-text"><i class="fa-solid fa-notes-medical" style="color: var(--accent-red);"></i></span>
+                  <input type="text" class="form-control" id="cw_other_service" placeholder="Describe requested dental service">
+                </div>
+              </div>
+              <div class="col-12">
+                <label for="cw_booking_for" class="form-label fw-semibold">Booking For <span class="text-danger">*</span></label>
+                <select class="form-select" id="cw_booking_for" required>
+                  <option value="Self" selected>Self</option>
+                  <option value="Son">Son</option>
+                  <option value="Wife">Wife</option>
+                  <option value="Sister">Sister</option>
+                  <option value="Brother">Brother</option>
+                  <option value="Mother">Mother</option>
+                  <option value="Father">Father</option>
+                  <option value="Other">Other</option>
+                </select>
+              </div>
+              <div class="col-12 d-none" id="cw_otherPersonGroup">
+                <label for="cw_person_name" class="form-label fw-semibold">Enter Person Name <span class="text-danger">*</span></label>
+                <div class="input-group">
+                  <span class="input-group-text"><i class="fa-solid fa-user-tag" style="color: var(--accent-red);"></i></span>
+                  <input type="text" class="form-control" id="cw_person_name" placeholder="Full name of person">
+                </div>
+              </div>
+              <div class="col-12 d-none" id="cw_tokenResultAlert">
+                <div class="alert alert-success mb-0 py-2">
+                  <i class="fa-solid fa-circle-check me-2 fs-5"></i>
+                  <strong>Token Issued!</strong> <span id="cw_tokenResultMsg"></span>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="modal-footer border-0">
+            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancel</button>
+            <button type="submit" class="btn btn-primary-custom" id="cw_submitBtn"><i class="fa-solid fa-ticket me-2"></i>Book Walk-In Token</button>
+          </div>
+        </form>
+      </div>
+    </div>
+  </div>
+
+  <!-- ADD / CREATE USER ACCOUNT MODAL (Doctor, Staff, Admin) -->
+  <div class="modal fade" id="addUserModal" tabindex="-1" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered">
+      <div class="modal-content glass-card border-0">
+        <div class="modal-header border-0 pb-0" style="background: var(--bg); border-bottom: 1px solid var(--border);">
+          <div>
+            <h5 class="modal-title fw-bold">
+              <i class="fa-solid fa-user-plus me-2 text-danger"></i>Add System Login Account
+            </h5>
+            <small class="text-muted">Create Doctor, Staff, or Admin login credentials for CRM</small>
+          </div>
+          <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+        </div>
+        <form id="addUserForm" onsubmit="event.preventDefault(); saveNewUser();">
+          <div class="modal-body p-4">
+            <div class="mb-3">
+              <label class="form-label fw-semibold small">Account Role <span class="text-danger">*</span></label>
+              <select class="form-select" id="new_user_role" onchange="toggleDoctorFieldsInModal(this.value)" required>
+                <option value="doctor" selected>Doctor (Consultation, Odontogram & Rx)</option>
+                <option value="staff">Staff (Front Desk, Bookings & Billing)</option>
+                <option value="admin">Admin (Full System & Financial Access)</option>
+              </select>
+            </div>
+
+            <div class="mb-3">
+              <label class="form-label fw-semibold small">Full Name <span class="text-danger">*</span></label>
+              <input type="text" class="form-control" id="new_user_name" placeholder="e.g. Dr. Emily Watson" required>
+            </div>
+
+            <div class="row g-2 mb-3">
+              <div class="col-md-6">
+                <label class="form-label fw-semibold small">Login Username <span class="text-danger">*</span></label>
+                <div class="input-group input-group-sm">
+                  <span class="input-group-text"><i class="fa-solid fa-user text-muted"></i></span>
+                  <input type="text" class="form-control" id="new_user_username" placeholder="dr.emily" required>
+                </div>
+              </div>
+              <div class="col-md-6">
+                <label class="form-label fw-semibold small">Login Password <span class="text-danger">*</span></label>
+                <div class="input-group input-group-sm">
+                  <span class="input-group-text"><i class="fa-solid fa-lock text-muted"></i></span>
+                  <input type="password" class="form-control" id="new_user_password" placeholder="••••••••" required>
+                </div>
+              </div>
+            </div>
+
+            <div class="mb-3" id="doctor_spec_group">
+              <label class="form-label fw-semibold small">Specialization / Department</label>
+              <input type="text" class="form-control form-control-sm" id="new_user_spec" placeholder="e.g. Orthodontics / Prosthodontics / BDS">
+            </div>
+
+            <div class="row g-2 mb-2">
+              <div class="col-md-6">
+                <label class="form-label fw-semibold small">Email (Optional)</label>
+                <input type="email" class="form-control form-control-sm" id="new_user_email" placeholder="emily@clinic.com">
+              </div>
+              <div class="col-md-6">
+                <label class="form-label fw-semibold small">Contact Phone (Optional)</label>
+                <input type="tel" class="form-control form-control-sm" id="new_user_phone" placeholder="9876543210">
+              </div>
+            </div>
+          </div>
+          <div class="modal-footer border-0 bg-light">
+            <button type="button" class="btn btn-secondary btn-sm px-3" data-bs-dismiss="modal">Cancel</button>
+            <button type="submit" class="btn btn-primary-custom btn-sm px-4 fw-bold" id="addUserSubmitBtn">
+              <i class="fa-solid fa-check me-1"></i> Create Login Account
+            </button>
+          </div>
+        </form>
+      </div>
+    </div>
+  </div>
+
+  <!-- COMBINED PAYMENT RECEIPT & PRESCRIPTION PRINT MODAL -->
+  <div class="modal fade" id="receiptRxPrintModal" tabindex="-1" aria-hidden="true">
+    <div class="modal-dialog modal-lg modal-dialog-centered">
+      <div class="modal-content glass-card border-0 shadow-lg">
+        <div class="modal-header border-0 pb-0 no-print" style="background: var(--bg); border-bottom: 1px solid var(--border);">
+          <div>
+            <h5 class="modal-title fw-bold text-dark">
+              <i class="fa-solid fa-file-invoice-dollar me-2 text-danger"></i>Clinical Prescription & Official Payment Receipt
+            </h5>
+            <small class="text-muted">Combined official dental prescription, clinical odontogram summary & payment receipt</small>
+          </div>
+          <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+        </div>
+        <div class="modal-body p-3 printable-area" id="receiptRxPrintContent">
+          <!-- Dynamically populated -->
+        </div>
+        <div class="modal-footer border-0 bg-light no-print">
+          <button type="button" class="btn btn-secondary btn-sm px-3" data-bs-dismiss="modal">Close</button>
+          <button type="button" class="btn btn-primary-custom btn-sm px-4 fw-bold" onclick="window.print()">
+            <i class="fa-solid fa-print me-1"></i> Print Slip (A4 / Thermal)
+          </button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- 1. PRESCRIPTION PRINT & CASE SLIP MODAL -->
+  <div class="modal fade" id="prescriptionPrintModal" tabindex="-1" aria-hidden="true">
+    <div class="modal-dialog modal-lg modal-dialog-centered">
+      <div class="modal-content glass-card border-0 shadow-lg">
+        <div class="modal-header border-0 pb-0 no-print" style="background: var(--bg); border-bottom: 1px solid var(--border);">
+          <div>
+            <h5 class="modal-title fw-bold text-dark">
+              <i class="fa-solid fa-print me-2 text-danger"></i>Clinical Prescription & Case Slip
+            </h5>
+            <small class="text-muted">Printable official dental prescription, interactive odontogram summary & clinical notes</small>
+          </div>
+          <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+        </div>
+        <div class="modal-body p-4 printable-area" id="prescriptionPrintContent">
+          <!-- Dynamically populated -->
+        </div>
+        <div class="modal-footer border-0 bg-light no-print">
+          <button type="button" class="btn btn-secondary btn-sm px-3" data-bs-dismiss="modal">Close</button>
+          <button type="button" class="btn btn-primary-custom btn-sm px-4 fw-bold" onclick="window.print()">
+            <i class="fa-solid fa-print me-1"></i> Print Slip (A4 / Thermal)
+          </button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- 2. PATIENT CASE SHEET & MEDICAL CARD PRINT MODAL -->
+  <div class="modal fade" id="patientCaseSheetModal" tabindex="-1" aria-hidden="true">
+    <div class="modal-dialog modal-lg modal-dialog-centered">
+      <div class="modal-content glass-card border-0 shadow-lg">
+        <div class="modal-header border-0 pb-0 no-print" style="background: var(--bg); border-bottom: 1px solid var(--border);">
+          <div>
+            <h5 class="modal-title fw-bold text-dark">
+              <i class="fa-solid fa-file-medical me-2 text-success"></i>Patient Medical Case Sheet & Registration Record
+            </h5>
+            <small class="text-muted">Official clinical registration card and patient medical history</small>
+          </div>
+          <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+        </div>
+        <div class="modal-body p-4 printable-area" id="patientCaseSheetContent">
+          <!-- Dynamically populated -->
+        </div>
+        <div class="modal-footer border-0 bg-light no-print">
+          <button type="button" class="btn btn-secondary btn-sm px-3" data-bs-dismiss="modal">Close</button>
+          <button type="button" class="btn btn-success btn-sm px-4 fw-bold" onclick="window.print()">
+            <i class="fa-solid fa-print me-1"></i> Print Case Sheet
+          </button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- 3. PATIENT PROFILE MODAL -->
+  <div class="modal fade" id="patientProfileModal" tabindex="-1" aria-hidden="true">
+    <div class="modal-dialog modal-md modal-dialog-centered">
+      <div class="modal-content glass-card border-0 shadow-lg">
+        <div class="modal-header border-0 pb-0">
+          <h5 class="modal-title fw-bold text-dark"><i class="fa-solid fa-user me-2 text-primary"></i>Patient Medical Profile</h5>
+          <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+        </div>
+        <div class="modal-body p-4" id="patientProfileBody">
+          <!-- Dynamically populated -->
+        </div>
+        <div class="modal-footer border-0 bg-light d-flex justify-content-between">
+          <div>
+            <button type="button" class="btn btn-outline-danger btn-sm px-3 fw-bold d-none" id="btnProfileSoftDelete" onclick="deleteActiveProfilePatient()">
+              <i class="fa-solid fa-trash-can me-1"></i> Soft Delete Patient
+            </button>
+          </div>
+          <div>
+            <button type="button" class="btn btn-secondary btn-sm px-3 me-1" data-bs-dismiss="modal">Close</button>
+            <button type="button" class="btn btn-outline-success btn-sm px-3 fw-bold" id="btnProfilePrintCaseSheet" onclick="printPatientCaseSheetFromProfile()">
+              <i class="fa-solid fa-print me-1"></i> Print Case Sheet
+            </button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- 4. SOFT DELETE PATIENT MODAL (ADMIN ONLY) -->
+  <div class="modal fade" id="softDeletePatientModal" tabindex="-1" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered">
+      <div class="modal-content glass-card border-0 shadow-lg">
+        <div class="modal-header border-0 pb-0">
+          <h5 class="modal-title fw-bold text-danger">
+            <i class="fa-solid fa-triangle-exclamation me-2"></i>Soft Delete Patient & Data
+          </h5>
+          <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+        </div>
+        <div class="modal-body p-4">
+          <div class="alert alert-danger d-flex align-items-center mb-3">
+            <i class="fa-solid fa-user-shield fs-2 me-3 text-danger"></i>
+            <div>
+              <strong>Administrator Privilege Confirmed:</strong>
+              <div class="small">You are soft-deleting this patient and ALL associated records.</div>
+            </div>
+          </div>
+          <p class="text-dark mb-2">Are you sure you want to soft-delete patient <strong id="deletePatientName" class="text-danger"></strong> (<span id="deletePatientCode"></span>)?</p>
+          <div class="bg-light p-3 rounded-3 mb-3 border">
+            <div class="small text-muted mb-1"><strong>The following data will be soft-deleted:</strong></div>
+            <ul class="small mb-0 ps-3 text-secondary">
+              <li>Patient Profile & Registration record</li>
+              <li>All active Walk-In & Online appointments</li>
+              <li>All completed clinical visit & consultation history</li>
+              <li>Queue tokens and prescription records</li>
+            </ul>
+          </div>
+          <div class="alert alert-light border small text-muted mb-0">
+            <i class="fa-solid fa-circle-info me-1 text-primary"></i>
+            <strong>Safe Retention:</strong> Records are not wiped permanently. An Administrator can restore this patient and their history at any time from the Deleted Archive tab.
+          </div>
+          <input type="hidden" id="deletePatientId">
+        </div>
+        <div class="modal-footer border-0 pt-0">
+          <button type="button" class="btn btn-secondary btn-sm px-3" data-bs-dismiss="modal">Cancel</button>
+          <button type="button" class="btn btn-danger btn-sm px-3 fw-bold" id="btnConfirmSoftDelete" onclick="executeSoftDeletePatient()">
+            <i class="fa-solid fa-trash-can me-1"></i> Soft Delete Patient & Data
+          </button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- 5. RIGHT-CLICK CONTEXT MENU (ONLINE & MASTER BOOKINGS) -->
+  <div id="bookingContextMenu" class="glass-context-menu" style="display:none; position:fixed;">
+    <div class="px-3 py-1 border-bottom mb-1">
+      <small class="fw-bold text-muted text-uppercase" style="font-size:0.7rem;">Quick Booking Actions</small>
+      <div id="ctxMenuBookingLabel" class="fw-bold text-dark text-truncate small">Patient</div>
+    </div>
+    <a class="dropdown-item py-2" href="javascript:void(0)" id="ctxConvertWalkin">
+      <i class="fa-solid fa-person-walking-arrow-right text-success me-2"></i> <strong>Convert to Walk-In Queue</strong>
+    </a>
+    <a class="dropdown-item py-2" href="javascript:void(0)" id="ctxAssignDoctor">
+      <i class="fa-solid fa-user-doctor text-primary me-2"></i> Assign Concerned Doctor
+    </a>
+    <a class="dropdown-item py-2" href="javascript:void(0)" id="ctxDoctorNote">
+      <i class="fa-solid fa-stethoscope text-info me-2"></i> Open Doctor's Note
+    </a>
+    <hr class="dropdown-divider my-1">
+    <a class="dropdown-item py-2 text-danger" href="javascript:void(0)" id="ctxCancelBooking">
+      <i class="fa-solid fa-ban me-2"></i> Cancel Appointment
+    </a>
+  </div>
+
+  <!-- 6. CONVERT ONLINE TO WALKIN MODAL -->
+  <div class="modal fade" id="convertWalkinModal" tabindex="-1" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered">
+      <div class="modal-content glass-card border-0 shadow-lg">
+        <div class="modal-header border-0 pb-0">
+          <h5 class="modal-title fw-bold text-success">
+            <i class="fa-solid fa-person-walking-arrow-right me-2"></i>Convert to Walk-In Queue
+          </h5>
+          <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+        </div>
+        <div class="modal-body p-4">
+          <p class="text-muted small mb-3">
+            Transfer this online booking to today's live walk-in waiting queue. A daily visual token (<span class="fw-bold text-dark">A001...</span>) will be assigned automatically.
+          </p>
+          <div class="bg-light p-3 rounded-3 mb-3 border">
+            <div class="row g-2 small">
+              <div class="col-6"><strong>Patient:</strong> <span id="cwModalPatientName">-</span></div>
+              <div class="col-6"><strong>Phone:</strong> <span id="cwModalPhone">-</span></div>
+              <div class="col-6"><strong>Relation:</strong> <span id="cwModalRelation">-</span></div>
+              <div class="col-6"><strong>Service:</strong> <span id="cwModalService">-</span></div>
+            </div>
+          </div>
+          <div class="mb-3">
+            <label class="form-label fw-bold small">Assign Concerned / Consulting Doctor <span class="text-danger">*</span></label>
+            <select class="form-select" id="cwModalDoctorSelect">
+              <option value="Dr. Alexander Wright">Dr. Alexander Wright (Senior Endodontist)</option>
+              <option value="Dr. Sarah Jenkins">Dr. Sarah Jenkins (Chief Dental Surgeon)</option>
+            </select>
+            <small class="text-muted">The patient will appear in this doctor's consultation queue.</small>
+          </div>
+          <input type="hidden" id="cwModalBookingId">
+        </div>
+        <div class="modal-footer border-0 pt-0">
+          <button type="button" class="btn btn-secondary btn-sm px-3" data-bs-dismiss="modal">Cancel</button>
+          <button type="button" class="btn btn-success btn-sm px-4 fw-bold" onclick="executeConvertWalkin()">
+            <i class="fa-solid fa-check me-1"></i> Confirm & Check-In
+          </button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+
+
+  <!-- Web MCP & Antigravity Agent Context Inspector Modal -->
+  <div class="modal fade" id="agentContextModal" tabindex="-1" aria-hidden="true">
+    <div class="modal-dialog modal-lg modal-dialog-centered modal-dialog-scrollable">
+      <div class="modal-content glass-card border-0 shadow-lg">
+        <div class="modal-header border-0 pb-0">
+          <div class="d-flex align-items-center gap-2">
+            <div class="icon-circle p-2 rounded-circle" style="background: rgba(139, 92, 246, 0.15); color: #7c3aed;">
+              <i class="fa-solid fa-robot fs-5"></i>
+            </div>
+            <div>
+              <h5 class="modal-title fw-bold text-dark mb-0">Web MCP & Antigravity Intelligence Hub</h5>
+              <small class="text-muted">Live Model Context Protocol server state, bifurcation cohorts, and agent prompt context.</small>
+            </div>
+          </div>
+          <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+        </div>
+        <div class="modal-body p-4">
+          <!-- Connection Status Chips -->
+          <div class="d-flex flex-wrap gap-2 mb-3">
+            <span class="badge bg-success-subtle text-success border border-success-subtle px-3 py-2 rounded-pill fw-semibold">
+              <i class="fa-solid fa-circle-check me-1"></i> MCP Server: dental-crm-mcp (Online)
+            </span>
+            <span class="badge bg-primary-subtle text-primary border border-primary-subtle px-3 py-2 rounded-pill fw-semibold">
+              <i class="fa-solid fa-database me-1"></i> Database: Cloudflare D1 Live Remote
+            </span>
+            <span class="badge bg-purple-subtle text-purple border border-purple-subtle px-3 py-2 rounded-pill fw-semibold" style="color: #6d28d9; background: rgba(109, 40, 217, 0.1);">
+              <i class="fa-solid fa-bolt me-1"></i> Protocol: stdio & HTTP (/api/agent/context)
+            </span>
+          </div>
+
+          <!-- Bifurcation Metrics Grid -->
+          <div class="row g-2 mb-3">
+            <div class="col-6 col-md-3">
+              <div class="p-3 bg-light rounded-3 border text-center">
+                <small class="text-muted fw-bold d-block text-uppercase" style="font-size: 0.7rem;">Tomorrow (कल)</small>
+                <h4 class="fw-bold text-danger mb-0 mt-1" id="mcpTomorrowCount">0</h4>
+                <small class="text-muted" style="font-size: 0.72rem;">Follow-up due</small>
+              </div>
+            </div>
+            <div class="col-6 col-md-3">
+              <div class="p-3 bg-light rounded-3 border text-center">
+                <small class="text-muted fw-bold d-block text-uppercase" style="font-size: 0.7rem;">Next 7 Days</small>
+                <h4 class="fw-bold text-primary mb-0 mt-1" id="mcpNextWeekCount">0</h4>
+                <small class="text-muted" style="font-size: 0.72rem;">Scheduled</small>
+              </div>
+            </div>
+            <div class="col-6 col-md-3">
+              <div class="p-3 bg-light rounded-3 border text-center">
+                <small class="text-muted fw-bold d-block text-uppercase" style="font-size: 0.7rem;">Recent Visits</small>
+                <h4 class="fw-bold text-success mb-0 mt-1" id="mcpRecentCount">0</h4>
+                <small class="text-muted" style="font-size: 0.72rem;">Post-op 48h</small>
+              </div>
+            </div>
+            <div class="col-6 col-md-3">
+              <div class="p-3 bg-light rounded-3 border text-center">
+                <small class="text-muted fw-bold d-block text-uppercase" style="font-size: 0.7rem;">Active Queue</small>
+                <h4 class="fw-bold text-dark mb-0 mt-1" id="mcpQueueCount">0</h4>
+                <small class="text-muted" style="font-size: 0.72rem;">Tokens waiting</small>
+              </div>
+            </div>
+          </div>
+
+          <!-- Live JSON Stream Viewer -->
+          <div class="d-flex justify-content-between align-items-center mb-1">
+            <label class="form-label fw-bold small text-muted mb-0">
+              <i class="fa-solid fa-code me-1 text-primary"></i> Live Agent JSON Payload (/api/agent/context):
+            </label>
+            <button type="button" class="btn btn-sm btn-link text-decoration-none p-0 text-primary" onclick="copyAgentContextJson()">
+              <i class="fa-solid fa-copy me-1"></i> Copy Full JSON Context
+            </button>
+          </div>
+          <pre id="agentContextJsonDisplay" style="max-height: 280px; background: #0f172a; color: #38bdf8; padding: 14px; border-radius: 8px; font-size: 0.78rem; overflow: auto; border: 1px solid #1e293b;">Loading agent context...</pre>
+        </div>
+        <div class="modal-footer border-0 pt-0">
+          <button type="button" class="btn btn-sm btn-outline-secondary px-3" data-bs-dismiss="modal">Close</button>
+          <button type="button" class="btn btn-sm btn-outline-primary px-3" onclick="loadAgentContextData()">
+            <i class="fa-solid fa-rotate me-1"></i> Refresh State
+          </button>
+          <button type="button" class="btn btn-sm btn-purple text-white px-3 fw-bold" style="background: #7c3aed;" onclick="copyAgentContextJson()">
+            <i class="fa-solid fa-copy me-1"></i> Copy AI Prompt
+          </button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- NOTIFICATION & AUTOMATION CONFIGURATION MODAL (WhatsApp API & Make.com) -->
+  <div class="modal fade" id="notifConfigModal" tabindex="-1" aria-hidden="true">
+    <div class="modal-dialog modal-lg modal-dialog-centered">
+      <div class="modal-content glass-card border-0 shadow-lg">
+        <div class="modal-header border-0 pb-0" style="background: var(--bg); border-bottom: 1px solid var(--border);">
+          <div>
+            <h5 class="modal-title fw-bold text-dark">
+              <i class="fa-solid fa-sliders me-2 text-primary"></i>Notification Channel & Webhook Configuration
+            </h5>
+            <small class="text-muted">Configure WhatsApp Cloud API endpoints, Make.com scenario webhooks, and default links</small>
+          </div>
+          <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+        </div>
+        <form id="notifConfigForm" onsubmit="event.preventDefault(); saveNotificationConfigForm();">
+          <div class="modal-body p-4">
+            <!-- Tabs: WhatsApp API vs Make.com Webhooks -->
+            <ul class="nav nav-pills mb-3 gap-2" id="notifConfigTabs" role="tablist">
+              <li class="nav-item" role="presentation">
+                <button class="nav-link active btn-sm" id="tab-whatsapp-cfg" data-bs-toggle="pill" data-bs-target="#cfg-whatsapp-pane" type="button" role="tab">
+                  <i class="fa-brands fa-whatsapp me-1 text-success"></i> WhatsApp API
+                </button>
+              </li>
+              <li class="nav-item" role="presentation">
+                <button class="nav-link btn-sm" id="tab-make-cfg" data-bs-toggle="pill" data-bs-target="#cfg-make-pane" type="button" role="tab">
+                  <i class="fa-solid fa-bolt me-1 text-warning"></i> Make.com Scenarios
+                </button>
+              </li>
+              <li class="nav-item" role="presentation">
+                <button class="nav-link btn-sm" id="tab-links-cfg" data-bs-toggle="pill" data-bs-target="#cfg-links-pane" type="button" role="tab">
+                  <i class="fa-solid fa-link me-1 text-info"></i> Default Links
+                </button>
+              </li>
+            </ul>
+
+            <div class="tab-content">
+              <!-- WhatsApp API Settings -->
+              <div class="tab-pane fade show active" id="cfg-whatsapp-pane" role="tabpanel">
+                <div class="alert alert-info py-2 px-3 small mb-3">
+                  <i class="fa-solid fa-circle-info me-1"></i> Supports Meta WhatsApp Cloud API or any custom WhatsApp HTTP gateway (e.g., WATI, Gupshup, Aisensy). Leave empty for CRM mock delivery mode.
+                </div>
+                <div class="mb-3">
+                  <label class="form-label small fw-bold text-dark">WhatsApp API Endpoint URL:</label>
+                  <input type="url" class="form-control form-control-sm" id="cfg_whatsapp_api_url" placeholder="https://graph.facebook.com/v20.0/YOUR_PHONE_ID/messages">
+                </div>
+                <div class="row g-2 mb-3">
+                  <div class="col-md-6">
+                    <label class="form-label small fw-bold text-dark">Phone Number ID:</label>
+                    <input type="text" class="form-control form-control-sm" id="cfg_whatsapp_phone_number_id" placeholder="e.g. 10482910481239">
+                  </div>
+                  <div class="col-md-6">
+                    <label class="form-label small fw-bold text-dark">System Access Token (Bearer):</label>
+                    <input type="password" class="form-control form-control-sm" id="cfg_whatsapp_api_token" placeholder="Bearer Token">
+                  </div>
+                </div>
+              </div>
+
+              <!-- Make.com Scenario Webhooks -->
+              <div class="tab-pane fade" id="cfg-make-pane" role="tabpanel">
+                <div class="alert alert-warning py-2 px-3 small mb-3">
+                  <i class="fa-solid fa-bolt me-1"></i> Paste your Make.com Webhook URLs here. The CRM sends a standard JSON payload with patient details, treatment, balances, and links.
+                </div>
+                <div class="mb-3">
+                  <label class="form-label small fw-bold text-dark">Default Make.com Webhook URL:</label>
+                  <input type="url" class="form-control form-control-sm" id="cfg_make_webhook_url" placeholder="https://hook.eu2.make.com/your-default-crm-webhook">
+                </div>
+                <div class="mb-3">
+                  <label class="form-label small fw-bold text-dark"><span class="badge bg-success me-1">Scenario 1</span> Treatment Completed → Thank You → Review Link:</label>
+                  <input type="url" class="form-control form-control-sm" id="cfg_make_scenario_review_url" placeholder="https://hook.eu2.make.com/treatment-completed-review-scenario">
+                  <small class="text-muted" style="font-size: 0.72rem;">Triggered automatically when choosing "Review & Feedback Request" or Post-Treatment scenario.</small>
+                </div>
+                <div class="mb-3">
+                  <label class="form-label small fw-bold text-dark"><span class="badge bg-warning text-dark me-1">Scenario 2</span> Payment Pending → Reminder:</label>
+                  <input type="url" class="form-control form-control-sm" id="cfg_make_scenario_payment_url" placeholder="https://hook.eu2.make.com/payment-pending-reminder-scenario">
+                  <small class="text-muted" style="font-size: 0.72rem;">Triggered automatically when choosing "Payment Reminder" scenario.</small>
+                </div>
+              </div>
+
+              <!-- Default Links -->
+              <div class="tab-pane fade" id="cfg-links-pane" role="tabpanel">
+                <div class="mb-3">
+                  <label class="form-label small fw-bold text-dark">Google Review Link / Profile:</label>
+                  <input type="url" class="form-control form-control-sm" id="cfg_google_review_link" placeholder="https://g.page/r/dental-clinic/review">
+                </div>
+                <div class="mb-3">
+                  <label class="form-label small fw-bold text-dark">Base Payment / Invoice Gateway URL:</label>
+                  <input type="url" class="form-control form-control-sm" id="cfg_payment_link_base" placeholder="https://pay.dentalclinic.com/invoice/">
+                  <small class="text-muted" style="font-size: 0.72rem;">Patient booking ID or code is appended dynamically to form the payment link.</small>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="modal-footer border-0 bg-light d-flex justify-content-between">
+            <button type="button" class="btn btn-secondary btn-sm px-3" data-bs-dismiss="modal">Cancel</button>
+            <button type="submit" class="btn btn-success btn-sm px-4 fw-bold">
+              <i class="fa-solid fa-floppy-disk me-1"></i> Save Configuration
+            </button>
+          </div>
+        </form>
+      </div>
+    </div>
+  </div>
+
+
+  <!-- Scripts -->
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
+  <script src="js/utils.js"></script>
+  <script src="js/auth.js"></script>
+  <script src="js/dashboard.js?v=2.4"></script>
+</body>
+</html>

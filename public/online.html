@@ -1,0 +1,249 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Online Appointment Booking | Veloura Dental</title>
+  <!-- Bootstrap 5 CSS -->
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
+  <!-- FontAwesome -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css">
+  <link rel="stylesheet" href="css/theme.css">
+  <link rel="stylesheet" href="css/style.css">
+</head>
+<body class="bg-light">
+
+  <nav class="navbar navbar-custom">
+    <div class="container">
+      <a class="navbar-brand d-flex align-items-center gap-2 fw-bold" href="dashboard.html" style="color: var(--primary-text);">
+        <div class="d-flex align-items-center justify-content-center" style="width: 36px; height: 36px; background: var(--accent-red); border-radius: 8px; color: #fff;">
+          <i class="fa-solid fa-tooth"></i>
+        </div>
+        <span style="font-family: var(--font-heading);">Dental CRM</span>
+      </a>
+      <div>
+        <a href="walkin.html" class="btn btn-sm btn-outline-secondary me-2" style="border-color: var(--border); color: var(--text-muted);"><i class="fa-solid fa-person-walking me-1"></i> Walk-In Token</a>
+        <a href="login.html" class="btn btn-sm" style="background: var(--accent-red); color: #fff; border-radius: 50px;"><i class="fa-solid fa-right-to-bracket me-1"></i> Staff Login</a>
+      </div>
+    </div>
+  </nav>
+
+  <div class="container py-5">
+    <div class="row justify-content-center">
+      <div class="col-md-9 col-lg-7">
+        <div class="glass-card p-4 p-md-5">
+          
+          <div class="text-center mb-4">
+            <div class="d-inline-flex align-items-center justify-content-center p-3 rounded-circle mb-3 fs-3" style="background: var(--red-light); color: var(--accent-red);">
+              <i class="fa-solid fa-laptop-medical"></i>
+            </div>
+            <h2 class="fw-bold" style="font-family: var(--font-heading);">Online Appointment Booking</h2>
+            <p class="text-muted small">Select your dental service and receive instant booking confirmation.</p>
+          </div>
+
+          <!-- Non-Blocking Toast / Alert Notification Banner -->
+          <div id="bookingToast" class="alert alert-success d-none alert-dismissible fade show text-center" role="alert">
+            <i class="fa-solid fa-circle-check me-2 fs-5"></i>
+            <span id="bookingToastMessage">Booking submitted successfully!</span>
+            <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+          </div>
+
+          <form id="onlineForm">
+            <div class="row g-3">
+              <!-- Patient Name -->
+              <div class="col-md-6">
+                <label for="patient_name" class="form-label fw-semibold">Patient Name <span class="text-danger">*</span></label>
+                <div class="input-group">
+                  <span class="input-group-text"><i class="fa-solid fa-user" style="color: var(--accent-red);"></i></span>
+                  <input type="text" class="form-control" id="patient_name" placeholder="Enter Full Name" required>
+                </div>
+              </div>
+
+              <!-- Phone Number -->
+              <div class="col-md-6">
+                <label for="phone" class="form-label fw-semibold">Phone Number <span class="text-danger">*</span></label>
+                <div class="input-group">
+                  <span class="input-group-text"><i class="fa-solid fa-phone" style="color: var(--accent-red);"></i></span>
+                  <input type="tel" class="form-control" id="phone" placeholder="10-digit Mobile (e.g. 9876543210)" maxlength="10" pattern="[6-9][0-9]{9}" title="Enter 10-digit Indian mobile number starting with 6, 7, 8, or 9" required>
+                </div>
+              </div>
+
+              <!-- Email -->
+              <div class="col-12">
+                <label for="email" class="form-label fw-semibold">Email Address</label>
+                <div class="input-group">
+                  <span class="input-group-text"><i class="fa-solid fa-envelope" style="color: var(--accent-red);"></i></span>
+                  <input type="email" class="form-control" id="email" placeholder="name@example.com">
+                </div>
+              </div>
+
+              <!-- Dental Service Dropdown -->
+              <div class="col-12">
+                <label for="dental_service" class="form-label fw-semibold">Dental Service <span class="text-danger">*</span></label>
+                <select class="form-select" id="dental_service" required>
+                  <option value="" disabled selected>Select Dental Treatment</option>
+                  <option value="General Checkup">General Checkup</option>
+                  <option value="Teeth Cleaning">Teeth Cleaning</option>
+                  <option value="Root Canal">Root Canal</option>
+                  <option value="Dental Implant">Dental Implant</option>
+                  <option value="Braces">Braces</option>
+                  <option value="Teeth Whitening">Teeth Whitening</option>
+                  <option value="Scaling">Scaling</option>
+                  <option value="Extraction">Extraction</option>
+                  <option value="Crown">Crown</option>
+                  <option value="Bridge">Bridge</option>
+                  <option value="Denture">Denture</option>
+                  <option value="Smile Design">Smile Design</option>
+                  <option value="Emergency">Emergency</option>
+                  <option value="Other">Other</option>
+                </select>
+              </div>
+
+              <!-- Conditional Other Service Textbox -->
+              <div class="col-12 d-none" id="otherServiceGroup">
+                <label for="other_service" class="form-label fw-semibold">Enter Service <span class="text-danger">*</span></label>
+                <div class="input-group">
+                  <span class="input-group-text"><i class="fa-solid fa-notes-medical" style="color: var(--accent-red);"></i></span>
+                  <input type="text" class="form-control" id="other_service" placeholder="Describe requested dental service">
+                </div>
+              </div>
+
+              <!-- Booking For Dropdown -->
+              <div class="col-12">
+                <label for="booking_for" class="form-label fw-semibold">Booking For <span class="text-danger">*</span></label>
+                <select class="form-select" id="booking_for" required>
+                  <option value="Self" selected>Self</option>
+                  <option value="Son">Son</option>
+                  <option value="Wife">Wife</option>
+                  <option value="Sister">Sister</option>
+                  <option value="Brother">Brother</option>
+                  <option value="Mother">Mother</option>
+                  <option value="Father">Father</option>
+                  <option value="Other">Other</option>
+                </select>
+              </div>
+
+              <!-- Conditional Other Person Name -->
+              <div class="col-12 d-none" id="otherPersonGroup">
+                <label for="person_name" class="form-label fw-semibold">Enter Person Name <span class="text-danger">*</span></label>
+                <div class="input-group">
+                  <span class="input-group-text"><i class="fa-solid fa-user-tag" style="color: var(--accent-red);"></i></span>
+                  <input type="text" class="form-control" id="person_name" placeholder="Full name of person">
+                </div>
+              </div>
+            </div>
+
+            <!-- Submit Button -->
+            <button type="submit" class="btn btn-primary-custom w-100 py-3 mt-4 fs-5" id="submitBtn">
+              <i class="fa-solid fa-calendar-check me-2"></i> Book Appointment
+            </button>
+          </form>
+
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
+  <script src="js/utils.js"></script>
+  <script>
+    const dentalServiceSelect = document.getElementById('dental_service');
+    const otherServiceGroup = document.getElementById('otherServiceGroup');
+    const otherServiceInput = document.getElementById('other_service');
+
+    const bookingForSelect = document.getElementById('booking_for');
+    const otherPersonGroup = document.getElementById('otherPersonGroup');
+    const personNameInput = document.getElementById('person_name');
+
+    const onlineForm = document.getElementById('onlineForm');
+    const toastBanner = document.getElementById('bookingToast');
+    const toastMsg = document.getElementById('bookingToastMessage');
+
+    dentalServiceSelect.addEventListener('change', () => {
+      if (dentalServiceSelect.value === 'Other') {
+        otherServiceGroup.classList.remove('d-none');
+        otherServiceInput.setAttribute('required', 'required');
+      } else {
+        otherServiceGroup.classList.add('d-none');
+        otherServiceInput.removeAttribute('required');
+      }
+    });
+
+    bookingForSelect.addEventListener('change', () => {
+      if (bookingForSelect.value === 'Other') {
+        otherPersonGroup.classList.remove('d-none');
+        personNameInput.setAttribute('required', 'required');
+      } else {
+        otherPersonGroup.classList.add('d-none');
+        personNameInput.removeAttribute('required');
+      }
+    });
+
+    const phoneInput = document.getElementById('phone');
+    if (phoneInput) {
+      phoneInput.addEventListener('input', (e) => {
+        let val = e.target.value.replace(/\D/g, '');
+        if (val.length === 12 && val.startsWith('91')) val = val.slice(2);
+        else if (val.length === 11 && val.startsWith('0')) val = val.slice(1);
+        e.target.value = val.slice(0, 10);
+      });
+    }
+
+    onlineForm.addEventListener('submit', async (e) => {
+      e.preventDefault();
+      const rawPhone = document.getElementById('phone').value.trim();
+      let cleanPhone = rawPhone.replace(/\D/g, '');
+      if (cleanPhone.length === 12 && cleanPhone.startsWith('91')) cleanPhone = cleanPhone.slice(2);
+      else if (cleanPhone.length === 11 && cleanPhone.startsWith('0')) cleanPhone = cleanPhone.slice(1);
+      cleanPhone = cleanPhone.slice(0, 10);
+
+      if (!/^[6-9]\d{9}$/.test(cleanPhone)) {
+        alert('Please enter a valid 10-digit Indian mobile number starting with 6, 7, 8, or 9.');
+        document.getElementById('phone').focus();
+        return;
+      }
+
+      const submitBtn = document.getElementById('submitBtn');
+      submitBtn.disabled = true;
+      submitBtn.innerHTML = '<i class="fa-solid fa-spinner fa-spin me-2"></i> Processing...';
+
+      const payload = {
+        patient_name: document.getElementById('patient_name').value.trim(),
+        phone: cleanPhone,
+        email: document.getElementById('email').value.trim(),
+        dental_service: dentalServiceSelect.value,
+        other_service: otherServiceInput.value.trim(),
+        booking_for: bookingForSelect.value,
+        person_name: personNameInput.value.trim()
+      };
+
+      try {
+        const res = await fetch('/api/bookings/online', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify(payload)
+        });
+
+        const data = await res.json();
+        if (data.success && data.booking) {
+          const b = data.booking;
+          toastMsg.innerHTML = `<strong>Booking Confirmed!</strong> Booking Code: <strong>${b.booking_code}</strong> | Token: <strong>${b.visual_token}</strong>`;
+          toastBanner.classList.remove('d-none');
+          onlineForm.reset();
+          otherServiceGroup.classList.add('d-none');
+          otherPersonGroup.classList.add('d-none');
+          window.scrollTo({ top: 0, behavior: 'smooth' });
+        } else {
+          alert(data.message || 'Booking failed. Please try again.');
+        }
+      } catch (err) {
+        console.error(err);
+        alert('Server connection error.');
+      } finally {
+        submitBtn.disabled = false;
+        submitBtn.innerHTML = '<i class="fa-solid fa-calendar-check me-2"></i> Book Appointment';
+      }
+    });
+  </script>
+</body>
+</html>

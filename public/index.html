@@ -1,0 +1,1018 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Veloura Dental & Homoeopathy - Modern Dental Care | Nikol, Ahmedabad</title>
+  <meta name="description" content="Veloura Dental & Homoeopathy in Nikol, Ahmedabad provides painless root canal, dental implants, teeth whitening, and integrated homeopathic oral care. Book online or get walk-in token.">
+
+  <!-- Google Fonts -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Outfit:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+
+  <!-- FontAwesome 6 -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css">
+
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    :root {
+      --red: #C2644F;
+      --red-dark: #a85441;
+      --red-light: #f3dfdb;
+      --dark: #03090D;
+      --text: #03090D;
+      --text-muted: #5e6b73;
+      --white: #ffffff;
+      --bg: #F8F2E5;
+      --border: #D3CFC5;
+      --shadow: 0 4px 20px rgba(0,0,0,0.08);
+      --shadow-lg: 0 12px 40px rgba(0,0,0,0.14);
+      --radius: 12px;
+      --radius-lg: 20px;
+    }
+
+    html { scroll-behavior: smooth; }
+    body { font-family: 'Inter', sans-serif; background: var(--white); color: var(--text); overflow-x: hidden; line-height: 1.6; }
+    h1,h2,h3,h4,h5,h6 { font-family: 'Outfit', sans-serif; }
+    a { text-decoration: none; color: inherit; }
+    img { max-width: 100%; }
+
+    .container { width: 100%; max-width: 1200px; margin: 0 auto; padding: 0 24px; }
+
+    /* === KEYFRAMES === */
+    @keyframes fadeInUp { from { opacity:0; transform:translateY(40px); } to { opacity:1; transform:none; } }
+    @keyframes fadeInLeft { from { opacity:0; transform:translateX(-50px); } to { opacity:1; transform:none; } }
+    @keyframes fadeInRight { from { opacity:0; transform:translateX(50px); } to { opacity:1; transform:none; } }
+    @keyframes floatY { 0%,100%{transform:translateY(0);} 50%{transform:translateY(-14px);} }
+    @keyframes floatBadge { 0%,100%{transform:translateY(0) rotate(-2deg);} 50%{transform:translateY(-10px) rotate(2deg);} }
+    @keyframes shimmer { 0%{background-position:-200% center;} 100%{background-position:200% center;} }
+    @keyframes marqueeAnim { 0%{transform:translateX(0);} 100%{transform:translateX(-50%);} }
+    @keyframes blink { 0%,100%{opacity:1;} 50%{opacity:0.3;} }
+    @keyframes slideDown { from{opacity:0;transform:translateY(-20px);} to{opacity:1;transform:none;} }
+
+    /* === SCROLL REVEAL === */
+    .reveal { opacity:0; transform:translateY(35px); transition:opacity 0.7s ease, transform 0.7s ease; }
+    .reveal.from-left { transform:translateX(-40px); }
+    .reveal.from-right { transform:translateX(40px); }
+    .reveal.visible { opacity:1; transform:none; }
+    .delay-100 { transition-delay:0.1s !important; }
+    .delay-200 { transition-delay:0.2s !important; }
+    .delay-300 { transition-delay:0.3s !important; }
+    .delay-400 { transition-delay:0.4s !important; }
+    .delay-500 { transition-delay:0.5s !important; }
+
+    /* === TOP BAR === */
+    .top-bar { background:var(--dark); color:#c8d0d8; font-size:0.82rem; padding:8px 0; animation:slideDown 0.5s ease; }
+    .top-bar .container { display:flex; align-items:center; justify-content:space-between; gap:12px; }
+    .top-bar a { color:#a8d8ea; transition:color 0.2s; }
+    .top-bar a:hover { color:#fff; }
+    .live-dot { width:7px; height:7px; background:#22c55e; border-radius:50%; display:inline-block; margin-right:6px; animation:blink 2s infinite; }
+
+    /* === NAVBAR === */
+    .navbar { position:sticky; top:0; z-index:1000; background:rgba(255,255,255,0.95); backdrop-filter:blur(14px); border-bottom:1px solid var(--border); padding:14px 0; transition:box-shadow 0.3s; }
+    .navbar.scrolled { box-shadow:0 4px 24px rgba(0,0,0,0.10); }
+    .navbar .container { display:flex; align-items:center; justify-content:space-between; gap:24px; }
+    .navbar-brand { display:flex; align-items:center; gap:10px; font-family:'Outfit',sans-serif; font-weight:700; color:var(--text); font-size:1.15rem; }
+    .navbar-brand .logo-icon { width:42px; height:42px; background:var(--red); border-radius:10px; display:flex; align-items:center; justify-content:center; color:#fff; font-size:1.2rem; flex-shrink:0; }
+    .navbar-brand .sub { font-size:0.68rem; color:var(--text-muted); font-weight:500; letter-spacing:0.08em; display:block; }
+    .nav-links { display:flex; align-items:center; gap:4px; list-style:none; }
+    .nav-links a { padding:8px 14px; border-radius:8px; font-weight:500; font-size:0.9rem; color:var(--text-muted); transition:color 0.2s, background 0.2s; }
+    .nav-links a:hover, .nav-links a.active { color:var(--red); background:var(--red-light); }
+    .nav-cta { display:flex; align-items:center; gap:10px; }
+    .btn-red { background:var(--red); color:#fff; padding:10px 22px; border-radius:50px; font-weight:600; font-size:0.88rem; border:none; cursor:pointer; transition:all 0.2s; display:inline-flex; align-items:center; gap:6px; position:relative; overflow:hidden; }
+    .btn-red::after { content:''; position:absolute; inset:0; background:linear-gradient(120deg, transparent 30%, rgba(255,255,255,0.25) 50%, transparent 70%); background-size:200% auto; animation:shimmer 2.5s infinite linear; }
+    .btn-red:hover { background:var(--red-dark); transform:translateY(-2px); box-shadow:0 6px 20px rgba(200,57,43,0.35); color:#fff; }
+    .btn-outline { background:transparent; color:var(--text); padding:9px 20px; border-radius:50px; font-weight:600; font-size:0.88rem; border:1.5px solid var(--border); cursor:pointer; transition:all 0.2s; display:inline-flex; align-items:center; gap:6px; }
+    .btn-outline:hover { border-color:var(--red); color:var(--red); }
+    .hamburger { display:none; flex-direction:column; gap:5px; cursor:pointer; padding:4px; background:none; border:none; }
+    .hamburger span { display:block; width:24px; height:2px; background:var(--text); border-radius:2px; transition:all 0.3s; }
+    .hamburger.open span:nth-child(1) { transform:rotate(45deg) translate(5px,5px); }
+    .hamburger.open span:nth-child(2) { opacity:0; }
+    .hamburger.open span:nth-child(3) { transform:rotate(-45deg) translate(5px,-5px); }
+
+    /* === HERO === */
+    .hero { background:linear-gradient(135deg, #03090D 0%, #15222b 55%, #2a1612 100%); position:relative; overflow:hidden; padding:80px 0 0; min-height:88vh; display:flex; flex-direction:column; }
+    .hero::before { content:''; position:absolute; inset:0; background:radial-gradient(ellipse at 70% 40%, rgba(200,57,43,0.18) 0%, transparent 60%), radial-gradient(ellipse at 20% 80%, rgba(200,57,43,0.10) 0%, transparent 50%); pointer-events:none; }
+    .hero-grid { display:grid; grid-template-columns:1fr 1fr; gap:40px; align-items:center; flex:1; }
+    .hero-left { padding:20px 0 40px; }
+    .hero-chip { display:inline-flex; align-items:center; gap:8px; background:rgba(255,255,255,0.10); border:1px solid rgba(255,255,255,0.2); color:rgba(255,255,255,0.85); padding:6px 14px; border-radius:50px; font-size:0.78rem; font-weight:600; letter-spacing:0.05em; margin-bottom:24px; animation:fadeInLeft 0.8s ease 0.2s both; }
+    .hero-chip .dot { width:7px; height:7px; background:#22c55e; border-radius:50%; animation:blink 2s infinite; }
+    .hero h1 { font-size:clamp(2.4rem, 5vw, 3.6rem); color:#fff; line-height:1.15; font-weight:800; margin-bottom:20px; animation:fadeInLeft 0.9s ease 0.35s both; }
+    .hero h1 span { color:var(--red); }
+    .hero-sub { color:rgba(255,255,255,0.65); font-size:1.05rem; margin-bottom:36px; line-height:1.7; animation:fadeInLeft 0.9s ease 0.5s both; }
+    .hero-btns { display:flex; gap:12px; flex-wrap:wrap; animation:fadeInLeft 0.9s ease 0.65s both; }
+    .btn-red-lg { background:var(--red); color:#fff; padding:14px 30px; border-radius:50px; font-weight:700; font-size:1rem; border:none; cursor:pointer; transition:all 0.25s; display:inline-flex; align-items:center; gap:8px; position:relative; overflow:hidden; }
+    .btn-red-lg::after { content:''; position:absolute; inset:0; background:linear-gradient(120deg, transparent 30%, rgba(255,255,255,0.25) 50%, transparent 70%); background-size:200% auto; animation:shimmer 2s infinite linear; }
+    .btn-red-lg:hover { background:var(--red-dark); transform:translateY(-3px); box-shadow:0 8px 28px rgba(200,57,43,0.4); color:#fff; }
+    .btn-ghost-lg { background:rgba(255,255,255,0.08); color:#fff; padding:14px 30px; border-radius:50px; font-weight:600; font-size:1rem; border:1.5px solid rgba(255,255,255,0.25); cursor:pointer; transition:all 0.25s; display:inline-flex; align-items:center; gap:8px; }
+    .btn-ghost-lg:hover { background:rgba(255,255,255,0.15); color:#fff; }
+    .hero-stats { display:flex; gap:32px; margin-top:48px; padding-top:32px; border-top:1px solid rgba(255,255,255,0.12); animation:fadeInLeft 0.9s ease 0.8s both; }
+    .hero-stat h3 { font-size:1.8rem; color:#fff; font-weight:800; margin-bottom:2px; }
+    .hero-stat p { color:rgba(255,255,255,0.5); font-size:0.82rem; }
+    .hero-right { display:flex; align-items:flex-end; justify-content:center; position:relative; animation:fadeInRight 1s ease 0.4s both; }
+    .hero-img-wrap { position:relative; display:flex; align-items:flex-end; justify-content:center; }
+    .hero-main-img { width:clamp(240px,38vw,420px); border-radius:20px; filter:drop-shadow(0 30px 60px rgba(0,0,0,0.5)); animation:floatY 5s ease-in-out infinite; position:relative; z-index:2; }
+    .doctor-cards { position:absolute; bottom:20px; left:-30px; right:-30px; display:flex; justify-content:space-between; z-index:3; }
+    .doctor-card { background:rgba(255,255,255,0.12); backdrop-filter:blur(20px); border:1px solid rgba(255,255,255,0.25); border-radius:16px; padding:14px 16px; display:flex; align-items:center; gap:10px; animation:floatBadge 6s ease-in-out infinite; }
+    .doctor-card:last-child { animation-delay:2s; }
+    .doctor-card img { width:42px; height:42px; border-radius:50%; object-fit:cover; border:2px solid var(--red); }
+    .doctor-card .dc-name { font-size:0.82rem; font-weight:700; color:#fff; margin-bottom:2px; }
+    .doctor-card .dc-role { font-size:0.7rem; color:rgba(255,255,255,0.6); }
+    .hero-info-bar { background:rgba(0,0,0,0.25); backdrop-filter:blur(10px); border-top:1px solid rgba(255,255,255,0.08); padding:16px 0; }
+    .hero-info-bar .container { display:flex; align-items:center; justify-content:space-between; gap:24px; }
+    .info-item { display:flex; align-items:center; gap:10px; color:rgba(255,255,255,0.75); font-size:0.85rem; }
+    .info-item i { color:var(--red); font-size:1rem; }
+    .info-item strong { color:#fff; display:block; font-size:0.8rem; }
+
+    /* === TICKER === */
+    .ticker-bar { background:var(--red); color:#fff; padding:10px 0; overflow:hidden; }
+    .ticker-track { display:flex; gap:0; white-space:nowrap; animation:marqueeAnim 24s linear infinite; }
+    .ticker-item { display:inline-flex; align-items:center; gap:10px; padding:0 32px; font-size:0.88rem; font-weight:600; }
+    .ticker-sep { color:rgba(255,255,255,0.4); }
+
+    /* === SECTION HELPERS === */
+    .section-chip { display:inline-block; background:var(--red-light); color:var(--red); padding:5px 14px; border-radius:50px; font-size:0.75rem; font-weight:700; letter-spacing:0.08em; text-transform:uppercase; margin-bottom:14px; }
+    .section-title { font-size:clamp(1.7rem, 3.5vw, 2.4rem); font-weight:800; color:var(--text); line-height:1.2; margin-bottom:14px; }
+    .section-sub { color:var(--text-muted); font-size:1rem; line-height:1.6; }
+    .view-all { display:inline-flex; align-items:center; gap:6px; color:var(--red); font-weight:600; font-size:0.9rem; padding:10px 20px; border:1.5px solid var(--red); border-radius:50px; transition:all 0.2s; white-space:nowrap; }
+    .view-all:hover { background:var(--red); color:#fff; }
+
+    /* === SERVICES === */
+    .services-section { padding:90px 0; background:var(--bg); }
+    .services-header { display:flex; align-items:flex-end; justify-content:space-between; margin-bottom:50px; gap:24px; flex-wrap:wrap; }
+    .services-header .left { max-width:500px; }
+    .services-grid { display:grid; grid-template-columns:repeat(5,1fr); gap:20px; }
+    .service-card { background:var(--white); border:1px solid var(--border); border-radius:var(--radius-lg); padding:28px 20px 22px; text-align:center; transition:transform 0.3s, box-shadow 0.3s, border-color 0.3s; cursor:pointer; position:relative; overflow:hidden; }
+    .service-card::before { content:''; position:absolute; top:0; left:0; right:0; height:3px; background:var(--red); transform:scaleX(0); transition:transform 0.3s; }
+    .service-card:hover::before { transform:scaleX(1); }
+    .service-card:hover { transform:translateY(-6px); box-shadow:var(--shadow-lg); border-color:rgba(200,57,43,0.15); }
+    .service-icon { width:70px; height:70px; border-radius:16px; background:var(--bg); display:flex; align-items:center; justify-content:center; margin:0 auto 16px; font-size:1.8rem; transition:transform 0.3s, background 0.3s; }
+    .service-card:hover .service-icon { transform:scale(1.1) rotate(-5deg); background:var(--red-light); }
+    .service-card h4 { font-size:0.9rem; font-weight:700; margin-bottom:8px; line-height:1.3; }
+    .service-card p { font-size:0.78rem; color:var(--text-muted); line-height:1.5; margin-bottom:14px; }
+    .learn-more { color:var(--red); font-size:0.8rem; font-weight:600; display:inline-flex; align-items:center; gap:4px; transition:gap 0.2s; }
+    .service-card:hover .learn-more { gap:8px; }
+
+    /* === REVIEWS === */
+    .reviews-section { padding:80px 0; background:var(--white); }
+    .reviews-header-row { display:flex; align-items:center; justify-content:space-between; margin-bottom:40px; flex-wrap:wrap; gap:20px; }
+    .google-rating { display:flex; align-items:center; gap:12px; padding:14px 20px; border:1px solid var(--border); border-radius:var(--radius); background:var(--white); }
+    .rating-stars { color:#f59e0b; font-size:1.1rem; margin-bottom:2px; }
+    .rating-label { font-size:0.78rem; color:var(--text-muted); }
+    .rating-score { font-size:1.5rem; font-weight:800; color:var(--text); }
+    .reviews-slider-wrap { position:relative; overflow:hidden; }
+    .reviews-track { display:flex; gap:20px; transition:transform 0.5s cubic-bezier(0.4,0,0.2,1); }
+    .review-card { background:var(--white); border:1px solid var(--border); border-radius:var(--radius-lg); padding:24px; flex:0 0 calc(25% - 15px); min-width:240px; transition:box-shadow 0.3s, transform 0.3s; }
+    .review-card:hover { box-shadow:var(--shadow-lg); transform:translateY(-4px); }
+    .review-top { display:flex; align-items:center; justify-content:space-between; margin-bottom:12px; }
+    .reviewer { display:flex; align-items:center; gap:10px; }
+    .reviewer-avatar { width:38px; height:38px; border-radius:50%; object-fit:cover; border:2px solid var(--red-light); }
+    .reviewer-name { font-weight:700; font-size:0.88rem; margin-bottom:1px; }
+    .review-stars { color:#f59e0b; font-size:0.8rem; }
+    .review-text { font-size:0.85rem; color:var(--text-muted); line-height:1.55; }
+    .slider-controls { display:flex; align-items:center; justify-content:center; gap:12px; margin-top:30px; }
+    .slider-btn { width:40px; height:40px; border-radius:50%; border:1.5px solid var(--border); background:var(--white); color:var(--text); cursor:pointer; display:flex; align-items:center; justify-content:center; transition:all 0.2s; }
+    .slider-btn:hover { background:var(--red); color:#fff; border-color:var(--red); }
+    .slider-dots { display:flex; gap:6px; }
+    .slider-dot { width:7px; height:7px; border-radius:50%; background:var(--border); cursor:pointer; transition:background 0.2s, width 0.2s; border:none; }
+    .slider-dot.active { background:var(--red); width:20px; border-radius:4px; }
+
+    /* === ABOUT === */
+    .about-section { padding:90px 0; background:var(--bg); }
+    .about-grid { display:grid; grid-template-columns:1fr 1fr; gap:60px; align-items:center; }
+    .about-img-wrap { position:relative; border-radius:20px; overflow:hidden; }
+    .about-img-wrap img { width:100%; height:420px; object-fit:cover; border-radius:20px; display:block; }
+    .about-badge { position:absolute; bottom:24px; right:-16px; background:var(--red); color:#fff; padding:16px 20px; border-radius:16px; text-align:center; box-shadow:0 8px 24px rgba(200,57,43,0.35); animation:floatBadge 5s ease-in-out infinite; }
+    .about-badge .num { font-size:2rem; font-weight:800; display:block; line-height:1; }
+    .about-badge .lbl { font-size:0.78rem; opacity:0.85; }
+    .about-stats { display:grid; grid-template-columns:1fr 1fr; gap:16px; margin-top:32px; }
+    .about-stat { background:var(--white); border:1px solid var(--border); border-radius:var(--radius); padding:18px 20px; display:flex; align-items:center; gap:14px; transition:transform 0.3s, box-shadow 0.3s; }
+    .about-stat:hover { transform:translateY(-3px); box-shadow:var(--shadow); }
+    .about-stat .icon { width:44px; height:44px; border-radius:10px; background:var(--red-light); color:var(--red); display:flex; align-items:center; justify-content:center; font-size:1.1rem; flex-shrink:0; }
+    .about-stat .num { font-size:1.4rem; font-weight:800; color:var(--text); line-height:1; }
+    .about-stat .lbl { font-size:0.75rem; color:var(--text-muted); margin-top:2px; }
+    .btn-red-outline { display:inline-flex; align-items:center; gap:8px; padding:13px 28px; border-radius:50px; border:2px solid var(--red); color:var(--red); font-weight:700; font-size:0.95rem; background:transparent; cursor:pointer; transition:all 0.25s; margin-top:28px; }
+    .btn-red-outline:hover { background:var(--red); color:#fff; }
+
+    /* === DOCTORS === */
+    .doctors-section { padding:90px 0; background:var(--white); }
+    .doctors-header-row { display:flex; align-items:flex-end; justify-content:space-between; margin-bottom:48px; gap:20px; flex-wrap:wrap; }
+    .doctors-grid { display:grid; grid-template-columns:repeat(4,1fr); gap:24px; }
+    .doctor-profile { background:var(--white); border:1px solid var(--border); border-radius:var(--radius-lg); overflow:hidden; transition:transform 0.3s, box-shadow 0.3s; cursor:pointer; }
+    .doctor-profile:hover { transform:translateY(-6px); box-shadow:var(--shadow-lg); }
+    .dp-img-wrap { position:relative; height:220px; overflow:hidden; background:var(--bg); }
+    .dp-img-wrap img { width:100%; height:100%; object-fit:cover; object-position:top; transition:transform 0.5s; }
+    .doctor-profile:hover .dp-img-wrap img { transform:scale(1.06); }
+    .dp-overlay { position:absolute; inset:0; background:linear-gradient(to top, rgba(26,26,46,0.85) 0%, transparent 55%); opacity:0; transition:opacity 0.3s; display:flex; align-items:flex-end; padding:16px; }
+    .doctor-profile:hover .dp-overlay { opacity:1; }
+    .dp-book { width:100%; background:var(--red); color:#fff; border:none; border-radius:8px; padding:8px; font-size:0.82rem; font-weight:700; cursor:pointer; text-align:center; display:block; }
+    .dp-body { padding:18px 16px; }
+    .dp-body h4 { font-size:1rem; font-weight:700; margin-bottom:4px; }
+    .dp-body .speciality { font-size:0.8rem; color:var(--red); font-weight:600; margin-bottom:4px; }
+    .dp-body .exp { font-size:0.75rem; color:var(--text-muted); display:flex; align-items:center; gap:4px; margin-top:6px; }
+    .dp-body .exp i { color:var(--red); }
+
+    /* === SAFETY === */
+    .safety-section { background:var(--dark); padding:72px 0; position:relative; overflow:hidden; }
+    .safety-section::before { content:''; position:absolute; inset:0; background:radial-gradient(ellipse at 30% 50%, rgba(200,57,43,0.12) 0%, transparent 60%); }
+    .safety-label { color:rgba(255,255,255,0.5); font-size:0.75rem; font-weight:700; letter-spacing:0.12em; text-transform:uppercase; text-align:center; margin-bottom:10px; }
+    .safety-title { color:#fff; text-align:center; font-size:clamp(1.4rem,3vw,2rem); font-weight:800; margin-bottom:48px; }
+    .safety-grid { display:grid; grid-template-columns:repeat(5,1fr); gap:20px; position:relative; z-index:1; }
+    .safety-card { text-align:center; padding:28px 16px; border:1px solid rgba(255,255,255,0.1); border-radius:var(--radius-lg); transition:background 0.3s, transform 0.3s; background:rgba(255,255,255,0.03); }
+    .safety-card:hover { background:rgba(200,57,43,0.15); transform:translateY(-4px); }
+    .safety-icon { width:60px; height:60px; border-radius:14px; background:rgba(200,57,43,0.15); color:#fc9c93; display:flex; align-items:center; justify-content:center; margin:0 auto 14px; font-size:1.5rem; transition:transform 0.3s; }
+    .safety-card:hover .safety-icon { transform:scale(1.15); background:rgba(200,57,43,0.3); }
+    .safety-card h5 { color:#fff; font-size:0.88rem; font-weight:700; margin-bottom:6px; }
+    .safety-card p { color:rgba(255,255,255,0.5); font-size:0.76rem; line-height:1.45; }
+
+    /* === FAQ === */
+    .faq-section { padding:90px 0; background:var(--bg); }
+    .faq-layout { display:grid; grid-template-columns:1fr 1fr; gap:60px; align-items:start; }
+    .faq-more { display:inline-flex; align-items:center; gap:8px; color:var(--text-muted); font-weight:600; font-size:0.88rem; padding:10px 20px; border:1.5px solid var(--border); border-radius:50px; transition:all 0.2s; margin-top:20px; }
+    .faq-more:hover { border-color:var(--red); color:var(--red); }
+    .faq-list { display:flex; flex-direction:column; gap:10px; }
+    .faq-item { background:var(--white); border:1px solid var(--border); border-radius:var(--radius); overflow:hidden; transition:box-shadow 0.2s; }
+    .faq-item.open { box-shadow:var(--shadow); border-color:rgba(200,57,43,0.2); }
+    .faq-q { padding:16px 20px; display:flex; align-items:center; justify-content:space-between; cursor:pointer; font-weight:600; font-size:0.92rem; transition:color 0.2s; gap:12px; }
+    .faq-item.open .faq-q { color:var(--red); }
+    .faq-icon { width:28px; height:28px; border-radius:50%; background:var(--bg); display:flex; align-items:center; justify-content:center; font-size:0.9rem; flex-shrink:0; transition:transform 0.3s, background 0.3s; }
+    .faq-item.open .faq-icon { transform:rotate(45deg); background:var(--red); color:#fff; }
+    .faq-a { max-height:0; overflow:hidden; transition:max-height 0.4s ease, padding 0.3s; padding:0 20px; color:var(--text-muted); font-size:0.88rem; line-height:1.6; }
+    .faq-item.open .faq-a { max-height:200px; padding:0 20px 16px; }
+
+    /* === VISIT / CONTACT === */
+    .visit-section { padding:90px 0; background:var(--white); }
+    .visit-grid { display:grid; grid-template-columns:1fr 1.2fr; gap:48px; align-items:start; }
+    .contact-item { display:flex; align-items:flex-start; gap:14px; margin-bottom:20px; }
+    .contact-icon { width:44px; height:44px; border-radius:10px; background:var(--red-light); color:var(--red); display:flex; align-items:center; justify-content:center; font-size:1rem; flex-shrink:0; }
+    .contact-item h5 { font-size:0.88rem; font-weight:700; margin-bottom:3px; }
+    .contact-item p { font-size:0.82rem; color:var(--text-muted); margin:0; line-height:1.4; }
+    .map-wrap { border-radius:20px; overflow:hidden; box-shadow:var(--shadow-lg); height:380px; }
+    .map-wrap iframe { width:100%; height:100%; border:none; display:block; }
+
+    /* === FOOTER === */
+    .footer { background:var(--dark); color:rgba(255,255,255,0.7); padding:60px 0 0; }
+    .footer-grid { display:grid; grid-template-columns:2fr 1fr 1.4fr 1.4fr; gap:40px; margin-bottom:48px; }
+    .footer-brand .logo { display:flex; align-items:center; gap:10px; margin-bottom:14px; }
+    .footer-brand .logo-icon { width:38px; height:38px; background:var(--red); border-radius:8px; display:flex; align-items:center; justify-content:center; color:#fff; font-size:1.1rem; }
+    .footer-brand .logo span { color:#fff; font-weight:700; font-size:1.1rem; font-family:'Outfit',sans-serif; }
+    .footer-brand p { font-size:0.85rem; line-height:1.6; margin-bottom:20px; }
+    .footer-socials { display:flex; gap:8px; }
+    .social-btn { width:36px; height:36px; border-radius:8px; border:1px solid rgba(255,255,255,0.15); background:rgba(255,255,255,0.05); color:rgba(255,255,255,0.7); display:flex; align-items:center; justify-content:center; transition:all 0.2s; font-size:0.9rem; }
+    .social-btn:hover { background:var(--red); border-color:var(--red); color:#fff; transform:translateY(-3px); }
+    .footer h5 { color:#fff; font-size:0.95rem; font-weight:700; margin-bottom:18px; }
+    .footer-links { list-style:none; display:flex; flex-direction:column; gap:9px; }
+    .footer-links a { color:rgba(255,255,255,0.6); font-size:0.85rem; transition:color 0.2s; display:flex; align-items:center; gap:6px; }
+    .footer-links a:hover { color:var(--red); padding-left:4px; }
+    .footer-contact-item { display:flex; align-items:flex-start; gap:10px; margin-bottom:12px; font-size:0.82rem; }
+    .footer-contact-item i { color:var(--red); margin-top:3px; flex-shrink:0; }
+    .footer-bottom { border-top:1px solid rgba(255,255,255,0.08); padding:20px 0; display:flex; align-items:center; justify-content:space-between; flex-wrap:wrap; gap:12px; }
+    .footer-bottom p { font-size:0.8rem; }
+    .footer-bottom-links { display:flex; gap:20px; }
+    .footer-bottom-links a { font-size:0.8rem; color:rgba(255,255,255,0.5); transition:color 0.2s; }
+    .footer-bottom-links a:hover { color:var(--red); }
+
+    /* === BACK TO TOP === */
+    #backToTop { position:fixed; bottom:28px; right:28px; width:46px; height:46px; background:var(--red); color:#fff; border:none; border-radius:50%; cursor:pointer; display:flex; align-items:center; justify-content:center; font-size:1.1rem; box-shadow:0 6px 20px rgba(200,57,43,0.4); opacity:0; transform:translateY(20px); transition:opacity 0.3s, transform 0.3s; z-index:999; }
+    #backToTop.show { opacity:1; transform:translateY(0); }
+    #backToTop:hover { background:var(--red-dark); transform:translateY(-2px); }
+
+    /* === MOBILE NAV === */
+    .mobile-nav { position:fixed; inset:0; background:var(--white); z-index:1001; transform:translateX(100%); transition:transform 0.35s cubic-bezier(0.4,0,0.2,1); display:flex; flex-direction:column; padding:24px; overflow-y:auto; }
+    .mobile-nav.open { transform:translateX(0); }
+    .mobile-nav-header { display:flex; align-items:center; justify-content:space-between; margin-bottom:32px; }
+    .mobile-close { background:none; border:none; font-size:1.5rem; cursor:pointer; color:var(--text); }
+    .mobile-links { list-style:none; display:flex; flex-direction:column; gap:4px; }
+    .mobile-links a { display:block; padding:14px 16px; border-radius:10px; font-weight:600; font-size:1.05rem; color:var(--text); transition:background 0.2s, color 0.2s; }
+    .mobile-links a:hover { background:var(--red-light); color:var(--red); }
+    .mobile-ctas { margin-top:28px; display:flex; flex-direction:column; gap:10px; }
+
+    /* === RESPONSIVE === */
+    @media (max-width:1024px) {
+      .services-grid { grid-template-columns:repeat(3,1fr); }
+      .doctors-grid { grid-template-columns:repeat(2,1fr); }
+      .safety-grid { grid-template-columns:repeat(3,1fr); }
+      .footer-grid { grid-template-columns:1fr 1fr; }
+    }
+    @media (max-width:768px) {
+      .nav-links,.nav-cta { display:none; }
+      .hamburger { display:flex; }
+      .hero-grid { grid-template-columns:1fr; }
+      .hero-right { display:none; }
+      .hero { padding:60px 0 0; min-height:auto; }
+      .hero-info-bar .container { flex-wrap:wrap; gap:12px; }
+      .about-grid,.faq-layout,.visit-grid { grid-template-columns:1fr; }
+      .about-badge { right:16px; }
+      .services-grid { grid-template-columns:repeat(2,1fr); }
+      .doctors-grid { grid-template-columns:1fr 1fr; }
+      .safety-grid { grid-template-columns:repeat(2,1fr); }
+      .footer-grid { grid-template-columns:1fr; }
+      .footer-bottom { flex-direction:column; text-align:center; }
+      .hero-stats { gap:20px; }
+      .doctor-cards { display:none; }
+      .top-bar .container { flex-direction:column; text-align:center; gap:4px; }
+    }
+    @media (max-width:480px) {
+      .services-grid,.doctors-grid { grid-template-columns:1fr; }
+      .safety-grid { grid-template-columns:1fr 1fr; }
+      .about-stats { grid-template-columns:1fr 1fr; }
+      .reviews-header-row { flex-direction:column; }
+    }
+  </style>
+</head>
+<body>
+
+<!-- TOP BAR -->
+<div class="top-bar">
+  <div class="container">
+    <span><span class="live-dot"></span>Mon – Sat: 9:00 AM – 9:00 PM &nbsp;|&nbsp; Sun: 10:00 AM – 1:00 PM</span>
+    <div style="display:flex;gap:16px;flex-wrap:wrap;">
+      <a href="tel:+917802083597"><i class="fa-solid fa-phone" style="margin-right:5px;"></i>+91 7802083597</a>
+      <a href="mailto:info@velouradental.com"><i class="fa-regular fa-envelope" style="margin-right:5px;"></i>info@velouradental.com</a>
+    </div>
+  </div>
+</div>
+
+<!-- NAVBAR -->
+<nav class="navbar" id="mainNav">
+  <div class="container">
+    <a href="index.html" class="navbar-brand">
+      <div class="logo-icon"><i class="fa-solid fa-tooth"></i></div>
+      <div>Veloura Dental<span class="sub">& HOMOEOPATHY</span></div>
+    </a>
+    <ul class="nav-links">
+      <li><a href="#home" class="active">Home</a></li>
+      <li><a href="#services">Services</a></li>
+      <li><a href="#about">About Us</a></li>
+      <li><a href="#doctors">Specialists</a></li>
+      <li><a href="#safety">Safety</a></li>
+      <li><a href="#faq">FAQ</a></li>
+    </ul>
+    <div class="nav-cta">
+      <a href="online.html" class="btn-red"><i class="fa-solid fa-calendar-check"></i> Book Now</a>
+      <a href="login.html" class="btn-outline"><i class="fa-solid fa-user-lock"></i> CRM</a>
+    </div>
+    <button class="hamburger" id="hamburger" onclick="toggleMobileNav()" aria-label="Toggle menu">
+      <span></span><span></span><span></span>
+    </button>
+  </div>
+</nav>
+
+<!-- Mobile Nav -->
+<div class="mobile-nav" id="mobileNav">
+  <div class="mobile-nav-header">
+    <div class="navbar-brand">
+      <div class="logo-icon"><i class="fa-solid fa-tooth"></i></div>
+      <div>Veloura Dental</div>
+    </div>
+    <button class="mobile-close" onclick="toggleMobileNav()"><i class="fa-solid fa-xmark"></i></button>
+  </div>
+  <ul class="mobile-links">
+    <li><a href="#home" onclick="toggleMobileNav()">Home</a></li>
+    <li><a href="#services" onclick="toggleMobileNav()">Services</a></li>
+    <li><a href="#about" onclick="toggleMobileNav()">About Us</a></li>
+    <li><a href="#doctors" onclick="toggleMobileNav()">Specialists</a></li>
+    <li><a href="#faq" onclick="toggleMobileNav()">FAQ</a></li>
+    <li><a href="#contact" onclick="toggleMobileNav()">Contact</a></li>
+  </ul>
+  <div class="mobile-ctas">
+    <a href="online.html" class="btn-red" style="justify-content:center;"><i class="fa-solid fa-calendar-check"></i> Book Appointment</a>
+    <a href="login.html" class="btn-outline" style="justify-content:center;"><i class="fa-solid fa-lock"></i> CRM Login</a>
+  </div>
+</div>
+
+<!-- HERO SECTION -->
+<header class="hero" id="home">
+  <div class="container">
+    <div class="hero-grid">
+      <div class="hero-left">
+        <div class="hero-chip">
+          <span class="dot"></span>CLINIC OPEN &nbsp;•&nbsp; NIKOL, AHMEDABAD
+        </div>
+        <h1>Modern Care for<br>a <span>Perfect</span><br>Smile</h1>
+        <p class="hero-sub">
+          From preventive care to complex restorations, a comprehensive approach
+          to your dental health with advanced technology.
+        </p>
+        <div class="hero-btns">
+          <a href="online.html" class="btn-red-lg"><i class="fa-solid fa-calendar-check"></i> Book Appointment</a>
+          <a href="#services" class="btn-ghost-lg"><i class="fa-solid fa-grid"></i> Explore Services</a>
+        </div>
+        <div class="hero-stats">
+          <div class="hero-stat">
+            <h3 class="count-num" data-target="15" data-suffix="+">0</h3>
+            <p>Years Experience</p>
+          </div>
+          <div class="hero-stat">
+            <h3 class="count-num" data-target="10000" data-suffix="+">0</h3>
+            <p>Happy Patients</p>
+          </div>
+          <div class="hero-stat">
+            <h3 class="count-num" data-target="98" data-suffix="%">0</h3>
+            <p>Success Rate</p>
+          </div>
+          <div class="hero-stat">
+            <h3 class="count-num" data-target="50" data-suffix="+">0</h3>
+            <p>Treatments</p>
+          </div>
+        </div>
+      </div>
+
+      <div class="hero-right">
+        <div class="hero-img-wrap">
+          <img
+            src="https://images.unsplash.com/photo-1606811971618-4486d14f3f99?w=700&auto=format&fit=crop&q=80"
+            alt="Modern Dental Clinic"
+            class="hero-main-img"
+            onerror="this.src='https://images.unsplash.com/photo-1629909613654-28e377c37b09?w=700&auto=format&fit=crop&q=80'"
+          >
+          <div class="doctor-cards">
+            <div class="doctor-card">
+              <img src="https://images.unsplash.com/photo-1594824813566-8185537130eb?w=100&auto=format&fit=crop&q=80" alt="Dr. Pooja Patel">
+              <div><div class="dc-name">Dr. Pooja Patel</div><div class="dc-role">Dental Specialist</div></div>
+            </div>
+            <div class="doctor-card">
+              <img src="https://images.unsplash.com/photo-1622253692010-333f2da6031d?w=100&auto=format&fit=crop&q=80" alt="Dr. Shashin Desai">
+              <div><div class="dc-name">Dr. Shashin Desai</div><div class="dc-role">Implant Expert</div></div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="hero-info-bar">
+    <div class="container">
+      <div class="info-item"><i class="fa-solid fa-award"></i><div><strong>Best Dentistry 2025</strong></div></div>
+      <div class="info-item"><i class="fa-solid fa-location-dot"></i><div><strong>Nikol, Ahmedabad</strong> +91 7802083597</div></div>
+      <div class="info-item"><i class="fa-solid fa-microchip"></i><div><strong>Advanced Dental Technologies</strong></div></div>
+    </div>
+  </div>
+</header>
+
+<!-- TICKER BAR -->
+<div class="ticker-bar" aria-hidden="true">
+  <div class="ticker-track">
+    <span class="ticker-item"><i class="fa-solid fa-tooth"></i> Painless Root Canal <span class="ticker-sep">✦</span></span>
+    <span class="ticker-item"><i class="fa-solid fa-syringe"></i> Dental Implants <span class="ticker-sep">✦</span></span>
+    <span class="ticker-item"><i class="fa-solid fa-wand-magic-sparkles"></i> Laser Whitening <span class="ticker-sep">✦</span></span>
+    <span class="ticker-item"><i class="fa-solid fa-smile"></i> Cosmetic Dentistry <span class="ticker-sep">✦</span></span>
+    <span class="ticker-item"><i class="fa-solid fa-leaf"></i> Homoeopathy Care <span class="ticker-sep">✦</span></span>
+    <span class="ticker-item"><i class="fa-solid fa-shield-virus"></i> 100% Sterilized <span class="ticker-sep">✦</span></span>
+    <span class="ticker-item"><i class="fa-solid fa-clock"></i> Same-Day Emergency <span class="ticker-sep">✦</span></span>
+    <span class="ticker-item"><i class="fa-solid fa-tooth"></i> Painless Root Canal <span class="ticker-sep">✦</span></span>
+    <span class="ticker-item"><i class="fa-solid fa-syringe"></i> Dental Implants <span class="ticker-sep">✦</span></span>
+    <span class="ticker-item"><i class="fa-solid fa-wand-magic-sparkles"></i> Laser Whitening <span class="ticker-sep">✦</span></span>
+    <span class="ticker-item"><i class="fa-solid fa-smile"></i> Cosmetic Dentistry <span class="ticker-sep">✦</span></span>
+    <span class="ticker-item"><i class="fa-solid fa-leaf"></i> Homoeopathy Care <span class="ticker-sep">✦</span></span>
+    <span class="ticker-item"><i class="fa-solid fa-shield-virus"></i> 100% Sterilized <span class="ticker-sep">✦</span></span>
+    <span class="ticker-item"><i class="fa-solid fa-clock"></i> Same-Day Emergency <span class="ticker-sep">✦</span></span>
+  </div>
+</div>
+
+<!-- SERVICES SECTION -->
+<section class="services-section" id="services">
+  <div class="container">
+    <div class="services-header">
+      <div class="left reveal from-left">
+        <span class="section-chip">OUR SERVICES</span>
+        <h2 class="section-title">Complete Dental Solutions<br>for a Healthy Smile</h2>
+        <p class="section-sub">We combine advanced technology with compassionate care to bring you the best dental experience.</p>
+      </div>
+      <a href="#services" class="view-all reveal from-right">View All Services <i class="fa-solid fa-arrow-right"></i></a>
+    </div>
+    <div class="services-grid">
+      <div class="service-card reveal delay-100">
+        <div class="service-icon">🦷</div>
+        <h4>Preventive Care</h4>
+        <p>Regular check-ups and cleanings for optimal oral health.</p>
+        <span class="learn-more">Learn More <i class="fa-solid fa-arrow-right"></i></span>
+      </div>
+      <div class="service-card reveal delay-200">
+        <div class="service-icon">🪛</div>
+        <h4>Dental Implants</h4>
+        <p>Strong, natural-looking implants for a confident smile.</p>
+        <span class="learn-more">Learn More <i class="fa-solid fa-arrow-right"></i></span>
+      </div>
+      <div class="service-card reveal delay-300">
+        <div class="service-icon">✨</div>
+        <h4>Cosmetic Dentistry</h4>
+        <p>Enhance your smile with modern cosmetic procedures.</p>
+        <span class="learn-more">Learn More <i class="fa-solid fa-arrow-right"></i></span>
+      </div>
+      <div class="service-card reveal delay-400">
+        <div class="service-icon">🔧</div>
+        <h4>Restorative Care</h4>
+        <p>Restore damaged teeth with advanced, long-lasting care.</p>
+        <span class="learn-more">Learn More <i class="fa-solid fa-arrow-right"></i></span>
+      </div>
+      <div class="service-card reveal delay-500">
+        <div class="service-icon">⬛</div>
+        <h4>Teeth Whitening</h4>
+        <p>Brighter teeth for a more confident, radiant smile.</p>
+        <span class="learn-more">Learn More <i class="fa-solid fa-arrow-right"></i></span>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- REVIEWS SECTION -->
+<section class="reviews-section" id="reviews">
+  <div class="container">
+    <div class="reviews-header-row">
+      <div class="reveal">
+        <span class="section-chip">GOOGLE REVIEWS</span>
+        <h2 class="section-title">Loved by Our Patients</h2>
+      </div>
+      <div class="google-rating reveal from-right">
+        <div style="font-size:1.8rem;">
+          <svg width="32" height="32" viewBox="0 0 48 48"><path fill="#FFC107" d="M43.611,20.083H42V20H24v8h11.303c-1.649,4.657-6.08,8-11.303,8c-6.627,0-12-5.373-12-12c0-6.627,5.373-12,12-12c3.059,0,5.842,1.154,7.961,3.039l5.657-5.657C34.046,6.053,29.268,4,24,4C12.955,4,4,12.955,4,24c0,11.045,8.955,20,20,20c11.045,0,20-8.955,20-20C44,22.659,43.862,21.35,43.611,20.083z"/><path fill="#FF3D00" d="M6.306,14.691l6.571,4.819C14.655,15.108,18.961,12,24,12c3.059,0,5.842,1.154,7.961,3.039l5.657-5.657C34.046,6.053,29.268,4,24,4C16.318,4,9.656,8.337,6.306,14.691z"/><path fill="#4CAF50" d="M24,44c5.166,0,9.86-1.977,13.409-5.192l-6.19-5.238C29.211,35.091,26.715,36,24,36c-5.202,0-9.619-3.317-11.283-7.946l-6.522,5.025C9.505,39.556,16.227,44,24,44z"/><path fill="#1976D2" d="M43.611,20.083H42V20H24v8h11.303c-0.792,2.237-2.231,4.166-4.087,5.571c0.001-0.001,0.002-0.001,0.003-0.002l6.19,5.238C36.971,39.205,44,34,44,24C44,22.659,43.862,21.35,43.611,20.083z"/></svg>
+        </div>
+        <div>
+          <div class="rating-stars">★★★★★</div>
+          <div style="display:flex;align-items:baseline;gap:6px;">
+            <span class="rating-score">4.9</span>
+            <span class="rating-label">(2,230+ Reviews)</span>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="reviews-slider-wrap">
+      <div class="reviews-track" id="reviewsTrack">
+        <div class="review-card">
+          <div class="review-top">
+            <div class="reviewer">
+              <img src="https://images.unsplash.com/photo-1535713875002-d1d0cf377fde?w=80&auto=format&fit=crop&q=80" class="reviewer-avatar" alt="Angel Mena">
+              <div><div class="reviewer-name">Angel Mena</div><div class="review-stars">★★★★★</div></div>
+            </div>
+          </div>
+          <p class="review-text">"Amazing experience! The staff is among the best. I came for a root canal and the results are very clean and modern."</p>
+        </div>
+        <div class="review-card">
+          <div class="review-top">
+            <div class="reviewer">
+              <img src="https://images.unsplash.com/photo-1633332755192-727a05c4013d?w=80&auto=format&fit=crop&q=80" class="reviewer-avatar" alt="Rohit Sharma">
+              <div><div class="reviewer-name">Rohit Sharma</div><div class="review-stars">★★★★★</div></div>
+            </div>
+          </div>
+          <p class="review-text">"My implant procedure was painless and the results are amazing. They make you feel beyond my expectations."</p>
+        </div>
+        <div class="review-card">
+          <div class="review-top">
+            <div class="reviewer">
+              <img src="https://images.unsplash.com/photo-1494790108377-be9c29b29330?w=80&auto=format&fit=crop&q=80" class="reviewer-avatar" alt="Priya Patel">
+              <div><div class="reviewer-name">Priya Patel</div><div class="review-stars">★★★★★</div></div>
+            </div>
+          </div>
+          <p class="review-text">"Best dental care I've ever received! The whitening results were outstanding. Highly recommend Veloura Dental!"</p>
+        </div>
+        <div class="review-card">
+          <div class="review-top">
+            <div class="reviewer">
+              <img src="https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?w=80&auto=format&fit=crop&q=80" class="reviewer-avatar" alt="Rajesh Shah">
+              <div><div class="reviewer-name">Rajesh Shah</div><div class="review-stars">★★★★★</div></div>
+            </div>
+          </div>
+          <p class="review-text">"Great service and professional staff. They are very professional and very comfortable. Great atmosphere!"</p>
+        </div>
+        <div class="review-card">
+          <div class="review-top">
+            <div class="reviewer">
+              <img src="https://images.unsplash.com/photo-1544005313-94ddf0286df2?w=80&auto=format&fit=crop&q=80" class="reviewer-avatar" alt="Megha Joshi">
+              <div><div class="reviewer-name">Megha Joshi</div><div class="review-stars">★★★★★</div></div>
+            </div>
+          </div>
+          <p class="review-text">"Teeth whitening results are fantastic! My smile looks so bright. I feel so confident now. Thank you!"</p>
+        </div>
+        <div class="review-card">
+          <div class="review-top">
+            <div class="reviewer">
+              <img src="https://images.unsplash.com/photo-1500648767791-00dcc994a43e?w=80&auto=format&fit=crop&q=80" class="reviewer-avatar" alt="Kunal Bose">
+              <div><div class="reviewer-name">Kunal Bose</div><div class="review-stars">★★★★★</div></div>
+            </div>
+          </div>
+          <p class="review-text">"Clean clinic with autoclaved instruments. My child was very relaxed during his filling. Super friendly doctors!"</p>
+        </div>
+      </div>
+    </div>
+    <div class="slider-controls">
+      <button class="slider-btn" onclick="slideReviews(-1)"><i class="fa-solid fa-chevron-left"></i></button>
+      <div class="slider-dots" id="sliderDots"></div>
+      <button class="slider-btn" onclick="slideReviews(1)"><i class="fa-solid fa-chevron-right"></i></button>
+    </div>
+  </div>
+</section>
+
+<!-- ABOUT SECTION -->
+<section class="about-section" id="about">
+  <div class="container">
+    <div class="about-grid">
+      <div class="about-img-wrap reveal from-left">
+        <img src="https://images.unsplash.com/photo-1629909615184-74f495363b67?w=800&auto=format&fit=crop&q=80" alt="Veloura Dental Clinic" loading="lazy">
+        <div class="about-badge">
+          <span class="num">D+</span>
+          <span class="lbl">Veloura Dental</span>
+        </div>
+      </div>
+      <div class="reveal delay-200">
+        <span class="section-chip">ABOUT US</span>
+        <h2 class="section-title">Care That Makes<br>a Difference</h2>
+        <p class="section-sub" style="margin-bottom:20px;">At Veloura, we truly believe everyone deserves personalised care. Our team of experts uses the best technology to provide gentle, effective, and long-lasting dental treatments in a comfortable environment.</p>
+        <div class="about-stats">
+          <div class="about-stat reveal delay-100">
+            <div class="icon"><i class="fa-solid fa-briefcase-medical"></i></div>
+            <div><div class="num">15+</div><div class="lbl">Years Experience</div></div>
+          </div>
+          <div class="about-stat reveal delay-200">
+            <div class="icon"><i class="fa-solid fa-users"></i></div>
+            <div><div class="num">10K+</div><div class="lbl">Happy Patients</div></div>
+          </div>
+          <div class="about-stat reveal delay-300">
+            <div class="icon"><i class="fa-solid fa-check-double"></i></div>
+            <div><div class="num">98%</div><div class="lbl">Patient Satisfaction</div></div>
+          </div>
+          <div class="about-stat reveal delay-400">
+            <div class="icon"><i class="fa-solid fa-tooth"></i></div>
+            <div><div class="num">50+</div><div class="lbl">Treatments</div></div>
+          </div>
+        </div>
+        <a href="#doctors" class="btn-red-outline">Meet Our Team <i class="fa-solid fa-arrow-right"></i></a>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- DOCTORS SECTION -->
+<section class="doctors-section" id="doctors">
+  <div class="container">
+    <div class="doctors-header-row">
+      <div class="reveal">
+        <span class="section-chip">OUR DOCTORS</span>
+        <h2 class="section-title">Meet Our Dental Experts</h2>
+      </div>
+      <a href="#doctors" class="view-all reveal from-right">View All Doctors <i class="fa-solid fa-arrow-right"></i></a>
+    </div>
+    <div class="doctors-grid">
+      <div class="doctor-profile reveal delay-100">
+        <div class="dp-img-wrap">
+          <img src="https://images.unsplash.com/photo-1594824813566-8185537130eb?w=400&auto=format&fit=crop&q=80" alt="Dr. Pooja Patel">
+          <div class="dp-overlay"><a href="online.html" class="dp-book"><i class="fa-solid fa-calendar-check"></i> Book Appointment</a></div>
+        </div>
+        <div class="dp-body">
+          <h4>Dr. Pooja Patel</h4>
+          <div class="speciality">Homeopathic Wellness Expert</div>
+          <p style="font-size:0.78rem;color:var(--text-muted);margin:0;">B.H.M.S – Homeopathic Medicine</p>
+          <div class="exp"><i class="fa-solid fa-star"></i> 10+ Years Experience</div>
+        </div>
+      </div>
+      <div class="doctor-profile reveal delay-200">
+        <div class="dp-img-wrap">
+          <img src="https://images.unsplash.com/photo-1622253692010-333f2da6031d?w=400&auto=format&fit=crop&q=80" alt="Dr. Shashin Desai">
+          <div class="dp-overlay"><a href="online.html" class="dp-book"><i class="fa-solid fa-calendar-check"></i> Book Appointment</a></div>
+        </div>
+        <div class="dp-body">
+          <h4>Dr. Shashin Desai</h4>
+          <div class="speciality">Lead Dental Surgeon</div>
+          <p style="font-size:0.78rem;color:var(--text-muted);margin:0;">B.D.S – Cosmetic & Implantology</p>
+          <div class="exp"><i class="fa-solid fa-star"></i> 15+ Years Experience</div>
+        </div>
+      </div>
+      <div class="doctor-profile reveal delay-300">
+        <div class="dp-img-wrap">
+          <img src="https://images.unsplash.com/photo-1559839734-2b71ea197ec2?w=400&auto=format&fit=crop&q=80" alt="Dr. Olivia Bennett">
+          <div class="dp-overlay"><a href="online.html" class="dp-book"><i class="fa-solid fa-calendar-check"></i> Book Appointment</a></div>
+        </div>
+        <div class="dp-body">
+          <h4>Dr. Olivia Bennett</h4>
+          <div class="speciality">Orthodontist</div>
+          <p style="font-size:0.78rem;color:var(--text-muted);margin:0;">M.D.S – Braces & Aligners</p>
+          <div class="exp"><i class="fa-solid fa-star"></i> 9+ Years Experience</div>
+        </div>
+      </div>
+      <div class="doctor-profile reveal delay-400">
+        <div class="dp-img-wrap">
+          <img src="https://images.unsplash.com/photo-1537368910025-700350fe46c7?w=400&auto=format&fit=crop&q=80" alt="Dr. Rajesh Mehta">
+          <div class="dp-overlay"><a href="online.html" class="dp-book"><i class="fa-solid fa-calendar-check"></i> Book Appointment</a></div>
+        </div>
+        <div class="dp-body">
+          <h4>Dr. Rajesh Mehta</h4>
+          <div class="speciality">Endodontist</div>
+          <p style="font-size:0.78rem;color:var(--text-muted);margin:0;">M.D.S – Root Canal Specialist</p>
+          <div class="exp"><i class="fa-solid fa-star"></i> 12+ Years Experience</div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- SAFETY SECTION -->
+<section class="safety-section" id="safety">
+  <div class="container">
+    <p class="safety-label">YOUR SAFETY IS OUR PRIORITY</p>
+    <h2 class="safety-title">Safe Care, Every Time</h2>
+    <div class="safety-grid">
+      <div class="safety-card reveal delay-100">
+        <div class="safety-icon"><i class="fa-solid fa-pump-medical"></i></div>
+        <h5>Advanced Sterilization</h5>
+        <p>100% autoclaved instruments opened in front of the patient.</p>
+      </div>
+      <div class="safety-card reveal delay-200">
+        <div class="safety-icon"><i class="fa-solid fa-broom"></i></div>
+        <h5>Hygienic Environment</h5>
+        <p>Clean, certified, and sanitized clinic spaces always.</p>
+      </div>
+      <div class="safety-card reveal delay-300">
+        <div class="safety-icon"><i class="fa-solid fa-shield-halved"></i></div>
+        <h5>Safety Protocols</h5>
+        <p>Strict protocols followed at every stage of treatment.</p>
+      </div>
+      <div class="safety-card reveal delay-400">
+        <div class="safety-icon"><i class="fa-solid fa-user-doctor"></i></div>
+        <h5>Trained Professionals</h5>
+        <p>Experienced team respecting your safety and comfort.</p>
+      </div>
+      <div class="safety-card reveal delay-500">
+        <div class="safety-icon"><i class="fa-solid fa-heart-pulse"></i></div>
+        <h5>Patient First</h5>
+        <p>Your health, comfort, and satisfaction come first always.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- FAQ SECTION -->
+<section class="faq-section" id="faq">
+  <div class="container">
+    <div class="faq-layout">
+      <div class="reveal from-left">
+        <span class="section-chip">FAQ</span>
+        <h2 class="section-title">Frequently Asked<br>Questions</h2>
+        <p class="section-sub">Everything you need to know about our dental services and procedures.</p>
+        <a href="#faq" class="faq-more">More Questions <i class="fa-solid fa-arrow-right"></i></a>
+      </div>
+      <div class="faq-list reveal delay-200">
+        <div class="faq-item open">
+          <div class="faq-q" onclick="toggleFaq(this)">
+            How often should I visit the dentist?
+            <div class="faq-icon"><i class="fa-solid fa-plus"></i></div>
+          </div>
+          <div class="faq-a">We recommend visiting your dentist every 6 months for a routine check-up and professional cleaning to maintain optimal oral health and catch any issues early.</div>
+        </div>
+        <div class="faq-item">
+          <div class="faq-q" onclick="toggleFaq(this)">
+            Are dental implants painful?
+            <div class="faq-icon"><i class="fa-solid fa-plus"></i></div>
+          </div>
+          <div class="faq-a">The procedure is performed under local anesthesia so you won't feel pain during surgery. Post-operative discomfort is manageable with prescribed medication.</div>
+        </div>
+        <div class="faq-item">
+          <div class="faq-q" onclick="toggleFaq(this)">
+            What is the cost of teeth whitening?
+            <div class="faq-icon"><i class="fa-solid fa-plus"></i></div>
+          </div>
+          <div class="faq-a">Our laser teeth whitening treatment starts at Rs. 4,500 and can brighten your teeth by several shades in a single visit.</div>
+        </div>
+        <div class="faq-item">
+          <div class="faq-q" onclick="toggleFaq(this)">
+            Do you accept insurance?
+            <div class="faq-icon"><i class="fa-solid fa-plus"></i></div>
+          </div>
+          <div class="faq-a">We accept most major dental insurance plans. We also offer flexible payment plans for larger treatments. Call us before your appointment to verify your coverage.</div>
+        </div>
+        <div class="faq-item">
+          <div class="faq-q" onclick="toggleFaq(this)">
+            How do I book an appointment?
+            <div class="faq-icon"><i class="fa-solid fa-plus"></i></div>
+          </div>
+          <div class="faq-a">You can book online using our patient portal, call us at +91 7802083597, or simply walk-in and generate a token. Same-day appointments available for emergencies.</div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- VISIT / CONTACT SECTION -->
+<section class="visit-section" id="contact">
+  <div class="container">
+    <div class="visit-grid">
+      <div class="reveal from-left">
+        <span class="section-chip">FIND US</span>
+        <h2 class="section-title">Visit Us</h2>
+        <p class="section-sub" style="margin-bottom:28px;">We are conveniently located in the heart of Nikol, Ahmedabad. Visit us for the best dental care experience.</p>
+        <div class="contact-item">
+          <div class="contact-icon"><i class="fa-solid fa-location-dot"></i></div>
+          <div>
+            <h5>Clinic Address</h5>
+            <p>1st Floor, Omkar Plaza, Bhakti Circle Road,<br>Nikol, Ahmedabad, Gujarat 380049</p>
+          </div>
+        </div>
+        <div class="contact-item">
+          <div class="contact-icon"><i class="fa-solid fa-phone"></i></div>
+          <div>
+            <h5>Call Us</h5>
+            <p><a href="tel:+917802083597" style="color:var(--red);font-weight:600;">+91 7802083597</a></p>
+          </div>
+        </div>
+        <div class="contact-item">
+          <div class="contact-icon"><i class="fa-regular fa-envelope"></i></div>
+          <div>
+            <h5>Email</h5>
+            <p><a href="mailto:info@velouradental.com" style="color:var(--red);font-weight:600;">info@velouradental.com</a></p>
+          </div>
+        </div>
+        <div class="contact-item">
+          <div class="contact-icon"><i class="fa-regular fa-clock"></i></div>
+          <div>
+            <h5>Working Hours</h5>
+            <p>Mon – Sat: 9:00 AM – 9:00 PM<br>Sun: 10:00 AM – 1:00 PM</p>
+          </div>
+        </div>
+        <div style="display:flex;gap:10px;margin-top:16px;flex-wrap:wrap;">
+          <a href="https://maps.google.com/?q=Omkar+Plaza+Bhakti+Circle+Nikol+Ahmedabad" target="_blank" class="btn-red" style="border-radius:50px;padding:12px 24px;">
+            <i class="fa-solid fa-map-location-dot"></i> Get Directions
+          </a>
+          <a href="online.html" class="btn-outline">Book Now</a>
+        </div>
+      </div>
+      <div class="map-wrap reveal from-right delay-200">
+        <iframe
+          src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3670.7!2d72.66!3d23.07!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x395e87bef4a30f61%3A0xd5b1d3c8c5a5c5a!2sNikol%2C%20Ahmedabad%2C%20Gujarat!5e0!3m2!1sen!2sin!4v1720000000000!5m2!1sen!2sin"
+          allowfullscreen=""
+          loading="lazy"
+          referrerpolicy="no-referrer-when-downgrade"
+          title="Veloura Dental Clinic Location"
+        ></iframe>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- FOOTER -->
+<footer class="footer">
+  <div class="container">
+    <div class="footer-grid">
+      <div class="footer-brand">
+        <div class="logo">
+          <div class="logo-icon"><i class="fa-solid fa-tooth"></i></div>
+          <span>Veloura Dental</span>
+        </div>
+        <p>Modern care for a perfect smile. Integrating precision dentistry with soothing homeopathic remedies. Serving Nikol & Ahmedabad with excellence.</p>
+        <div class="footer-socials">
+          <a href="#" class="social-btn"><i class="fa-brands fa-facebook-f"></i></a>
+          <a href="#" class="social-btn"><i class="fa-brands fa-instagram"></i></a>
+          <a href="#" class="social-btn"><i class="fa-brands fa-whatsapp"></i></a>
+          <a href="#" class="social-btn"><i class="fa-brands fa-youtube"></i></a>
+        </div>
+      </div>
+      <div>
+        <h5>Quick Links</h5>
+        <ul class="footer-links">
+          <li><a href="#home">Home</a></li>
+          <li><a href="#services">Services</a></li>
+          <li><a href="#doctors">Specialists</a></li>
+          <li><a href="online.html">Book Online</a></li>
+          <li><a href="walkin.html">Walk-In Token</a></li>
+          <li><a href="#contact">Contact</a></li>
+        </ul>
+      </div>
+      <div>
+        <h5>Our Services</h5>
+        <ul class="footer-links">
+          <li><a href="#services">Dental Implants</a></li>
+          <li><a href="#services">Cosmetic Dentistry</a></li>
+          <li><a href="#services">Root Canal</a></li>
+          <li><a href="#services">Restorative Care</a></li>
+          <li><a href="#services">Teeth Whitening</a></li>
+          <li><a href="#about">Homoeopathy</a></li>
+        </ul>
+      </div>
+      <div>
+        <h5>Contact Us</h5>
+        <div class="footer-contact-item"><i class="fa-solid fa-phone"></i><span>+91 7802083597</span></div>
+        <div class="footer-contact-item"><i class="fa-regular fa-envelope"></i><span>info@velouradental.com</span></div>
+        <div class="footer-contact-item"><i class="fa-solid fa-location-dot"></i><span>1st Floor, Omkar Plaza, Bhakti Circle Road, Nikol, Ahmedabad 380049</span></div>
+        <div class="footer-contact-item"><i class="fa-regular fa-clock"></i><span>Mon–Sat: 9AM – 9PM<br>Sun: 10AM – 1PM</span></div>
+      </div>
+    </div>
+    <div class="footer-bottom">
+      <p>© 2026 Veloura Dental & Homoeopathy. All rights reserved.</p>
+      <div class="footer-bottom-links">
+        <a href="#">Privacy Policy</a>
+        <a href="#">Terms & Conditions</a>
+      </div>
+    </div>
+  </div>
+</footer>
+
+<!-- Back to Top -->
+<button id="backToTop" onclick="window.scrollTo({top:0,behavior:'smooth'})" aria-label="Back to top">
+  <i class="fa-solid fa-arrow-up"></i>
+</button>
+
+<script>
+  /* ===== NAVBAR SCROLL ===== */
+  const nav = document.getElementById('mainNav');
+  window.addEventListener('scroll', () => {
+    nav.classList.toggle('scrolled', window.scrollY > 50);
+    document.getElementById('backToTop').classList.toggle('show', window.scrollY > 400);
+  });
+
+  /* ===== MOBILE NAV ===== */
+  function toggleMobileNav() {
+    const mn = document.getElementById('mobileNav');
+    const hb = document.getElementById('hamburger');
+    mn.classList.toggle('open');
+    hb.classList.toggle('open');
+    document.body.style.overflow = mn.classList.contains('open') ? 'hidden' : '';
+  }
+
+  /* ===== SCROLL REVEAL ===== */
+  const revealObs = new IntersectionObserver((entries) => {
+    entries.forEach(e => { if (e.isIntersecting) e.target.classList.add('visible'); });
+  }, { threshold: 0.12 });
+  document.querySelectorAll('.reveal').forEach(el => revealObs.observe(el));
+
+  /* ===== COUNTER ANIMATION ===== */
+  function animateCounters() {
+    document.querySelectorAll('.count-num').forEach(el => {
+      const target = parseInt(el.dataset.target, 10);
+      const suffix = el.dataset.suffix || '';
+      let current = 0;
+      const step = target / 80;
+      const timer = setInterval(() => {
+        current = Math.min(current + step, target);
+        el.textContent = (target >= 1000 ? Math.round(current).toLocaleString() : Math.round(current)) + suffix;
+        if (current >= target) clearInterval(timer);
+      }, 18);
+    });
+  }
+  const heroObs = new IntersectionObserver((e) => { if (e[0].isIntersecting) { animateCounters(); heroObs.disconnect(); } }, { threshold: 0.3 });
+  const heroStats = document.querySelector('.hero-stats');
+  if (heroStats) heroObs.observe(heroStats);
+
+  /* ===== REVIEWS SLIDER ===== */
+  let reviewIdx = 0;
+  const track = document.getElementById('reviewsTrack');
+  const cards = track ? Array.from(track.querySelectorAll('.review-card')) : [];
+  const dotsWrap = document.getElementById('sliderDots');
+
+  function getPerView() {
+    return window.innerWidth <= 480 ? 1 : window.innerWidth <= 768 ? 2 : window.innerWidth <= 1024 ? 3 : 4;
+  }
+
+  function totalSlides() {
+    return Math.max(1, cards.length - getPerView() + 1);
+  }
+
+  function buildDots() {
+    if (!dotsWrap) return;
+    const n = totalSlides();
+    dotsWrap.innerHTML = '';
+    for (let i = 0; i < n; i++) {
+      const d = document.createElement('button');
+      d.className = 'slider-dot' + (i === reviewIdx ? ' active' : '');
+      d.onclick = () => { reviewIdx = i; updateSlider(); };
+      dotsWrap.appendChild(d);
+    }
+  }
+
+  function updateSlider() {
+    if (!track || cards.length === 0) return;
+    const cardW = cards[0].offsetWidth + 20;
+    track.style.transform = 'translateX(-' + (reviewIdx * cardW) + 'px)';
+    document.querySelectorAll('.slider-dot').forEach((d, i) => d.classList.toggle('active', i === reviewIdx));
+  }
+
+  function slideReviews(dir) {
+    const max = totalSlides() - 1;
+    reviewIdx = Math.max(0, Math.min(reviewIdx + dir, max));
+    updateSlider();
+  }
+
+  buildDots();
+  let autoSl = setInterval(() => {
+    reviewIdx = reviewIdx >= totalSlides() - 1 ? 0 : reviewIdx + 1;
+    updateSlider();
+    buildDots();
+  }, 4500);
+  if (track) {
+    track.addEventListener('mouseenter', () => clearInterval(autoSl));
+    track.addEventListener('mouseleave', () => {
+      autoSl = setInterval(() => { reviewIdx = reviewIdx >= totalSlides() - 1 ? 0 : reviewIdx + 1; updateSlider(); buildDots(); }, 4500);
+    });
+  }
+  window.addEventListener('resize', () => { reviewIdx = 0; buildDots(); updateSlider(); });
+
+  /* ===== FAQ TOGGLE ===== */
+  function toggleFaq(qEl) {
+    const item = qEl.closest('.faq-item');
+    const wasOpen = item.classList.contains('open');
+    document.querySelectorAll('.faq-item.open').forEach(i => i.classList.remove('open'));
+    if (!wasOpen) item.classList.add('open');
+  }
+</script>
+
+</body>
+</html>

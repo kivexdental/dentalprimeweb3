@@ -1,0 +1,312 @@
+/* Veloura / Dental Prime - Unified Website Aesthetic Theme */
+@import url('https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;500;600;700;800&family=Outfit:wght@400;500;600;700;800&family=Inter:wght@300;400;500;600;700&family=Cormorant+Garamond:ital,wght@0,400;0,500;0,600;0,700;1,400;1,600&display=swap');
+
+:root {
+  /* Website Color Palette */
+  --bg: #F4F1EB;
+  --bg-page: #F4F1EB;
+  --primary-bg: #F4F1EB;
+  --primary-bg-alt: #E9E4DC;
+  --soft-beige: #E9E4DC;
+  --beige: #E9E4DC;
+
+  --dark: #171717;
+  --text: #171717;
+  --primary-text: #171717;
+  --text-muted: #6F6B65;
+  --text-secondary: #6F6B65;
+  --text-light: #B9B1A5;
+
+  --white: #FFFFFF;
+  --card-bg: #FFFFFF;
+  --border: #D7D2C9;
+  --card-border: #D7D2C9;
+  --border-color: #D7D2C9;
+  --neutral-grey: #D7D2C9;
+
+  /* Brand Accents */
+  --red: #C2644F;
+  --red-dark: #a85441;
+  --red-light: #f3dfdb;
+  --accent-red: #C2644F;
+  --accent-terracotta: #C2644F;
+
+  --accent-green: #779580;
+  --sage: #779580;
+  --sage-light: #e8f5e9;
+
+  --accent-blue: #83A9D0;
+  --blue-light: #eef4f9;
+
+  --shadow: 0 1px 3px rgba(0, 0, 0, 0.04);
+  --shadow-lg: 0 4px 16px rgba(0, 0, 0, 0.06);
+  --shadow-luxury: 0 20px 40px -15px rgba(0, 0, 0, 0.05);
+
+  --radius-sm: 10px;
+  --radius: 12px;
+  --radius-md: 14px;
+  --radius-lg: 18px;
+  --radius-full: 9999px;
+
+  /* Typography */
+  --font-heading: 'Outfit', 'Plus Jakarta Sans', sans-serif;
+  --font-body: 'Plus Jakarta Sans', 'Inter', sans-serif;
+  --font-serif: 'Cormorant Garamond', Georgia, serif;
+
+  /* Sidebar Tokens (Graphite dark matching website dark elements) */
+  --sidebar-bg: #171717;
+  --sidebar-text: #F4F1EB;
+  --sidebar-active: #C2644F;
+  --sidebar-border: rgba(215, 210, 201, 0.12);
+
+  /* Status Colors */
+  --status-pending-bg: #f3dfdb;
+  --status-pending-text: #C2644F;
+  --status-completed-bg: #e8f5e9;
+  --status-completed-text: #779580;
+  --status-cancelled-bg: #E9E4DC;
+  --status-cancelled-text: #6F6B65;
+
+  /* Bootstrap 5 Theme Overrides */
+  --bs-primary: #C2644F;
+  --bs-primary-rgb: 194, 100, 79;
+  --bs-secondary: #E9E4DC;
+  --bs-secondary-rgb: 233, 228, 220;
+  --bs-success: #779580;
+  --bs-success-rgb: 119, 149, 128;
+  --bs-info: #83A9D0;
+  --bs-info-rgb: 131, 169, 208;
+  --bs-dark: #171717;
+  --bs-dark-rgb: 23, 23, 23;
+  --bs-body-bg: #F4F1EB;
+  --bs-body-color: #171717;
+  --bs-border-color: #D7D2C9;
+  --bs-link-color: #C2644F;
+  --bs-link-hover-color: #a85441;
+
+  --transition-fast: all 0.25s ease-in-out;
+}
+
+/* Global Elements Matching Website */
+body {
+  background-color: var(--bg-page) !important;
+  color: var(--primary-text) !important;
+  font-family: var(--font-body);
+}
+
+h1, h2, h3, h4, h5, h6 {
+  font-family: var(--font-heading);
+  color: var(--primary-text);
+}
+
+/* Bootstrap Buttons Unified to Website Palette */
+.btn-primary,
+.btn-primary:focus,
+.btn-primary:active {
+  background-color: var(--accent-red) !important;
+  border-color: var(--accent-red) !important;
+  color: #FFFFFF !important;
+  box-shadow: 0 1px 3px rgba(194, 100, 79, 0.2);
+}
+
+.btn-primary:hover {
+  background-color: var(--red-dark) !important;
+  border-color: var(--red-dark) !important;
+  color: #FFFFFF !important;
+}
+
+.btn-outline-primary {
+  color: var(--accent-red) !important;
+  border-color: var(--accent-red) !important;
+  background-color: transparent !important;
+}
+
+.btn-outline-primary:hover,
+.btn-outline-primary:active,
+.btn-outline-primary:focus {
+  background-color: var(--accent-red) !important;
+  border-color: var(--accent-red) !important;
+  color: #FFFFFF !important;
+}
+
+.btn-dark {
+  background-color: var(--dark) !important;
+  border-color: var(--dark) !important;
+  color: var(--bg-page) !important;
+}
+
+.btn-dark:hover {
+  background-color: #252525 !important;
+  border-color: #252525 !important;
+}
+
+.btn-outline-secondary {
+  color: var(--text-muted) !important;
+  border-color: var(--border) !important;
+  background-color: #FFFFFF !important;
+}
+
+.btn-outline-secondary:hover {
+  background-color: var(--soft-beige) !important;
+  color: var(--dark) !important;
+  border-color: var(--dark) !important;
+}
+
+/* Form Controls */
+.form-control, .form-select {
+  background-color: #FFFFFF !important;
+  border: 1px solid var(--border) !important;
+  color: var(--primary-text) !important;
+  border-radius: var(--radius);
+  font-family: var(--font-body);
+}
+
+.form-control:focus, .form-select:focus {
+  border-color: var(--accent-red) !important;
+  box-shadow: 0 0 0 3px rgba(194, 100, 79, 0.15) !important;
+  outline: none !important;
+}
+
+.input-group-text {
+  background-color: var(--bg-page) !important;
+  border-color: var(--border) !important;
+  color: var(--text-muted) !important;
+}
+
+.form-check-input:checked {
+  background-color: var(--accent-red) !important;
+  border-color: var(--accent-red) !important;
+}
+
+/* Cards & Surfaces */
+.glass-card, .card, .stat-card {
+  background: var(--card-bg) !important;
+  border: 1px solid var(--border) !important;
+  border-radius: var(--radius-md) !important;
+  box-shadow: var(--shadow) !important;
+}
+
+.top-header {
+  background: rgba(255, 255, 255, 0.9) !important;
+  backdrop-filter: blur(12px) !important;
+  border-bottom: 1px solid var(--border) !important;
+}
+
+.search-bar-wrap input {
+  background: var(--bg-page) !important;
+  border: 1px solid var(--border) !important;
+}
+
+.search-bar-wrap input:focus {
+  background: #FFFFFF !important;
+  border-color: var(--accent-red) !important;
+}
+
+/* Warm Website Tables */
+.table {
+  color: var(--primary-text) !important;
+  border-color: var(--border) !important;
+}
+
+.table-light, thead.table-light, tr.table-light th, thead th {
+  background-color: var(--soft-beige) !important;
+  color: var(--primary-text) !important;
+  border-color: var(--border) !important;
+  font-weight: 600;
+  font-size: 0.85rem;
+  letter-spacing: 0.02em;
+}
+
+.table-hover tbody tr:hover {
+  background-color: rgba(233, 228, 220, 0.35) !important;
+}
+
+.table td {
+  border-color: rgba(215, 210, 201, 0.5) !important;
+}
+
+/* Badges & Pills */
+.bg-light {
+  background-color: var(--bg-page) !important;
+}
+
+.badge.bg-primary {
+  background-color: var(--accent-red) !important;
+}
+
+.nav-pills .nav-link.active {
+  background-color: var(--accent-red) !important;
+  color: #FFFFFF !important;
+}
+
+.nav-pills .nav-link {
+  color: var(--text-muted);
+}
+
+/* Sidebar Custom Warm Refinements */
+.sidebar {
+  background: var(--sidebar-bg) !important;
+  border-right: 1px solid var(--sidebar-border);
+}
+
+.sidebar .brand {
+  border-bottom: 1px solid var(--sidebar-border) !important;
+}
+
+.nav-item-link {
+  color: #D7D2C9 !important;
+  transition: all 0.2s ease;
+}
+
+.nav-item-link:hover {
+  background: rgba(255, 255, 255, 0.08) !important;
+  color: #FFFFFF !important;
+}
+
+.nav-item-link.active {
+  background: var(--accent-red) !important;
+  color: #FFFFFF !important;
+}
+
+/* Dark Mode (Consistent with Website Dark Tones) */
+[data-theme="dark"] {
+  --primary-bg: #151515;
+  --bg-page: #151515;
+  --primary-bg-alt: #1F1F1F;
+  --primary-text: #F4F1EB;
+  --text-muted: #D7D2C9;
+  --text-light: #8c9b9f;
+
+  --card-bg: #1B1B1B;
+  --card-border: #2A2A2A;
+  --border-color: #2A2A2A;
+  --border: #2A2A2A;
+  --soft-beige: #252525;
+
+  --sidebar-bg: #111111;
+  --sidebar-text: #D7D2C9;
+  --sidebar-active: #C2644F;
+  --sidebar-border: rgba(255, 255, 255, 0.08);
+
+  --status-pending-bg: rgba(194,100,79,0.2);
+  --status-pending-text: #f3dfdb;
+  --status-completed-bg: rgba(119,149,128,0.2);
+  --status-completed-text: #a8c7b0;
+  --status-cancelled-bg: rgba(255,255,255,0.08);
+  --status-cancelled-text: #D7D2C9;
+
+  --bs-body-bg: #151515;
+  --bs-body-color: #F4F1EB;
+}
+
+/* Toast Notifications Container (Fixed top right, above all modals) */
+.toast-container-custom,
+.walkin-success-toast-container {
+  position: fixed !important;
+  top: 24px !important;
+  right: 24px !important;
+  z-index: 100000 !important;
+  max-width: 440px !important;
+  pointer-events: auto !important;
+}
+

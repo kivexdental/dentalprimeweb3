@@ -1,0 +1,240 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="light">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Portal Login - Dental | Kivex Technology</title>
+  <!-- Google Fonts -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@400;500;600;700;800&family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+  <!-- Bootstrap 5 CSS -->
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
+  <!-- FontAwesome -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css">
+  <link rel="stylesheet" href="css/theme.css">
+  <link rel="stylesheet" href="css/style.css">
+  <style>
+    body {
+      background: var(--bg);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      min-height: 100vh;
+    }
+    .login-card {
+      background: var(--white);
+      border: 1px solid var(--border);
+      border-radius: var(--radius-lg);
+      box-shadow: var(--shadow-lg);
+    }
+    .login-icon {
+      width: 64px;
+      height: 64px;
+      border-radius: 50%;
+      background: var(--accent-red);
+      color: #fff;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 1.5rem;
+      margin-bottom: 16px;
+    }
+    .role-tabs {
+      background: var(--bg);
+      border-radius: 50px;
+      padding: 4px;
+      border: 1px solid var(--border);
+    }
+    .role-tab {
+      border-radius: 50px;
+      padding: 8px 20px;
+      font-weight: 600;
+      font-size: 0.88rem;
+      border: none;
+      transition: all 0.2s;
+    }
+    .role-tab.active {
+      background: var(--accent-red);
+      color: #fff;
+    }
+    .role-tab:not(.active) {
+      background: transparent;
+      color: var(--text-muted);
+    }
+    .login-title {
+      font-family: var(--font-heading);
+      font-weight: 700;
+      color: var(--primary-text);
+    }
+    .form-label {
+      font-weight: 600;
+      color: var(--primary-text);
+    }
+    .input-group-text {
+      background: var(--bg);
+      border-color: var(--border);
+    }
+    .back-link {
+      color: var(--text-muted);
+      font-size: 0.88rem;
+    }
+    .back-link:hover {
+      color: var(--accent-red);
+    }
+  </style>
+</head>
+<body>
+
+  <div class="container py-4">
+    <div class="row justify-content-center">
+      <div class="col-md-6 col-lg-5 col-xl-4">
+        
+        <div class="login-card p-4 p-md-5">
+          <div class="text-center mb-4">
+            <div class="login-icon" id="portalIcon">
+              <i class="fa-solid fa-user-gear"></i>
+            </div>
+            <h3 class="login-title mb-1" id="portalTitle">CRM Portal Login</h3>
+            <p class="text-muted small">Select your role and enter credentials to login</p>
+          </div>
+
+          <!-- Quick Role Selection Tabs (Admin, Doctor, Staff) -->
+          <div class="role-tabs d-flex gap-1 mb-4" id="roleTabs">
+            <button type="button" class="role-tab active flex-fill" id="roleBtnAdmin" onclick="selectRole('admin')">
+              <i class="fa-solid fa-shield-halved me-1"></i> Admin
+            </button>
+            <button type="button" class="role-tab flex-fill" id="roleBtnDoctor" onclick="selectRole('doctor')">
+              <i class="fa-solid fa-user-doctor me-1"></i> Doctor
+            </button>
+            <button type="button" class="role-tab flex-fill" id="roleBtnStaff" onclick="selectRole('staff')">
+              <i class="fa-solid fa-id-card-clip me-1"></i> Staff
+            </button>
+          </div>
+
+          <div id="sessionNotice" class="alert alert-warning small py-2 mb-3" style="background: #fef3c7; border: 1px solid #fde68a; color: #92400e; border-radius: 10px;">
+            <i class="fa-solid fa-clock-rotate-left me-1"></i> Your previous session expired. Click <strong>Login</strong> below to continue.
+          </div>
+
+          <div id="loginAlert" class="alert alert-danger d-none small py-2" role="alert"></div>
+
+          <form id="loginForm">
+            <!-- Username -->
+            <div class="mb-3">
+              <label for="username" class="form-label">Username</label>
+              <div class="input-group">
+                <span class="input-group-text"><i class="fa-solid fa-user text-muted"></i></span>
+                <input type="text" class="form-control" id="username" placeholder="Enter username (e.g. admin)" value="admin" autocomplete="username" required>
+              </div>
+            </div>
+
+            <!-- Password with Eye Toggle -->
+            <div class="mb-3">
+              <label for="password" class="form-label">Password</label>
+              <div class="input-group position-relative">
+                <span class="input-group-text"><i class="fa-solid fa-lock text-muted"></i></span>
+                <input type="password" class="form-control" id="password" placeholder="Enter password" value="admin123" autocomplete="current-password" required>
+                <i class="fa-solid fa-eye password-toggle-icon" id="togglePasswordBtn"></i>
+              </div>
+            </div>
+
+            <!-- Remember Me -->
+            <div class="d-flex justify-content-between align-items-center mb-4 small">
+              <div class="form-check">
+                <input type="checkbox" class="form-check-input" id="rememberMe" checked>
+                <label class="form-check-label text-muted" for="rememberMe">Remember Me</label>
+              </div>
+            </div>
+
+            <!-- Submit Button -->
+            <button type="submit" class="btn btn-primary-custom w-100 py-2 fs-6 fw-bold" id="loginBtn" style="justify-content: center;">
+              <i class="fa-solid fa-right-to-bracket me-2"></i> Login to Dashboard
+            </button>
+          </form>
+
+          <div class="text-center mt-4 pt-3 border-top" style="border-color: var(--border) !important;">
+            <div class="p-3 bg-light rounded-3 text-start small border mb-3">
+              <span class="fw-bold text-dark d-block mb-1"><i class="fa-solid fa-key me-1 text-danger"></i>System Access Credentials:</span>
+              <div class="d-flex justify-content-between py-1 border-bottom">
+                <span class="text-muted">Admin:</span>
+                <span class="font-monospace fw-semibold text-dark">admin / <strong>admin123</strong></span>
+              </div>
+              <div class="d-flex justify-content-between py-1 border-bottom">
+                <span class="text-muted">Doctor:</span>
+                <span class="font-monospace fw-semibold text-dark">doctor / <strong>doctor123</strong></span>
+              </div>
+              <div class="d-flex justify-content-between pt-1">
+                <span class="text-muted">Staff:</span>
+                <span class="font-monospace fw-semibold text-dark">staff / <strong>staff123</strong></span>
+              </div>
+            </div>
+            <div>
+              <a href="online.html" class="back-link text-decoration-none"><i class="fa-solid fa-calendar-plus me-1"></i> Patient Online Booking</a>
+            </div>
+          </div>
+        </div>
+
+      </div>
+    </div>
+  </div>
+
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
+  <script src="js/utils.js"></script>
+  <script src="js/auth.js"></script>
+  <script>
+    function selectRole(role) {
+      const uInput = document.getElementById('username');
+      const pInput = document.getElementById('password');
+      const btnAdmin = document.getElementById('roleBtnAdmin');
+      const btnDoctor = document.getElementById('roleBtnDoctor');
+      const btnStaff = document.getElementById('roleBtnStaff');
+      const portalTitle = document.getElementById('portalTitle');
+      const portalIcon = document.getElementById('portalIcon');
+
+      btnAdmin.className = 'role-tab flex-fill';
+      btnDoctor.className = 'role-tab flex-fill';
+      btnStaff.className = 'role-tab flex-fill';
+
+      if (role === 'admin') {
+        btnAdmin.className = 'role-tab active flex-fill';
+        portalTitle.innerText = 'Admin Portal Login';
+        portalIcon.innerHTML = '<i class="fa-solid fa-shield-halved"></i>';
+        uInput.placeholder = 'Enter admin username';
+        uInput.value = 'admin';
+        pInput.value = 'admin123';
+      } else if (role === 'doctor') {
+        btnDoctor.className = 'role-tab active flex-fill';
+        portalTitle.innerText = 'Doctor Clinical Portal';
+        portalIcon.innerHTML = '<i class="fa-solid fa-user-doctor"></i>';
+        uInput.placeholder = 'Enter doctor username';
+        uInput.value = 'doctor';
+        pInput.value = 'doctor123';
+      } else {
+        btnStaff.className = 'role-tab active flex-fill';
+        portalTitle.innerText = 'Clinic Staff Portal';
+        portalIcon.innerHTML = '<i class="fa-solid fa-id-card-clip"></i>';
+        uInput.placeholder = 'Enter staff username';
+        uInput.value = 'staff';
+        pInput.value = 'staff123';
+      }
+    }
+
+    document.addEventListener('DOMContentLoaded', () => {
+      // Default to admin credentials for convenient access
+      const uInput = document.getElementById('username');
+      const pInput = document.getElementById('password');
+      if (uInput && !uInput.value) uInput.value = 'admin';
+      if (pInput && !pInput.value) pInput.value = 'admin123';
+
+      if (window.location.search.includes('expired=true')) {
+        const loginAlert = document.getElementById('loginAlert');
+        if (loginAlert) {
+          loginAlert.className = 'alert alert-warning small py-2';
+          loginAlert.innerHTML = '<i class="fa-solid fa-clock-rotate-left me-1"></i> Your previous session expired. Click <strong>Login</strong> below to continue.';
+          loginAlert.classList.remove('d-none');
+        }
+      }
+    });
+  </script>
+</body>
+</html>

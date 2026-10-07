@@ -1,0 +1,6 @@
+# robots.txt for Dental Prime Luxury Dental Studio
+User-agent: *
+Allow: /
+
+# Sitemap
+Sitemap: https://dentalprime.clinic/sitemap.xml
