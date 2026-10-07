@@ -1,5 +1,6 @@
 import React, { useState, useEffect, useRef } from 'react';
 import { Monitor, Tablet as TabletIcon, Smartphone, Maximize2, X, SlidersHorizontal } from 'lucide-react';
+import { CRM_PORTAL_URL } from '../config/api';
 
 export type DeviceMode = 'pc' | 'tablet' | 'phone' | 'fullscreen';
 
@@ -331,7 +332,7 @@ export const KivexToolbar: React.FC = () => {
           >
             <iframe
               ref={iframeRef}
-              src={previewTarget === 'crm' ? '/dashboard.html' : '/?embed=true'}
+              src={previewTarget === 'crm' ? CRM_PORTAL_URL : '/?embed=true'}
               title={previewTarget === 'crm' ? 'Dental Clinic CRM System' : 'KIVEX Technology Responsive Viewport Preview'}
               className="w-full h-full border-0 bg-[#F4F1EB]"
             />

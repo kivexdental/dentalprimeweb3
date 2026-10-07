@@ -24,7 +24,8 @@ const app = express();
 
 // Security & Middleware
 app.use(helmet({
-  contentSecurityPolicy: false // Allow loading CDN assets like Bootstrap, FontAwesome, Chart.js
+  contentSecurityPolicy: false, // Allow loading CDN assets like Bootstrap, FontAwesome, Chart.js
+  frameguard: false // Allow KIVEX technology responsive preview iframe
 }));
 app.use(cors());
 app.use(morgan('dev'));

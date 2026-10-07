@@ -2,6 +2,7 @@ import React, { useState, useEffect } from 'react';
 import { X, Check, ArrowRight, ArrowLeft, Calendar as CalendarIcon, Clock, User, ShieldCheck, Sparkles, CheckCircle2, Phone, Mail, FileText, ChevronDown } from 'lucide-react';
 import confetti from 'canvas-confetti';
 import { SERVICES_DATA, DOCTORS_DATA } from '../data/clinicData';
+import { getApiUrl } from '../config/api';
 
 interface BookingModalProps {
   isOpen: boolean;
@@ -167,7 +168,7 @@ export const BookingModal: React.FC<BookingModalProps> = ({
     };
 
     try {
-      const response = await fetch('/api/bookings/online', {
+      const response = await fetch(getApiUrl('/api/bookings/online'), {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify(payload)

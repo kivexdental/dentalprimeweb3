@@ -1,6 +1,7 @@
 import React from 'react';
 import { ArrowRight, Phone, Mail, MapPin, Instagram, Facebook, Linkedin, Youtube, ShieldCheck } from 'lucide-react';
 import { LegalPolicyType } from './LegalModal';
+import { CRM_LOGIN_URL, CRM_WALKIN_URL } from '../config/api';
 
 interface FooterProps {
   onOpenBooking: () => void;
@@ -77,8 +78,8 @@ export const Footer: React.FC<FooterProps> = ({ onOpenBooking, onOpenLegal }) =>
               <li><a href="#doctors" className="hover:text-white transition-colors">Doctors</a></li>
               <li><a href="#results" className="hover:text-white transition-colors">Gallery</a></li>
               <li><a href="#location" className="hover:text-white transition-colors">Location & FAQ</a></li>
-              <li className="pt-2 border-t border-white/10"><a href="/login" className="text-white hover:text-[#C2644F] font-semibold transition-colors flex items-center gap-1.5"><ShieldCheck className="w-3.5 h-3.5 text-[#C2644F]" /> Staff CRM Portal</a></li>
-              <li><a href="/walkin" className="hover:text-white transition-colors">Walk-In Patient Kiosk</a></li>
+              <li className="pt-2 border-t border-white/10"><a href={CRM_LOGIN_URL} className="text-white hover:text-[#C2644F] font-semibold transition-colors flex items-center gap-1.5"><ShieldCheck className="w-3.5 h-3.5 text-[#C2644F]" /> Staff CRM Portal</a></li>
+              <li><a href={CRM_WALKIN_URL} className="hover:text-white transition-colors">Walk-In Patient Kiosk</a></li>
               <li><button type="button" onClick={onOpenBooking} className="hover:text-white transition-colors text-left font-sans text-xs">Online Booking Portal</button></li>
             </ul>
           </div>

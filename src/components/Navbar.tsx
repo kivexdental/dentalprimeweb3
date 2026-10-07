@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { Phone, ArrowRight, Menu, X, ShieldCheck } from 'lucide-react';
+import { CRM_LOGIN_URL } from '../config/api';
 
 interface NavbarProps {
   onOpenBooking: () => void;
@@ -96,7 +97,7 @@ export const Navbar: React.FC<NavbarProps> = ({ onOpenBooking }) => {
           {/* Right Action Buttons */}
           <div className="hidden sm:flex items-center gap-2.5">
             <a
-              href="/login"
+              href={CRM_LOGIN_URL}
               className="inline-flex items-center gap-1.5 border border-[#D7D2C9] hover:border-[#C2644F] bg-white/80 hover:bg-white text-[#171717] px-4 py-2.5 rounded-full font-sans text-xs md:text-sm font-medium tracking-wide transition-all duration-300 shadow-sm hover:shadow"
               title="Access Clinic CRM Dashboard"
             >
@@ -124,7 +125,7 @@ export const Navbar: React.FC<NavbarProps> = ({ onOpenBooking }) => {
           {/* Mobile Menu Trigger */}
           <div className="flex sm:hidden items-center gap-2">
             <a
-              href="/login"
+              href={CRM_LOGIN_URL}
               className="border border-[#D7D2C9] bg-white/90 text-[#171717] px-2.5 py-1.5 rounded-full font-sans text-xs font-medium flex items-center gap-1"
             >
               <ShieldCheck className="w-3 h-3 text-[#C2644F]" />
@@ -173,7 +174,7 @@ export const Navbar: React.FC<NavbarProps> = ({ onOpenBooking }) => {
 
           <div className="flex flex-col gap-3 pt-6 border-t border-[#D7D2C9]">
             <a
-              href="/login"
+              href={CRM_LOGIN_URL}
               className="w-full border border-[#D7D2C9] bg-white text-[#171717] py-3 rounded-full font-sans text-sm font-medium flex items-center justify-center gap-2 min-h-[44px] shadow-sm"
             >
               <ShieldCheck className="w-4 h-4 text-[#C2644F]" />
