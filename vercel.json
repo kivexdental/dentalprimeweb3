@@ -1,0 +1,13 @@
+{
+  "framework": "vite",
+  "rewrites": [
+    {
+      "source": "/api/:match*",
+      "destination": "https://dentalprimeweb3.onrender.com/api/:match*"
+    },
+    {
+      "source": "/((?!api).*)/?",
+      "destination": "/index.html"
+    }
+  ]
+}
