@@ -4402,8 +4402,8 @@ async function loadClinicSettings() {
     const data = await res.json();
     if (data.success && data.settings) {
       const s = data.settings;
-      const clinicName = s.clinic_name || 'Dental';
-      const clinicSubtitle = s.clinic_subtitle || 'Kivex Technology';
+      const clinicName = s.clinic_name || 'Dental Prime';
+      const clinicSubtitle = s.clinic_subtitle || 'Studio & Clinic';
 
       // Update Top-Left Sidebar Brand in real time
       const sidebarNameEl = document.getElementById('sidebarClinicName');
@@ -4440,8 +4440,8 @@ async function saveSystemSettings() {
   const clinicNameInput = document.getElementById('setting_clinic_name');
   const clinicSubtitleInput = document.getElementById('setting_clinic_subtitle');
 
-  const clinicName = (clinicNameInput?.value || '').trim() || 'Dental';
-  const clinicSubtitle = (clinicSubtitleInput?.value || '').trim() || 'Kivex Technology';
+  const clinicName = (clinicNameInput?.value || '').trim() || 'Dental Prime';
+  const clinicSubtitle = (clinicSubtitleInput?.value || '').trim() || 'Studio & Clinic';
 
   const payload = {
     clinic_name: clinicName,

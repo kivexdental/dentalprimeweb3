@@ -10,8 +10,8 @@
     }
   ],
   "settings": {
-    "clinic_name": "Dental",
-    "clinic_logo": "https://images.unsplash.com/photo-1629909613654-28e377c37b09?w=150&auto=format&fit=crop&q=80",
+    "clinic_name": "Dental Prime",
+    "clinic_logo": "assets/crm-logo.png",
     "clinic_address": "104 Healthcare Boulevard, Suite 300, Medical District",
     "phone": "+1 (555) 234-5678",
     "email": "contact@smilecaredental.com",
@@ -20,7 +20,7 @@
     "currency": "₹",
     "auto_sync": "true",
     "theme": "light",
-    "clinic_subtitle": "xyz",
+    "clinic_subtitle": "Studio & Clinic",
     "quick_procedures": "[{\"id\":1,\"title\":\"Scaling Done\",\"icon\":\"🩺\",\"text\":\"Routine oral examination completed. Generalized calculus noted. Ultrasonic scaling done.\"},{\"id\":2,\"title\":\"Composite Filling\",\"icon\":\"🦷\",\"text\":\"Class II composite filling placed with etching, bonding & light cure polishing.\"},{\"id\":3,\"title\":\"RCT BMP Sitting\",\"icon\":\"🔬\",\"text\":\"RCT: Access opened, working length established with apex locator, canals shaped to 25/04, dressed with Ca(OH)2.\"},{\"id\":4,\"title\":\"RCT Obturation\",\"icon\":\"✨\",\"text\":\"RCT Obturation completed with gutta-percha & bioceramic sealer. Core restoration placed.\"},{\"id\":5,\"title\":\"Extraction\",\"icon\":\"✂️\",\"text\":\"Atraumatic extraction performed under 2% Lignocaine with Adrenaline (1:80,000). Hemostasis achieved.\"},{\"id\":6,\"title\":\"Crown Prep\",\"icon\":\"👑\",\"text\":\"Crown preparation completed with subgingival shoulder margin. Elastomeric impression taken.\"},{\"id\":7,\"title\":\"Post-Op Advice\",\"icon\":\"📋\",\"text\":\"Post-op instructions given: Soft diet, avoid hot foods, warm salt water rinses after 24 hrs.\"}]"
   },
   "services": [

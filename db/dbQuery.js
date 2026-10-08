@@ -25,8 +25,9 @@ const initialDefaultData = {
     }
   ],
   settings: {
-    clinic_name: 'Smile Care Dental Clinic & Implant Center',
-    clinic_logo: 'https://images.unsplash.com/photo-1629909613654-28e377c37b09?w=150&auto=format&fit=crop&q=80',
+    clinic_name: 'Dental Prime',
+    clinic_subtitle: 'Studio & Clinic',
+    clinic_logo: 'assets/crm-logo.png',
     clinic_address: '104 Healthcare Boulevard, Suite 300, Medical District',
     phone: '+1 (555) 234-5678',
     email: 'contact@smilecaredental.com',

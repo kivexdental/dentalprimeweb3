@@ -20,10 +20,22 @@
     <!-- Left Sidebar -->
     <aside class="sidebar" id="appSidebar">
       <div class="brand">
-        <i class="fa-solid fa-tooth fa-2x" style="color: var(--accent-blue);"></i>
-        <div class="overflow-hidden">
-          <h5 class="fw-bold mb-0 text-white text-nowrap" id="sidebarClinicName" style="font-family: var(--font-heading);">Dental</h5>
-          <small class="text-nowrap" id="sidebarClinicSubtitle" style="color: #94a3b8;">xyz</small>
+        <div class="crm-brand-header">
+          <div class="crm-brand-logo-badge" title="Dental Prime Clinic">
+            <img src="assets/crm-logo.png" alt="Dental Prime Logo" class="crm-brand-logo-img">
+          </div>
+          <div class="overflow-hidden flex-grow-1">
+            <h5 class="fw-bold mb-0 text-white text-nowrap" id="sidebarClinicName" style="font-family: var(--font-heading); font-size: 1.05rem; letter-spacing: 0.02em;">Dental Prime</h5>
+            <small class="text-nowrap d-block" id="sidebarClinicSubtitle" style="color: #94a3b8; font-size: 0.72rem; letter-spacing: 0.05em; text-transform: uppercase;">Studio & Clinic</small>
+          </div>
+        </div>
+
+        <!-- By Kivex Technology (Right below clinic logo) -->
+        <div class="brand-kivex-attribution">
+          <span class="attribution-label">by kivex technology</span>
+          <a href="https://kivextechnology.com" target="_blank" rel="noopener noreferrer" title="Powered by KIVEX Technology" class="d-inline-block">
+            <img src="assets/kivex-logo.png" alt="KIVEX Technology" class="kivex-brand-logo">
+          </a>
         </div>
       </div>
 
@@ -2449,9 +2461,14 @@
       <div class="modal-content glass-card border-0">
         <div class="modal-body p-4 p-md-5 printable-area" id="invoicePrintArea">
           <div class="d-flex justify-content-between align-items-center mb-4 pb-3 border-bottom">
-            <div>
-              <h3 class="fw-bold mb-0" style="color: var(--accent-red); font-family: var(--font-heading);"><i class="fa-solid fa-tooth me-2" style="color: var(--accent-blue);"></i>Dental</h3>
-              <small class="text-muted">Kivex Technology CRM Platform | 1st Floor, Omkar Plaza, Nikol, Ahmedabad</small>
+            <div class="d-flex align-items-center gap-3">
+              <div style="width: 46px; height: 46px; background: #F4F1EB; border-radius: 8px; border: 1px solid var(--border); display: flex; align-items: center; justify-content: center; overflow: hidden; padding: 2px;">
+                <img src="assets/crm-logo.png" alt="Dental Prime Logo" style="width: 100%; height: 100%; object-fit: cover; border-radius: 6px;">
+              </div>
+              <div>
+                <h3 class="fw-bold mb-0" style="color: var(--accent-red); font-family: var(--font-heading);">Dental Prime</h3>
+                <small class="text-muted d-block">Studio & Clinic | Kivex Technology CRM Platform</small>
+              </div>
             </div>
             <div class="text-end">
               <h4 class="fw-bold text-dark mb-0">INVOICE</h4>
@@ -2510,10 +2527,14 @@
             <p class="mb-0" id="invMedicines"></p>
           </div>
 
-          <div class="d-flex justify-content-end align-items-center pt-3 border-top">
+          <div class="d-flex justify-content-between align-items-center pt-3 border-top">
+            <div class="d-flex align-items-center gap-2">
+              <span class="text-muted" style="font-size: 0.72rem; text-transform: uppercase; letter-spacing: 0.08em; font-weight: 600;">Powered by</span>
+              <img src="assets/kivex-logo.png" alt="KIVEX Technology" style="height: 18px; width: auto; object-fit: contain;">
+            </div>
             <div class="text-end">
-              <div class="fw-bold mt-2" style="color: var(--accent-red); font-family: var(--font-heading);">Dental</div>
-              <small class="text-muted d-block" style="font-size: 0.72rem;">Powered by Kivex Technology</small>
+              <div class="fw-bold" style="color: var(--accent-red); font-family: var(--font-heading);">Dental Prime</div>
+              <small class="text-muted d-block" style="font-size: 0.72rem;">Studio & Clinic</small>
             </div>
           </div>
 
